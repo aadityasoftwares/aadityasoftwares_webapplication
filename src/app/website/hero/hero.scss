@@ -1,0 +1,231 @@
+@use '../../styles/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  background-color: #ffffff;
+  position: relative;
+  overflow: visible;
+}
+
+.hero-section {
+  width: 100%;
+  padding-top: clamp(32px, 5vw, 64px);
+  padding-bottom: 0;
+  position: relative;
+  overflow: visible;
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 5vw, 64px);
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 32px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 24px 48px;
+  }
+}
+
+/* Left Column */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: clamp(40px, 6vw, 80px);
+
+  @media (max-width: 992px) {
+    padding-bottom: 0;
+  }
+}
+
+.hero-eyebrow {
+  margin: 0 0 18px 0;
+  font-family: $font-sans;
+  font-size: clamp(14px, 1.5vw, 17px);
+  font-weight: 500;
+  color: #334155;
+  letter-spacing: -0.01em;
+}
+
+.hero-title {
+  margin: 0 0 36px 0;
+  font-family: $font-sans;
+  font-size: clamp(2.5rem, 5.2vw, 4.4rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+
+  .highlight-softwares {
+    color: #5b54e0;
+  }
+}
+
+/* Hero Actions */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.btn-explore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 34px;
+  font-family: $font-sans;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  background-color: #fde047;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 180ms ease;
+  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.35);
+
+  &:hover {
+    background-color: #facc15;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(250, 204, 21, 0.45);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background-color: #5b54e0;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 180ms ease;
+  box-shadow: 0 4px 14px rgba(91, 84, 224, 0.35);
+
+  .play-icon {
+    transform: translateX(1.5px);
+  }
+
+  &:hover {
+    background-color: #4f46e5;
+    transform: scale(1.08);
+    box-shadow: 0 8px 22px rgba(91, 84, 224, 0.45);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}
+
+/* Right Column: Overlapping Visual */
+.hero-visual {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  margin-bottom: -110px;
+
+  @media (max-width: 992px) {
+    margin-bottom: 0;
+  }
+}
+
+.hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.22);
+  background-color: #e2e8f0;
+  aspect-ratio: 4 / 3;
+}
+
+.hero-team-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Video Showcase Modal */
+.video-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: modal-fade-in 200ms ease;
+}
+
+.video-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  background-color: #0f172a;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.video-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.video-frame-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

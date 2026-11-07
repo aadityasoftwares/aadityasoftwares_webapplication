@@ -1,0 +1,71 @@
+<header class="app-site-header">
+  <div class="header-container">
+    <!-- Brand Logo -->
+    <a href="#home" class="header-brand" (click)="onNavClick(navItems[0], $event)">
+      <div class="brand-logo-text">
+        <span class="brand-main">EleTech</span>
+        <span class="brand-pro">PRO</span>
+      </div>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <nav class="desktop-navigation" aria-label="Main Navigation">
+      <ul class="nav-list">
+        @for (item of navItems; track item.label) {
+          <li class="nav-item">
+            <a
+              [href]="item.href"
+              class="nav-link"
+              [class.is-active]="activePath() === item.label"
+              (click)="onNavClick(item, $event)"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <!-- Desktop CTA Action -->
+    <div class="header-actions">
+      <button type="button" class="btn-signup" (click)="onSignup($event)">
+        Signup
+      </button>
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        type="button"
+        class="mobile-menu-btn"
+        [attr.aria-expanded]="mobileMenuOpen()"
+        aria-label="Toggle navigation menu"
+        (click)="toggleMobileMenu()"
+      >
+        <app-icon [icon]="mobileMenuOpen() ? LucideX : LucideMenu" size="md" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  @if (mobileMenuOpen()) {
+    <div class="mobile-drawer" role="dialog" aria-modal="true">
+      <nav class="mobile-nav">
+        @for (item of navItems; track item.label) {
+          <a
+            [href]="item.href"
+            class="mobile-nav-link"
+            [class.is-active]="activePath() === item.label"
+            (click)="onNavClick(item, $event)"
+          >
+            {{ item.label }}
+          </a>
+        }
+        <div class="mobile-action">
+          <button type="button" class="btn-signup btn-signup-mobile" (click)="onSignup($event)">
+            Signup
+          </button>
+        </div>
+      </nav>
+    </div>
+  }
+</header>
+

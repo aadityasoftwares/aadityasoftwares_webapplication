@@ -1,0 +1,62 @@
+<section id="home" class="hero-section">
+  <div class="hero-container">
+    <!-- Left Column: Copy & Actions -->
+    <div class="hero-content">
+      <p class="hero-eyebrow">One-Stop Solution For All Your Business Needs</p>
+
+      <h1 class="hero-title">
+        Creating <span class="highlight-softwares">Softwares</span>
+        <br />
+        &amp; Digital Excellence
+      </h1>
+
+      <div class="hero-actions">
+        <button type="button" class="btn-explore" (click)="onExplore()">
+          Explore Our Work
+        </button>
+
+        <button
+          type="button"
+          class="btn-play"
+          aria-label="Watch company showcase video"
+          (click)="onPlay()"
+        >
+          <app-icon [icon]="LucidePlay" size="sm" class="play-icon" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Column: Team Collaboration Image (Overlaps section below) -->
+    <div class="hero-visual">
+      <div class="hero-image-wrapper">
+        <img
+          src="/images/hero-team.jpg"
+          alt="Software engineers and designers collaborating around a laptop"
+          class="hero-team-image"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Showcase Modal -->
+  @if (isVideoModalOpen()) {
+    <div class="video-modal-backdrop" (click)="closeVideoModal()" role="dialog" aria-modal="true">
+      <div class="video-modal-container" (click)="$event.stopPropagation()">
+        <button type="button" class="video-modal-close" (click)="closeVideoModal()" aria-label="Close modal">
+          <app-icon [icon]="LucideX" size="md" />
+        </button>
+        <div class="video-frame-wrapper">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/ScMzIvxBSi4?autoplay=1"
+            title="Aaditya Softwares Innovation & Engineering"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  }
+</section>
+

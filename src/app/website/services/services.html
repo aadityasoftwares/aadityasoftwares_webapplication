@@ -1,0 +1,74 @@
+<section id="services" class="services-section" appScrollReveal>
+  <div class="services-container">
+    <!-- Left Column: Big Display Title -->
+    <div class="services-header-col">
+      <h2 class="services-heading">
+        Turning Your Ideas<br />
+        Into Cutting-edge<br />
+        Technologies
+      </h2>
+    </div>
+
+    <!-- Right Column: Capability & Services List -->
+    <div class="services-list-col">
+      <div class="services-list">
+        @for (item of services; track item.id; let first = $first) {
+          @if (!first) {
+            <div class="service-divider" aria-hidden="true"></div>
+          }
+
+          <div
+            class="service-item"
+            [class.is-expanded]="activeServiceId() === item.id"
+            (click)="toggleService(item)"
+          >
+            <!-- Header Row -->
+            <div class="service-row">
+              <span class="service-num">{{ item.num }}</span>
+              <span class="service-title">{{ item.title }}</span>
+
+              @if (activeServiceId() !== item.id) {
+                <a
+                  [href]="item.href"
+                  class="service-action-link"
+                  (click)="$event.stopPropagation()"
+                >
+                  {{ item.linkText }}
+                </a>
+              }
+            </div>
+
+            <!-- Expanded Content (Active state as shown in 02) -->
+            @if (activeServiceId() === item.id) {
+              <div class="service-body">
+                <div class="service-desc-wrapper">
+                  <p class="service-description">{{ item.description }}</p>
+                  <a
+                    [href]="item.href"
+                    class="service-action-link-inline"
+                    (click)="$event.stopPropagation()"
+                  >
+                    {{ item.linkText }}
+                    <app-icon [icon]="LucideArrowUpRight" size="xs" />
+                  </a>
+                </div>
+
+                @if (item.image) {
+                  <div class="service-image-container">
+                    <img
+                      [src]="item.image"
+                      [alt]="item.title + ' preview mockup'"
+                      class="service-thumb-image"
+                      loading="lazy"
+                    />
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
