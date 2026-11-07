@@ -1,0 +1,229 @@
+@use '../../../styles/variables' as *;
+
+@mixin badge-tone($surface, $ink, $edge) {
+  --app-badge-surface: #{$surface};
+  --app-badge-ink: #{$ink};
+  --app-badge-edge: #{$edge};
+}
+
+:host {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.app-badge {
+  --app-badge-height: 24px;
+  --app-badge-icon-size: 13px;
+  --app-badge-dot-size: 6px;
+  --app-badge-padding-x: 10px;
+  --app-badge-gap: 5px;
+
+  @include badge-tone($color-surface, $color-text-body, $color-border);
+
+  position: relative;
+  isolation: isolate;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--app-badge-gap);
+
+  min-width: 0;
+  max-width: 100%;
+  height: var(--app-badge-height);
+
+  box-sizing: border-box;
+  padding: 0 var(--app-badge-padding-x);
+
+  color: var(--app-badge-ink);
+  background-color: var(--app-badge-surface);
+  border: 1px solid var(--app-badge-edge);
+
+  font-family: $font-sans;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+/* Sizes */
+.app-badge-xs {
+  --app-badge-height: 18px;
+  --app-badge-icon-size: 11px;
+  --app-badge-dot-size: 5px;
+  --app-badge-padding-x: 6px;
+  --app-badge-gap: 4px;
+  font-size: 10px;
+}
+
+.app-badge-sm {
+  --app-badge-height: 22px;
+  --app-badge-icon-size: 12px;
+  --app-badge-dot-size: 6px;
+  --app-badge-padding-x: 8px;
+  font-size: 11px;
+}
+
+.app-badge-md {
+  --app-badge-height: 26px;
+  --app-badge-icon-size: 14px;
+  --app-badge-dot-size: 7px;
+  --app-badge-padding-x: 10px;
+  --app-badge-gap: 6px;
+  font-size: 12px;
+}
+
+.app-badge-lg {
+  --app-badge-height: 32px;
+  --app-badge-icon-size: 16px;
+  --app-badge-dot-size: 8px;
+  --app-badge-padding-x: 12px;
+  --app-badge-gap: 7px;
+  font-size: 13px;
+}
+
+/* Shapes */
+.app-badge-square {
+  border-radius: $radius-xs;
+}
+
+.app-badge-rounded {
+  border-radius: $radius-sm;
+}
+
+.app-badge-pill {
+  border-radius: $radius-full;
+}
+
+/* Variants - Aaditya Softwares Modern Blue Theme */
+.app-badge-neutral {
+  @include badge-tone($color-surface, $color-text-muted, $color-border);
+}
+
+.app-badge-primary {
+  @include badge-tone($color-primary-light, $color-primary, #bfdbfe);
+}
+
+.app-badge-secondary {
+  @include badge-tone($color-surface-muted, $color-text-body, $color-border-hover);
+}
+
+.app-badge-accent {
+  @include badge-tone($color-accent-light, $color-accent-active, #a5f3fc);
+}
+
+.app-badge-success {
+  @include badge-tone($color-success-light, $color-success-text, $color-success-border);
+}
+
+.app-badge-warning {
+  @include badge-tone($color-warning-light, $color-warning-text, $color-warning-border);
+}
+
+.app-badge-danger {
+  @include badge-tone($color-danger-light, $color-danger-text, $color-danger-border);
+}
+
+.app-badge-info {
+  @include badge-tone($color-info-light, $color-info-text, $color-info-border);
+}
+
+.app-badge-outline {
+  @include badge-tone(transparent, $color-text-primary, $color-border-hover);
+}
+
+/* Content */
+.app-badge-label {
+  display: inline-block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 var(--app-badge-icon-size);
+  width: var(--app-badge-icon-size);
+  height: var(--app-badge-icon-size);
+}
+
+.app-badge-dot {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 var(--app-badge-dot-size);
+  width: var(--app-badge-dot-size);
+  height: var(--app-badge-dot-size);
+  background-color: currentColor;
+  border-radius: 50%;
+}
+
+.app-badge-dot-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background-color: inherit;
+  opacity: 0.75;
+  animation: app-badge-dot-pulse 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes app-badge-dot-pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Removable Close Button */
+.app-badge-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
+  padding: 2px;
+  color: inherit;
+  background: transparent;
+  border: none;
+  border-radius: $radius-full;
+  cursor: pointer;
+  line-height: 0;
+  opacity: 0.65;
+  transition: opacity 150ms ease, background-color 150ms ease, transform 150ms ease;
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+    background-color: rgba(15, 23, 42, 0.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 1px;
+    opacity: 1;
+  }
+}
+
+/* Disabled */
+.app-badge-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+

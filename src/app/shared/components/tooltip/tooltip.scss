@@ -1,0 +1,50 @@
+@use '../../../styles/variables' as *;
+
+.app-tooltip-panel {
+  position: fixed;
+  z-index: 9999;
+  box-sizing: border-box;
+  padding: 6px 12px;
+  font-family: $font-sans;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  border-radius: $radius-sm;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(2px) scale(0.96);
+  transition: opacity 140ms ease, transform 140ms ease, visibility 140ms ease;
+  box-shadow: $shadow-md;
+}
+
+.app-tooltip-panel.app-tooltip-ready {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.app-tooltip-dark {
+  background-color: $color-heading;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-tooltip-light {
+  background-color: $color-surface-white;
+  color: $color-text-primary;
+  border: 1px solid $color-border;
+}
+
+.app-tooltip-primary {
+  background-color: $color-primary;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.app-tooltip-accent {
+  background-color: $color-accent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+

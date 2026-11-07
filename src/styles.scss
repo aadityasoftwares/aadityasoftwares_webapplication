@@ -1,0 +1,60 @@
+/* Aaditya Softwares - Global Styles & Modern Blue Design System */
+@use './app/styles/variables' as *;
+
+:root {
+  color-scheme: light;
+
+  /* Theme Color Tokens */
+  --color-primary: #{$color-primary};
+  --color-primary-hover: #{$color-primary-hover};
+  --color-primary-active: #{$color-primary-active};
+  --color-primary-light: #{$color-primary-light};
+
+  --color-accent: #{$color-accent};
+  --color-accent-hover: #{$color-accent-hover};
+  --color-accent-light: #{$color-accent-light};
+
+  --color-heading: #{$color-heading};
+  --color-text-primary: #{$color-text-primary};
+  --color-text-body: #{$color-text-body};
+  --color-text-muted: #{$color-text-muted};
+
+  --color-border: #{$color-border};
+  --color-border-hover: #{$color-border-hover};
+
+  --color-surface: #{$color-surface};
+  --color-surface-white: #{$color-surface-white};
+  --color-surface-muted: #{$color-surface-muted};
+
+  /* Focus & Elevation */
+  --focus-ring: #{$focus-ring};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+
+  /* Fonts */
+  --font-sans: #{$font-sans};
+  --font-mono: #{$font-mono};
+
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-body);
+  background-color: var(--color-surface);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+

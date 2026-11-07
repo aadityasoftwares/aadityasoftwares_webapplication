@@ -1,0 +1,324 @@
+@use 'sass:color';
+@use '../../../styles/variables' as *;
+
+/* Host */
+:host {
+  display: inline-flex;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+:host.app-button-host-full {
+  display: flex;
+  width: 100%;
+}
+
+/* Local Solid Button Mixin */
+@mixin solid-button($background, $text: #ffffff, $hover-bg: null, $active-bg: null) {
+  $actual-hover: color.adjust($background, $lightness: 6%);
+  @if $hover-bg != null {
+    $actual-hover: $hover-bg;
+  }
+  $actual-active: color.adjust($background, $lightness: -6%);
+  @if $active-bg != null {
+    $actual-active: $active-bg;
+  }
+
+  color: $text;
+  background-color: $background;
+  border-color: $background;
+  box-shadow: $shadow-xs;
+
+  &:hover:not(:disabled) {
+    background-color: $actual-hover;
+    border-color: $actual-hover;
+    box-shadow: $shadow-md;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    background-color: $actual-active;
+    border-color: $actual-active;
+    box-shadow: $shadow-xs;
+    transform: translateY(1px);
+  }
+}
+
+/* Wrapper */
+.app-button-wrapper {
+  --app-button-height: 40px;
+  --app-button-min-width: 96px;
+  --app-button-padding-x: 18px;
+  --app-button-padding-y: 8px;
+  --app-button-icon-size: 18px;
+  --app-button-split-width: 40px;
+
+  display: inline-flex;
+  align-items: stretch;
+  max-width: 100%;
+  vertical-align: middle;
+
+  &.app-button-full {
+    display: flex;
+    width: 100%;
+  }
+}
+
+/* Base button */
+.app-button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $button-gap;
+  box-sizing: border-box;
+  height: var(--app-button-height);
+  min-width: var(--app-button-min-width);
+  padding: var(--app-button-padding-y) var(--app-button-padding-x);
+  border: 1px solid transparent;
+  border-radius: $button-radius;
+  outline: none;
+  font-family: $font-sans;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  transition: $button-transition;
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+    box-shadow: $focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  &[aria-pressed='true'] {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.15);
+  }
+}
+
+/* Sizes */
+.app-button-xs {
+  gap: 5px;
+  font-size: 11px;
+  border-radius: $radius-xs;
+}
+
+.app-button-sm {
+  gap: 6px;
+  font-size: 13px;
+  border-radius: $radius-sm;
+}
+
+.app-button-md {
+  font-size: 14px;
+  border-radius: $button-radius;
+}
+
+.app-button-lg,
+.app-button-xl {
+  gap: 9px;
+  font-size: 15px;
+  border-radius: $radius-lg;
+}
+
+.app-button-rounded {
+  border-radius: $radius-full !important;
+}
+
+.app-button-icon-only {
+  min-width: var(--app-button-height);
+  width: var(--app-button-height);
+  padding: 0;
+}
+
+.app-button-full {
+  width: 100%;
+}
+
+.app-button-nowrap {
+  white-space: nowrap;
+}
+
+/* Variants - Aaditya Softwares Modern Blue Theme */
+.app-button-primary {
+  @include solid-button($color-primary, #ffffff, $color-primary-hover, $color-primary-active);
+}
+
+.app-button-secondary {
+  color: $color-heading;
+  background-color: $color-surface-white;
+  border-color: $color-border;
+  box-shadow: $shadow-xs;
+
+  &:hover:not(:disabled) {
+    background-color: $color-surface-muted;
+    border-color: $color-border-hover;
+    box-shadow: $shadow-sm;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color.adjust($color-surface-muted, $lightness: -3%);
+    transform: translateY(1px);
+  }
+}
+
+.app-button-accent {
+  @include solid-button($color-accent, #ffffff, $color-accent-hover, $color-accent-active);
+}
+
+.app-button-outline {
+  color: $color-heading;
+  background-color: transparent;
+  border-color: $color-border-hover;
+
+  &:hover:not(:disabled) {
+    color: $color-primary;
+    background-color: $color-primary-light;
+    border-color: $color-primary;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    background-color: color.adjust($color-primary-light, $lightness: -4%);
+    transform: translateY(1px);
+  }
+}
+
+.app-button-ghost {
+  color: $color-text-body;
+  background-color: transparent;
+  border-color: transparent;
+
+  &:hover:not(:disabled) {
+    color: $color-heading;
+    background-color: $color-surface-muted;
+  }
+
+  &:active:not(:disabled) {
+    background-color: color.adjust($color-surface-muted, $lightness: -3%);
+  }
+}
+
+.app-button-link {
+  min-width: auto;
+  padding: 0 4px;
+  color: $color-primary;
+  background-color: transparent;
+  border-color: transparent;
+
+  &:hover:not(:disabled) {
+    color: $color-primary-hover;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transform: none;
+  }
+}
+
+.app-button-success {
+  @include solid-button($color-success, #ffffff, $color-success-hover);
+}
+
+.app-button-warning {
+  @include solid-button($color-warning, #ffffff, $color-warning-hover);
+}
+
+.app-button-danger {
+  @include solid-button($color-danger, #ffffff, $color-danger-hover);
+}
+
+.app-button-info {
+  @include solid-button($color-info, #ffffff, $color-info-hover);
+}
+
+.app-button-appearance-flat {
+  box-shadow: none !important;
+
+  &:hover:not(:disabled),
+  &:active:not(:disabled) {
+    box-shadow: none !important;
+    transform: none !important;
+  }
+}
+
+/* Split Button */
+.app-button-split-wrapper {
+  .app-button-main {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .app-button-split-action {
+    width: var(--app-button-split-width);
+    min-width: var(--app-button-split-width);
+    padding: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  &.app-button-wrapper-secondary .app-button-split-action,
+  &.app-button-wrapper-outline .app-button-split-action,
+  &.app-button-wrapper-ghost .app-button-split-action {
+    border-left: 1px solid $color-border;
+  }
+}
+
+/* Icon, Label, Spinner */
+.app-button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.app-button-label {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.app-button-spinner {
+  display: inline-block;
+  width: var(--app-button-icon-size);
+  height: var(--app-button-icon-size);
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: app-button-spin 700ms linear infinite;
+}
+
+@keyframes app-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-button-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
