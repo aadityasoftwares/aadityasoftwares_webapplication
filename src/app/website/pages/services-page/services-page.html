@@ -237,6 +237,75 @@
       </div>
 
       <!-- =======================================================
+           Customer Fast-Finder: What Does Your Business Need?
+           ======================================================= -->
+      <div class="service-decision-matrix">
+        <div class="matrix-header">
+          <span class="matrix-eyebrow">SERVICE DECISION GUIDE</span>
+          <h3 class="matrix-title">Which Engineering Service Does Your Business Need?</h3>
+          <p class="matrix-subtitle">
+            Click any goal below to immediately reveal the matching engineering discipline, deliverables, and production tech stack.
+          </p>
+        </div>
+
+        <div class="decision-cards-grid">
+          <div class="decision-card" (click)="selectRibbon('custom-software')" tabindex="0" role="button">
+            <span class="dc-tag">Goal: Web App or SaaS</span>
+            <h4 class="dc-heading">I need a scalable web application, portal, or B2B SaaS.</h4>
+            <p class="dc-recommend">
+              &rarr; Recommended: <strong>01. Custom Software &amp; Web Engineering</strong>
+            </p>
+            <span class="dc-link">Explore Service &darr;</span>
+          </div>
+
+          <div class="decision-card" (click)="selectRibbon('mobile-development')" tabindex="0" role="button">
+            <span class="dc-tag">Goal: Mobile App</span>
+            <h4 class="dc-heading">I need iOS and Android apps for users, merchants, or delivery fleet.</h4>
+            <p class="dc-recommend">
+              &rarr; Recommended: <strong>02. Mobile Application Engineering</strong>
+            </p>
+            <span class="dc-link">Explore Service &darr;</span>
+          </div>
+
+          <div class="decision-card" (click)="selectRibbon('cloud-devops')" tabindex="0" role="button">
+            <span class="dc-tag">Goal: Cloud &amp; Scaling</span>
+            <h4 class="dc-heading">I need auto-scaling cloud servers, edge storage, or CI/CD pipelines.</h4>
+            <p class="dc-recommend">
+              &rarr; Recommended: <strong>03. Cloud Architecture &amp; DevOps</strong>
+            </p>
+            <span class="dc-link">Explore Service &darr;</span>
+          </div>
+
+          <div class="decision-card" (click)="selectRibbon('ai-workflows')" tabindex="0" role="button">
+            <span class="dc-tag">Goal: AI &amp; Automation</span>
+            <h4 class="dc-heading">I want custom LLM agents, automated document extraction, or smart search.</h4>
+            <p class="dc-recommend">
+              &rarr; Recommended: <strong>04. AI &amp; Intelligent Workflows</strong>
+            </p>
+            <span class="dc-link">Explore Service &darr;</span>
+          </div>
+
+          <div class="decision-card" (click)="selectRibbon('ui-ux-design')" tabindex="0" role="button">
+            <span class="dc-tag">Goal: UI/UX in Figma</span>
+            <h4 class="dc-heading">I need clickable prototypes, user journey mapping, and design systems.</h4>
+            <p class="dc-recommend">
+              &rarr; Recommended: <strong>05. UI/UX &amp; Design Systems</strong>
+            </p>
+            <span class="dc-link">Explore Service &darr;</span>
+          </div>
+
+          <div class="decision-card" (click)="selectRibbon('quality-assurance')" tabindex="0" role="button">
+            <span class="dc-tag">Goal: Zero Bugs</span>
+            <h4 class="dc-heading">I need automated testing and security audits before launch.</h4>
+            <p class="dc-recommend">
+              &rarr; Recommended: <strong>06. QA &amp; Automated Testing</strong>
+            </p>
+            <span class="dc-link">Explore Service &darr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- =======================================================
            The Interactive Ribbon Accordion (Reference: BRANDING, UIUX, PACKAGING, 3D DESIGN...)
            ======================================================= -->
       <div class="services-ribbon-accordion">
@@ -356,62 +425,53 @@
   </section>
 
   <!-- =======================================================
-       Section 3: Project Deliverables Mosaic Gallery
-       (Reference: Section 02 "02 mattered - A CRYPTO UIUX...")
+       Section 3: Services in Production: Verified Outcomes
+       (Direct Deliverable Proof linking to in-depth case studies)
        ======================================================= -->
   <section class="services-gallery-section" appScrollReveal>
     <div class="section-container">
       <div class="gallery-header-row">
         <div class="gallery-header-left">
-          <span class="section-sub-eyebrow">02 DELIVERABLES &amp; CASE STUDIES</span>
-          <h2 class="section-heading">Engineering in Action: Proven Solutions</h2>
+          <span class="section-sub-eyebrow">VERIFIED SERVICE OUTCOMES</span>
+          <h2 class="section-heading">Services in Action: Real Production Deployments</h2>
           <p class="section-subtitle">
-            Explore commercial platforms, multi-sided marketplace ecosystems, and our proprietary SaaS built with precision.
+            See which of our 7 engineering practices power our commercial platforms and proprietary SaaS.
           </p>
         </div>
         <div class="gallery-header-right">
           <button type="button" class="gallery-all-works-btn" (click)="onViewProjects()">
-            <span>All Works</span>
+            <span>View Full Case Studies on Projects Page</span>
             <app-icon [icon]="LucideArrowRight" size="sm" />
           </button>
         </div>
       </div>
 
-      <!-- Asymmetrical Gallery Grid matching Reference -->
-      <div class="gallery-mosaic-grid">
+      <!-- Clean 3-Card Deliverables Proof Deck -->
+      <div class="services-deliverables-deck">
         @for (project of showcaseProjects; track project.id) {
-          <article class="gallery-mosaic-card" (click)="onViewProjects()" tabindex="0">
-            <div class="card-image-box">
-              <img
-                [src]="project.image"
-                [alt]="project.name"
-                class="mosaic-img"
-                loading="lazy"
-              />
-              <div class="mosaic-hover-overlay">
-                <!-- Circular VIEW badge matching reference -->
-                <div class="circular-view-badge">
-                  <span>VIEW</span>
-                </div>
-              </div>
+          <article class="deliverable-proof-card" (click)="onViewProjects()" tabindex="0" role="button">
+            <div class="dp-header">
+              <span class="dp-badge">{{ project.badge }}</span>
+              <span class="dp-service-tag">{{ project.category }}</span>
             </div>
 
-            <div class="card-meta-bar">
-              <div class="meta-left">
-                <span class="mosaic-cat">{{ project.category }}</span>
-                <h3 class="mosaic-title">{{ project.name }}</h3>
-              </div>
-              <div class="meta-right">
-                <span class="mosaic-badge">{{ project.badge }}</span>
-              </div>
+            <h3 class="dp-name">{{ project.name }}</h3>
+            <p class="dp-desc">{{ project.description }}</p>
+
+            <div class="dp-specs-row">
+              <span class="dp-spec-label">{{ project.statsLabel }}:</span>
+              <span class="dp-spec-val">{{ project.statsValue }}</span>
             </div>
 
-            <p class="mosaic-desc">{{ project.description }}</p>
-
-            <div class="mosaic-tech-row">
+            <div class="dp-tech-pills">
               @for (t of project.tech; track t) {
-                <span class="mosaic-tech-tag">{{ t }}</span>
+                <span class="dp-pill">{{ t }}</span>
               }
+            </div>
+
+            <div class="dp-action-link">
+              <span>Read Full Case Study on Projects Page</span>
+              <app-icon [icon]="LucideArrowUpRight" size="xs" />
             </div>
           </article>
         }
