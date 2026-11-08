@@ -1,14 +1,20 @@
 <header class="app-site-header">
   <div class="header-container">
     <!-- Brand Logo -->
-    <a href="#home" class="header-brand" (click)="onNavClick(navItems[0], $event)">
+    <a href="#home" class="header-brand" (click)="onNavClick(navItems[0], $event)" aria-label="AadityaSoftwares Home">
+      <div class="brand-logo-badge">
+        <img
+          src="/companylogos/AadityaSoftwaresLogo.png"
+          alt="AadityaSoftwares"
+          class="header-brand-logo-img"
+        />
+      </div>
       <div class="brand-logo-text">
-        <span class="brand-main">EleTech</span>
-        <span class="brand-pro">PRO</span>
+        <span class="brand-main">Aaditya</span><span class="brand-highlight">Softwares</span>
       </div>
     </a>
 
-    <!-- Desktop Nav Links -->
+    <!-- Desktop Navigation with Icons -->
     <nav class="desktop-navigation" aria-label="Main Navigation">
       <ul class="nav-list">
         @for (item of navItems; track item.label) {
@@ -19,18 +25,24 @@
               [class.is-active]="activePath() === item.label"
               (click)="onNavClick(item, $event)"
             >
-              {{ item.label }}
+              <app-icon [icon]="item.icon" size="sm" class="nav-item-icon" />
+              <span>{{ item.label }}</span>
             </a>
           </li>
         }
       </ul>
     </nav>
 
-    <!-- Desktop CTA Action -->
+    <!-- Desktop CTA Action (app-button with square-rounded radius) -->
     <div class="header-actions">
-      <button type="button" class="btn-signup" (click)="onSignup($event)">
+      <app-button
+        variant="primary"
+        size="sm"
+        [iconRight]="LucideArrowRight"
+        (buttonClick)="onSignup($event)"
+      >
         Signup
-      </button>
+      </app-button>
 
       <!-- Mobile Menu Toggle -->
       <button
@@ -45,7 +57,7 @@
     </div>
   </div>
 
-  <!-- Mobile Drawer Menu -->
+  <!-- Mobile Drawer Menu with Icons -->
   @if (mobileMenuOpen()) {
     <div class="mobile-drawer" role="dialog" aria-modal="true">
       <nav class="mobile-nav">
@@ -56,13 +68,20 @@
             [class.is-active]="activePath() === item.label"
             (click)="onNavClick(item, $event)"
           >
-            {{ item.label }}
+            <app-icon [icon]="item.icon" size="sm" class="mobile-nav-icon" />
+            <span>{{ item.label }}</span>
           </a>
         }
         <div class="mobile-action">
-          <button type="button" class="btn-signup btn-signup-mobile" (click)="onSignup($event)">
+          <app-button
+            variant="primary"
+            size="md"
+            [fullWidth]="true"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onSignup($event)"
+          >
             Signup
-          </button>
+          </app-button>
         </div>
       </nav>
     </div>

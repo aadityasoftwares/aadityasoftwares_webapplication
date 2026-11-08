@@ -27,11 +27,34 @@ describe('Hero', () => {
     expect(component.isVideoModalOpen()).toBe(false);
   });
 
-  it('should emit exploreClick event', () => {
-    let emitted = false;
-    component.exploreClick.subscribe(() => (emitted = true));
-    component.onExplore();
-    expect(emitted).toBe(true);
+  it('should have 5 development steps with initial active step 01', () => {
+    expect(component.steps.length).toBe(5);
+    expect(component.activeStepIndex()).toBe(0);
+    expect(component.activeStep().id).toBe('01');
+    expect(component.activeStep().name).toBe('Secure by Design');
+  });
+
+  it('should update active step when selectStep is called', () => {
+    component.selectStep(2);
+    expect(component.activeStepIndex()).toBe(2);
+    expect(component.activeStep().id).toBe('03');
+    expect(component.activeStep().tag).toBe('Maintainable');
+  });
+
+  it('should advance cyclically when nextStep is called', () => {
+    component.selectStep(4);
+    expect(component.activeStep().id).toBe('05');
+    component.nextStep();
+    expect(component.activeStepIndex()).toBe(0);
+    expect(component.activeStep().id).toBe('01');
+  });
+
+  it('should pause and resume autoplay on hover events', () => {
+    expect(component.isPaused()).toBe(false);
+    component.pauseAutoPlay();
+    expect(component.isPaused()).toBe(true);
+    component.resumeAutoPlay();
+    expect(component.isPaused()).toBe(false);
   });
 });
 

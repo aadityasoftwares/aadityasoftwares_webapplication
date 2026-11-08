@@ -1,40 +1,298 @@
 <section id="home" class="hero-section">
+  <!-- Subtle Ambient Glow Orbs -->
+  <div class="hero-ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-orb-top-right"></div>
+    <div class="glow-orb glow-orb-top-left"></div>
+  </div>
+
   <div class="hero-container">
-    <!-- Left Column: Copy & Actions -->
-    <div class="hero-content">
-      <p class="hero-eyebrow">One-Stop Solution For All Your Business Needs</p>
+    <!-- Main 2-Column Hero Grid -->
+    <div class="hero-main-row">
+      <!-- Left Column: Copy & Actions -->
+      <div class="hero-content">
+        <!-- Developer Studio Badge (Clean, High-Trust, Non-AI) -->
+        <div class="hero-badge">
+          <div class="badge-status-pill">
+            <span class="badge-pulse-dot" aria-hidden="true"></span>
+            <span class="badge-status-text">Production Grade</span>
+          </div>
+          <span class="badge-separator">/</span>
+          <span class="badge-desc">Full-Stack Software Engineering Studio</span>
+        </div>
 
-      <h1 class="hero-title">
-        Creating <span class="highlight-softwares">Softwares</span>
-        <br />
-        &amp; Digital Excellence
-      </h1>
+        <!-- Headline: 2 Clean Display Lines with Gradient Accent -->
+        <h1 class="hero-title">
+          <span class="hero-title-line">
+            Creating <span class="highlight-softwares">Softwares</span>
+          </span>
+          <span class="hero-title-line">
+            &amp; Digital Excellence
+          </span>
+        </h1>
 
-      <div class="hero-actions">
-        <button type="button" class="btn-explore" (click)="onExplore()">
-          Explore Our Work
-        </button>
+        <!-- Grounded, Developer-Mind Value Proposition -->
+        <p class="hero-description">
+          We design, architect, and deploy high-performance web applications and scalable cloud systems.
+          From enterprise clients like <strong>SGTC India</strong> and <strong>Oonloop</strong> to our in-house
+          productivity platform <a href="https://stickyji.com/" target="_blank" rel="noopener noreferrer" class="hero-inline-link"><strong>StickyJi</strong></a>, we build software engineered to scale.
+        </p>
 
-        <button
-          type="button"
-          class="btn-play"
-          aria-label="Watch company showcase video"
-          (click)="onPlay()"
+        <!-- Actions using app-button -->
+        <div class="hero-actions">
+          <app-button
+            variant="primary"
+            size="lg"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onExplore()"
+          >
+            Explore Our Work
+          </app-button>
+
+          <app-button
+            variant="secondary"
+            size="lg"
+            [iconLeft]="LucidePlay"
+            (buttonClick)="onPlay()"
+          >
+            Watch Showcase
+          </app-button>
+        </div>
+
+        <!-- Key Engineering Pillars (Developer-Grade Trust Points) -->
+        <div class="hero-trust-strip">
+          <div class="trust-item">
+            <div class="trust-item-icon">
+              <app-icon [icon]="LucideShieldCheck" size="xs" />
+            </div>
+            <span>Enterprise Security</span>
+          </div>
+
+          <span class="trust-divider" aria-hidden="true"></span>
+
+          <div class="trust-item">
+            <div class="trust-item-icon">
+              <app-icon [icon]="LucideCode2" size="xs" />
+            </div>
+            <span>Clean Architecture</span>
+          </div>
+
+          <span class="trust-divider" aria-hidden="true"></span>
+
+          <div class="trust-item">
+            <div class="trust-item-icon">
+              <app-icon [icon]="LucideRocket" size="xs" />
+            </div>
+            <span>Zero-Downtime Delivery</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Circular Orbital Development Approach (Pure Concentric Circular Shape) -->
+      <div class="hero-visual">
+        <div
+          class="orbital-system"
+          (mouseenter)="pauseAutoPlay()"
+          (mouseleave)="resumeAutoPlay()"
+          role="region"
+          aria-label="Our Development Approach 5-Step Process"
         >
-          <app-icon [icon]="LucidePlay" size="sm" class="play-icon" />
-        </button>
+          <!-- Concentric Orbit SVG Rings -->
+          <svg
+            class="orbital-rings-svg"
+            viewBox="0 0 520 520"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <!-- Outermost Subtle Ring -->
+            <circle
+              cx="260"
+              cy="260"
+              r="255"
+              stroke="#f1f5f9"
+              stroke-width="1"
+            />
+            <!-- Outer Orbit Path for 5 Nodes -->
+            <circle
+              cx="260"
+              cy="260"
+              r="215"
+              stroke="rgba(203, 213, 225, 0.85)"
+              stroke-width="1.5"
+              stroke-dasharray="6 6"
+              class="orbit-ring-outer"
+            />
+            <!-- Middle Accent Path -->
+            <circle
+              cx="260"
+              cy="260"
+              r="175"
+              stroke="rgba(30, 64, 175, 0.2)"
+              stroke-width="1.2"
+              class="orbit-ring-middle"
+            />
+            <!-- Inner Subtle Orbit -->
+            <circle
+              cx="260"
+              cy="260"
+              r="150"
+              stroke="rgba(6, 182, 212, 0.25)"
+              stroke-width="1"
+              stroke-dasharray="4 4"
+              class="orbit-ring-inner"
+            />
+            <!-- Decorative Accent Dots along the orbital field -->
+            <circle cx="260" cy="45" r="3" fill="#1e40af" opacity="0.45" />
+            <circle cx="435" cy="260" r="2.5" fill="#06b6d4" opacity="0.5" />
+            <circle cx="85" cy="260" r="2.5" fill="#3b82f6" opacity="0.45" />
+            <circle cx="260" cy="475" r="3" fill="#1e40af" opacity="0.45" />
+          </svg>
+
+          <!-- 5 Circular Orbital Nodes Around the Perimeter -->
+          @for (step of steps; track step.id; let i = $index) {
+            <button
+              type="button"
+              class="orbital-node"
+              [class.node-active]="activeStepIndex() === i"
+              [style.left]="step.posLeft"
+              [style.top]="step.posTop"
+              (click)="selectStep(i)"
+              [attr.aria-label]="'Step ' + step.id + ': ' + step.name"
+            >
+              <div class="node-icon-wrap">
+                <app-icon [icon]="step.icon" size="sm" />
+              </div>
+              <span class="node-step-badge">{{ step.id }}</span>
+              <span class="node-tooltip">{{ step.name }}</span>
+            </button>
+          }
+
+          <!-- Center Active Step Circle Hub (Pure Circular Shape — Not Square) -->
+          <div class="orbital-core-circle">
+            <div class="core-inner-rim" aria-hidden="true"></div>
+
+            <div class="core-circle-content">
+              <!-- Top Category Title -->
+              <div class="core-header">
+                <span class="core-tagline">OUR DEVELOPMENT APPROACH</span>
+              </div>
+
+              <!-- Animated Step Panes Container (Smooth Fade & Slide) -->
+              <div class="core-steps-container">
+                @for (step of steps; track step.id; let i = $index) {
+                  <div
+                    class="core-step-pane"
+                    [class.is-active]="activeStepIndex() === i"
+                    [attr.aria-hidden]="activeStepIndex() !== i"
+                  >
+                    <div class="core-badge-wrap">
+                      <span class="core-badge-tag">{{ step.tag }}</span>
+                    </div>
+
+                    <div class="core-step-name-row">
+                      <span class="core-step-name">{{ step.id }} &mdash; {{ step.name }}</span>
+                    </div>
+
+                    <h3 class="core-headline">{{ step.headline }}</h3>
+                    <p class="core-desc">{{ step.description }}</p>
+                  </div>
+                }
+              </div>
+
+              <!-- Interactive 5-Step Number Bar (01 02 03 04 05) -->
+              <div class="core-nav-bar" role="tablist" aria-label="Development steps">
+                @for (step of steps; track step.id; let i = $index) {
+                  <button
+                    type="button"
+                    class="nav-step-btn"
+                    [class.is-active]="activeStepIndex() === i"
+                    (click)="selectStep(i)"
+                    [attr.aria-selected]="activeStepIndex() === i"
+                    [attr.aria-label]="'Go to step ' + step.id"
+                  >
+                    <span class="nav-step-text">{{ step.id }}</span>
+                    <span class="nav-step-indicator"></span>
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Right Column: Team Collaboration Image (Overlaps section below) -->
-    <div class="hero-visual">
-      <div class="hero-image-wrapper">
-        <img
-          src="/images/hero-team.jpg"
-          alt="Software engineers and designers collaborating around a laptop"
-          class="hero-team-image"
-          loading="eager"
-        />
+    <!-- Client Partnerships & In-House Products Trust Bar -->
+    <div class="hero-clients-bar">
+      <div class="clients-header">
+        <span class="clients-tagline">Trusted by our clients &amp; powering in-house SaaS</span>
+      </div>
+
+      <div class="clients-grid">
+        <!-- Client 1: SGTC India -->
+        <a
+          href="https://sgtcindia.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="client-card"
+          title="SGTC India - Logistics & Enterprise Client"
+        >
+          <div class="client-logo-badge">
+            <img
+              src="/sgtc.png"
+              alt="SGTC INDIA"
+              class="client-brand-img"
+            />
+          </div>
+          <div class="client-meta">
+            <span class="client-name">SGTC INDIA</span>
+            <span class="client-sub">Enterprise Client</span>
+          </div>
+          <app-icon [icon]="LucideExternalLink" size="xs" class="client-external-icon" />
+        </a>
+
+        <!-- Client 2: Oonloop -->
+        <a
+          href="https://oonloop.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="client-card"
+          title="Oonloop - Hyperlocal E-Commerce Client"
+        >
+          <div class="client-logo-badge">
+            <img
+              src="/oonloop.png"
+              alt="oonloop"
+              class="client-brand-img"
+            />
+          </div>
+          <div class="client-meta">
+            <span class="client-name">oonloop</span>
+            <span class="client-sub">E-Commerce Client</span>
+          </div>
+          <app-icon [icon]="LucideExternalLink" size="xs" class="client-external-icon" />
+        </a>
+
+        <!-- In-House Flagship Product: StickyJi -->
+        <a
+          href="https://stickyji.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="client-card card-featured"
+          title="StickyJi - In-House Productivity SaaS (stickyji.com)"
+        >
+          <div class="client-logo-badge">
+            <img
+              src="/companylogos/StickyJiLogo.png"
+              alt="StickyJi - In-House Product"
+              class="client-brand-img"
+            />
+          </div>
+          <div class="client-meta">
+            <span class="client-name">StickyJi</span>
+            <span class="client-tag-badge">Our In-House Product</span>
+          </div>
+          <app-icon [icon]="LucideExternalLink" size="xs" class="client-external-icon" />
+        </a>
       </div>
     </div>
   </div>
@@ -43,7 +301,12 @@
   @if (isVideoModalOpen()) {
     <div class="video-modal-backdrop" (click)="closeVideoModal()" role="dialog" aria-modal="true">
       <div class="video-modal-container" (click)="$event.stopPropagation()">
-        <button type="button" class="video-modal-close" (click)="closeVideoModal()" aria-label="Close modal">
+        <button
+          type="button"
+          class="video-modal-close"
+          (click)="closeVideoModal()"
+          aria-label="Close modal"
+        >
           <app-icon [icon]="LucideX" size="md" />
         </button>
         <div class="video-frame-wrapper">
@@ -59,4 +322,3 @@
     </div>
   }
 </section>
-

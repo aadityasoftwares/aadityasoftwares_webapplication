@@ -8,7 +8,7 @@ export const WEBSITE_ROUTES: Routes = [
       {
         path: '',
         loadComponent: () => import('../home/home').then((m) => m.Home),
-        title: 'Aaditya Softwares - Creating Softwares & Digital Excellence',
+        title: 'AadityaSoftwares - Creating Softwares & Digital Excellence',
       },
     ],
   },

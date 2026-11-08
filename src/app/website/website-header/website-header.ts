@@ -10,19 +10,32 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { LucideMenu, LucideX, LucideSparkles, LucideArrowRight } from '@lucide/angular';
-import { AppIcon } from '../../shared/components/icon/icon';
+import {
+  LucideMenu,
+  LucideX,
+  LucideSparkles,
+  LucideArrowRight,
+  LucideHouse,
+  LucideUsers,
+  LucideLayers,
+  LucideBriefcase,
+  LucideMail,
+  LucideUserPlus,
+} from '@lucide/angular';
+import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
+import { Button } from '../../shared/components/button/button';
 
 export interface HeaderNavItem {
   label: string;
   href: string;
+  icon: AppIconDefinition;
   active?: boolean;
 }
 
 @Component({
   selector: 'app-website-header',
   standalone: true,
-  imports: [AppIcon],
+  imports: [AppIcon, Button],
   templateUrl: './website-header.html',
   styleUrl: './website-header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,13 +56,14 @@ export class WebsiteHeader {
   readonly LucideX = LucideX;
   readonly LucideSparkles = LucideSparkles;
   readonly LucideArrowRight = LucideArrowRight;
+  readonly LucideUserPlus = LucideUserPlus;
 
   readonly navItems: HeaderNavItem[] = [
-    { label: 'Home', href: '#home', active: true },
-    { label: 'About', href: '#about' },
-    { label: 'Service', href: '#services' },
-    { label: 'Project', href: '#projects' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', href: '#home', icon: LucideHouse, active: true },
+    { label: 'About', href: '#about', icon: LucideUsers },
+    { label: 'Service', href: '#services', icon: LucideLayers },
+    { label: 'Project', href: '#projects', icon: LucideBriefcase },
+    { label: 'Contact', href: '#contact', icon: LucideMail },
   ];
 
   @Output() signupClick = new EventEmitter<void>();
@@ -92,8 +106,8 @@ export class WebsiteHeader {
     }
   }
 
-  onSignup(event: MouseEvent): void {
-    event.preventDefault();
+  onSignup(event?: MouseEvent): void {
+    event?.preventDefault();
     this.signupClick.emit();
   }
 }
