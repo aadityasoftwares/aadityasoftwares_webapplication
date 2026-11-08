@@ -1,74 +1,223 @@
 <section id="services" class="services-section" appScrollReveal>
+  <!-- Ambient Subtle Background Glow -->
+  <div class="services-ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-top-left"></div>
+    <div class="glow-orb glow-bottom-right"></div>
+  </div>
+
   <div class="services-container">
-    <!-- Left Column: Big Display Title -->
-    <div class="services-header-col">
-      <h2 class="services-heading">
-        Turning Your Ideas<br />
-        Into Cutting-edge<br />
-        Technologies
-      </h2>
+    <!-- =======================================================
+         Part 1: Header (Matching Inspiration Layout)
+         ======================================================= -->
+    <div class="services-header-row">
+      <!-- Left Column: Eyebrow + Large Display Title -->
+      <div class="header-left">
+        <div class="services-eyebrow">
+          <span class="eyebrow-label">SERVICES WE OFFER</span>
+        </div>
+
+        <h2 class="services-headline">
+          <span class="headline-row">Engineering</span>
+          <span class="headline-row">Excellence</span>
+        </h2>
+      </div>
+
+      <!-- Right Column: Lead Description + Action Links -->
+      <div class="header-right">
+        <p class="services-lead-text">
+          From product strategy and custom architecture to AI engineering and cloud deployments, we've got you covered. Build with clarity, scale with confidence.
+        </p>
+
+        <div class="services-header-actions">
+          <a href="#services" class="services-action-link" (click)="scrollToTrack($event)">
+            <span>View All Services</span>
+            <span class="action-chevron" aria-hidden="true">&rsaquo;</span>
+          </a>
+          <a href="#contact" class="services-action-link primary" (click)="onDiscussProject()">
+            <span>Discuss Your Project</span>
+            <span class="action-chevron" aria-hidden="true">&rsaquo;</span>
+          </a>
+        </div>
+      </div>
     </div>
 
-    <!-- Right Column: Capability & Services List -->
-    <div class="services-list-col">
-      <div class="services-list">
-        @for (item of services; track item.id; let first = $first) {
-          @if (!first) {
-            <div class="service-divider" aria-hidden="true"></div>
-          }
+    <!-- =======================================================
+         Part 2: Horizontal Showcase Track (Cards from Reference)
+         ======================================================= -->
+    <div class="services-showcase-wrapper">
+      <div #cardsTrack class="services-cards-track" (scroll)="onTrackScroll($event)">
+        @for (s of services; track s.id) {
+          <article class="service-card" [class.is-featured]="s.isFeatured" (click)="openDetail(s)" role="button" tabindex="0" (keydown.enter)="openDetail(s)">
+            <!-- Background Image -->
+            <img [src]="s.image" [alt]="s.title" class="card-bg-img" loading="lazy" />
 
-          <div
-            class="service-item"
-            [class.is-expanded]="activeServiceId() === item.id"
-            (click)="toggleService(item)"
-          >
-            <!-- Header Row -->
-            <div class="service-row">
-              <span class="service-num">{{ item.num }}</span>
-              <span class="service-title">{{ item.title }}</span>
+            <!-- Dark Gradient Vignette for Contrast -->
+            <div class="card-gradient-overlay" aria-hidden="true"></div>
 
-              @if (activeServiceId() !== item.id) {
-                <a
-                  [href]="item.href"
-                  class="service-action-link"
-                  (click)="$event.stopPropagation()"
-                >
-                  {{ item.linkText }}
-                </a>
-              }
+            <!-- Card Top Header (Index Number) -->
+            <div class="card-top-bar">
+              <span class="card-index">{{ s.num }}</span>
             </div>
 
-            <!-- Expanded Content (Active state as shown in 02) -->
-            @if (activeServiceId() === item.id) {
-              <div class="service-body">
-                <div class="service-desc-wrapper">
-                  <p class="service-description">{{ item.description }}</p>
-                  <a
-                    [href]="item.href"
-                    class="service-action-link-inline"
-                    (click)="$event.stopPropagation()"
-                  >
-                    {{ item.linkText }}
-                    <app-icon [icon]="LucideArrowUpRight" size="xs" />
-                  </a>
-                </div>
-
-                @if (item.image) {
-                  <div class="service-image-container">
-                    <img
-                      [src]="item.image"
-                      [alt]="item.title + ' preview mockup'"
-                      class="service-thumb-image"
-                      loading="lazy"
-                    />
-                  </div>
-                }
+            <!-- Card Bottom Meta: Left Content + Right Action Notch Button -->
+            <div class="card-bottom-bar">
+              <div class="card-meta-content">
+                <span class="card-category">{{ s.category }}</span>
+                <h3 class="card-title">{{ s.title }}</h3>
               </div>
-            }
+
+              <div class="card-action-corner">
+                <button
+                  type="button"
+                  class="card-arrow-circle"
+                  [class.accent-gold]="s.isFeatured"
+                  (click)="openDetail(s); $event.stopPropagation()"
+                  [attr.aria-label]="'Explore deliverables for ' + s.title"
+                >
+                  <app-icon [icon]="LucideArrowUpRight" size="sm" />
+                </button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+
+      <!-- Horizontal Progress Bar & Slider Controls (Matching Inspiration Bottom Bar) -->
+      <div class="services-track-footer">
+        <div class="track-progress-bar" role="progressbar" [attr.aria-valuenow]="scrollProgress()" aria-valuemin="0" aria-valuemax="100">
+          <div class="track-progress-indicator" [style.left.%]="scrollProgress() * 0.65"></div>
+        </div>
+
+        <div class="track-nav-buttons">
+          <button type="button" class="track-nav-btn prev" (click)="scrollPrev()" aria-label="Previous service card">
+            <app-icon [icon]="LucideChevronLeft" size="sm" />
+          </button>
+          <button type="button" class="track-nav-btn next" (click)="scrollNext()" aria-label="Next service card">
+            <app-icon [icon]="LucideChevronRight" size="sm" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Part 3: Our Engineering Philosophy (White Background)
+         ======================================================= -->
+    <div class="services-philosophy-block">
+      <div class="philosophy-header">
+        <div class="philosophy-eyebrow">
+          <span>OUR ENGINEERING PHILOSOPHY</span>
+        </div>
+        <h3 class="philosophy-title">
+          We Don't Just Build Software. We Build It Right.
+        </h3>
+        <p class="philosophy-sub">
+          Our engineering standards ensure that every solution we ship is resilient, scalable, and secure.
+        </p>
+      </div>
+
+      <div class="philosophy-grid">
+        @for (p of principles; track p.id) {
+          <div class="principle-card">
+            <div class="principle-top-row">
+              <div class="principle-icon-box">
+                <app-icon [icon]="p.icon" size="sm" />
+              </div>
+              <span class="principle-index">{{ p.num }}</span>
+            </div>
+            <h4 class="principle-card-title">{{ p.title }}</h4>
+            <p class="principle-card-desc">{{ p.description }}</p>
           </div>
         }
       </div>
     </div>
-  </div>
-</section>
 
+    <!-- =======================================================
+         Part 4: Bottom Call-to-Action (CTA) Block (White Surface)
+         ======================================================= -->
+    <div class="services-cta-block">
+      <div class="cta-inner-card">
+        <div class="cta-content">
+          <span class="cta-badge">LET'S COLLABORATE</span>
+          <h3 class="cta-title">Have an Idea? Let's Build Something Great.</h3>
+          <p class="cta-desc">
+            Whether you're starting a new product or improving an existing application, let's discuss how we can help.
+          </p>
+        </div>
+
+        <div class="cta-action">
+          <app-button
+            variant="primary"
+            size="lg"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onDiscussProject()"
+          >
+            Discuss Your Project
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       Part 5: Service Detail Modal / Drawer
+       ======================================================= -->
+  @if (selectedService(); as item) {
+    <div class="service-modal-backdrop" (click)="closeDetail()">
+      <div class="service-modal-dialog" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" [attr.aria-label]="item.title">
+        <!-- Close Button -->
+        <button type="button" class="modal-close-btn" (click)="closeDetail()" aria-label="Close service details">
+          <app-icon [icon]="LucideX" size="sm" />
+        </button>
+
+        <!-- Modal Top Visual Banner -->
+        <div class="modal-banner">
+          <img [src]="item.image" [alt]="item.title" class="modal-banner-img" />
+          <div class="modal-banner-gradient"></div>
+          <div class="modal-banner-meta">
+            <span class="modal-badge">Service {{ item.num }}</span>
+            <h3 class="modal-title">{{ item.title }}</h3>
+          </div>
+        </div>
+
+        <!-- Modal Body Content -->
+        <div class="modal-body">
+          <div class="modal-highlight-box">
+            <span class="highlight-label">KEY FOCUS</span>
+            <p class="highlight-text">&ldquo;{{ item.highlight }}&rdquo;</p>
+          </div>
+
+          <div class="modal-desc-box">
+            <h4 class="modal-subheading">Overview</h4>
+            <p class="modal-description">{{ item.description }}</p>
+          </div>
+
+          <div class="modal-deliverables-box">
+            <h4 class="modal-subheading">Deliverables &amp; Capabilities</h4>
+            <ul class="deliverables-list">
+              @for (d of item.deliverables; track d) {
+                <li class="deliverable-item">
+                  <span class="d-icon"><app-icon [icon]="LucideCheck" size="xs" /></span>
+                  <span class="d-text">{{ d }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="modal-actions">
+            <app-button
+              variant="primary"
+              size="md"
+              [iconRight]="LucideArrowRight"
+              (buttonClick)="onDiscussProject()"
+            >
+              Discuss This Service
+            </app-button>
+            <button type="button" class="modal-secondary-btn" (click)="closeDetail()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</section>

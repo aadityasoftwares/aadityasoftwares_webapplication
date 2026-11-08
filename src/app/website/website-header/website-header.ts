@@ -28,6 +28,7 @@ import { Button } from '../../shared/components/button/button';
 export interface HeaderNavItem {
   label: string;
   href: string;
+  route?: string;
   icon: AppIconDefinition;
   active?: boolean;
 }
@@ -59,11 +60,11 @@ export class WebsiteHeader {
   readonly LucideUserPlus = LucideUserPlus;
 
   readonly navItems: HeaderNavItem[] = [
-    { label: 'Home', href: '#home', icon: LucideHouse, active: true },
-    { label: 'About', href: '#about', icon: LucideUsers },
-    { label: 'Service', href: '#services', icon: LucideLayers },
-    { label: 'Project', href: '#projects', icon: LucideBriefcase },
-    { label: 'Contact', href: '#contact', icon: LucideMail },
+    { label: 'Home', href: '/', route: '/', icon: LucideHouse, active: true },
+    { label: 'About', href: '/about', route: '/about', icon: LucideUsers },
+    { label: 'Service', href: '/services', route: '/services', icon: LucideLayers },
+    { label: 'Project', href: '/projects', route: '/projects', icon: LucideBriefcase },
+    { label: 'Contact', href: '/contact', route: '/contact', icon: LucideMail },
   ];
 
   @Output() signupClick = new EventEmitter<void>();
@@ -73,6 +74,18 @@ export class WebsiteHeader {
     this.router.events.pipe(takeUntilDestroyed()).subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.mobileMenuOpen.set(false);
+        const url = event.urlAfterRedirects || event.url;
+        if (url.startsWith('/about')) {
+          this.activePath.set('About');
+        } else if (url.startsWith('/services')) {
+          this.activePath.set('Service');
+        } else if (url.startsWith('/projects')) {
+          this.activePath.set('Project');
+        } else if (url.startsWith('/contact')) {
+          this.activePath.set('Contact');
+        } else {
+          this.activePath.set('Home');
+        }
       }
     });
   }
@@ -97,7 +110,16 @@ export class WebsiteHeader {
     this.closeMobileMenu();
     this.navSelect.emit(item);
 
-    if (item.href.startsWith('#')) {
+    if (item.route) {
+      this.router
+        .navigate([item.route])
+        .catch(() => {})
+        .then(() => {
+          if (typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+    } else if (item.href.startsWith('#')) {
       const targetId = item.href.slice(1);
       const element = this.document.getElementById(targetId);
       if (element) {
@@ -109,5 +131,13 @@ export class WebsiteHeader {
   onSignup(event?: MouseEvent): void {
     event?.preventDefault();
     this.signupClick.emit();
+    this.router
+      .navigate(['/contact'])
+      .catch(() => {})
+      .then(() => {
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
   }
 }

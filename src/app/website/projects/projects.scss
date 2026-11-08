@@ -1,0 +1,1311 @@
+@use '../../styles/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  position: relative;
+  background-color: $color-surface-white;
+  color: $color-heading;
+  overflow: hidden;
+}
+
+.projects-section {
+  width: 100%;
+  padding-top: clamp(36px, 4.5vw, 56px);
+  padding-bottom: clamp(40px, 5vw, 64px);
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Ambient Subtle Background Glows */
+.projects-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.projects-glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.45;
+}
+
+.glow-orb-1 {
+  top: 15%;
+  right: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba($color-primary, 0.1) 0%, rgba($color-accent, 0.04) 60%, transparent 75%);
+}
+
+.glow-orb-2 {
+  bottom: 20%;
+  left: -8%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba($color-accent, 0.08) 0%, rgba($color-primary-hover, 0.04) 65%, transparent 80%);
+}
+
+.projects-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 32px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+/* =========================================================
+   Section Header (Matching Reference Image Header Structure)
+   ========================================================= */
+.projects-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: clamp(32px, 4vw, 48px);
+
+  @media (max-width: 860px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+.projects-header-text {
+  max-width: 760px;
+}
+
+.section-sub-eyebrow {
+  display: inline-block;
+  font-family: $font-sans;
+  font-size: $font-size-eyebrow;
+  font-weight: $font-weight-eyebrow;
+  letter-spacing: $letter-spacing-eyebrow;
+  color: $color-primary;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.projects-main-heading {
+  margin: 0 0 12px 0;
+  font-family: $font-sans;
+  font-size: $font-size-h2;
+  font-weight: 850;
+  line-height: $line-height-heading;
+  letter-spacing: $letter-spacing-heading;
+  color: $color-heading;
+}
+
+.projects-main-desc {
+  margin: 0;
+  font-family: $font-sans;
+  font-size: $font-size-lead;
+  line-height: $line-height-body;
+  color: $color-text-muted;
+}
+
+.projects-header-action {
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Showcase Cards List
+   ========================================================= */
+.projects-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3.5vw, 44px);
+}
+
+/* The Large Showcase Card (Matching Reference Design) */
+.project-showcase-card {
+  position: relative;
+  background: linear-gradient(180deg, $color-surface-white 0%, $color-surface 100%);
+  border: 1px solid $color-border;
+  border-radius: 28px;
+  padding: clamp(24px, 3.5vw, 40px);
+  box-shadow: $shadow-sm;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.25fr);
+  gap: clamp(28px, 4vw, 52px);
+  align-items: center;
+  transition: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.12);
+    border-color: rgba($color-primary, 0.45);
+  }
+
+  /* Alternating Layout: Visual on Left, Content on Right */
+  &.card-reversed {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.15fr);
+
+    .project-content-col {
+      order: 2;
+    }
+
+    .project-visual-col {
+      order: 1;
+    }
+  }
+
+  /* Special Treatment for StickyJi (In-House SaaS Product) */
+  &.is-saas-card {
+    border-color: rgba(245, 158, 11, 0.35);
+    background: linear-gradient(180deg, #ffffff 0%, #fffdf7 100%);
+
+    &:hover {
+      border-color: rgba(245, 158, 11, 0.7);
+      box-shadow: 0 20px 42px -12px rgba(245, 158, 11, 0.2);
+    }
+  }
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr !important;
+    gap: 28px;
+    padding: 24px 20px;
+
+    .project-content-col {
+      order: 2 !important;
+    }
+
+    .project-visual-col {
+      order: 1 !important;
+    }
+  }
+}
+
+/* In-House SaaS Ribbon for StickyJi */
+.saas-highlight-ribbon {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
+  border: 1px solid #fde68a;
+  border-radius: $radius-full;
+  font-family: $font-sans;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 0.02em;
+  box-shadow: $shadow-xs;
+  z-index: 2;
+
+  @media (max-width: 600px) {
+    position: static;
+    margin-bottom: 12px;
+    align-self: flex-start;
+  }
+}
+
+/* =========================================================
+   Column A: Project Content
+   ========================================================= */
+.project-content-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-badge-wrap {
+  margin-bottom: 12px;
+}
+
+.project-category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: $font-mono;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: $color-primary;
+  background: $color-primary-light;
+  padding: 4px 10px;
+  border-radius: $radius-full;
+  border: 1px solid rgba($color-primary, 0.15);
+
+  &.badge-saas {
+    color: #b45309;
+    background: #fef3c7;
+    border-color: #fde68a;
+  }
+
+  .badge-sparkle {
+    color: #f59e0b;
+  }
+}
+
+.project-title {
+  margin: 0 0 10px 0;
+  font-family: $font-sans;
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: $letter-spacing-heading;
+  color: $color-heading;
+}
+
+.project-desc {
+  margin: 0 0 20px 0;
+  font-family: $font-sans;
+  font-size: $font-size-body;
+  font-weight: 400;
+  line-height: $line-height-body;
+  color: $color-text-body;
+}
+
+/* OonLoop: 4-Platform Ecosystem Highlighting */
+.platforms-highlight-block {
+  margin-bottom: 20px;
+  background: $color-surface-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: 14px 16px;
+  box-shadow: $shadow-xs;
+
+  .platforms-title {
+    display: block;
+    font-family: $font-sans;
+    font-size: 11px;
+    font-weight: 800;
+    color: $color-primary;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.platform-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: $color-surface;
+  border-radius: $radius-md;
+  border: 1px solid rgba($color-border, 0.8);
+  transition: all 180ms ease;
+
+  &:hover {
+    border-color: $color-primary;
+    background: $color-primary-light;
+  }
+
+  .platform-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: $radius-sm;
+    background: rgba($color-primary, 0.1);
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  .platform-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    .platform-name {
+      font-family: $font-sans;
+      font-size: 12.5px;
+      font-weight: 750;
+      color: $color-heading;
+      line-height: 1.25;
+    }
+
+    .platform-role {
+      font-family: $font-sans;
+      font-size: 10.5px;
+      color: $color-text-muted;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+/* StickyJi: 6 In-House SaaS Features Grid */
+.saas-features-block {
+  margin-bottom: 20px;
+  background: #fffdf8;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: $radius-lg;
+  padding: 14px 16px;
+  box-shadow: $shadow-xs;
+
+  .features-title {
+    display: block;
+    font-family: $font-sans;
+    font-size: 11px;
+    font-weight: 800;
+    color: #b45309;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 12px;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .feature-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fef3c7;
+    color: #d97706;
+    flex-shrink: 0;
+  }
+
+  .feature-name {
+    font-family: $font-sans;
+    font-size: 12px;
+    font-weight: 650;
+    color: $color-heading;
+  }
+}
+
+/* Specifications Table (Matching Reference Image Key-Value Layout) */
+.project-specs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  background: $color-surface-white;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+}
+
+.spec-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items: baseline;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+.spec-label {
+  font-family: $font-sans;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: $color-text-muted;
+}
+
+.spec-value {
+  font-family: $font-sans;
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-heading;
+}
+
+/* Technology Stack Tags */
+.project-tech-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 24px;
+}
+
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: $font-mono;
+  font-size: 11px;
+  font-weight: 700;
+  color: $color-text-body;
+  background: $color-surface-muted;
+  border: 1px solid rgba($color-border, 0.95);
+  padding: 3px 10px;
+  border-radius: $radius-sm;
+  transition: all 180ms ease;
+
+  &:hover {
+    color: $color-primary;
+    border-color: $color-primary;
+    background: $color-primary-light;
+  }
+}
+
+/* Action Button ("See More" matching reference image) */
+.project-action-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.project-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: $radius-full;
+  border: 1px solid $color-primary;
+  background: $color-primary;
+  color: $color-surface-white;
+  font-family: $font-sans;
+  font-size: 13.5px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px -2px rgba($color-primary, 0.35);
+
+  .btn-arrow {
+    transition: transform 180ms ease;
+  }
+
+  &:hover {
+    background: $color-primary-hover;
+    border-color: $color-primary-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px -4px rgba($color-primary, 0.45);
+
+    .btn-arrow {
+      transform: translateX(3px);
+    }
+  }
+
+  &.btn-saas {
+    background: #d97706;
+    border-color: #d97706;
+    box-shadow: 0 4px 12px -2px rgba(217, 119, 6, 0.35);
+
+    &:hover {
+      background: #b45309;
+      border-color: #b45309;
+      box-shadow: 0 8px 18px -4px rgba(217, 119, 6, 0.45);
+    }
+  }
+}
+
+/* =========================================================
+   Column B: Project Visual Preview Frame
+   ========================================================= */
+.project-visual-col {
+  width: 100%;
+}
+
+.visual-mockup-frame {
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba($color-border, 0.95);
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 280ms ease;
+
+  &:hover {
+    box-shadow: $shadow-xl;
+    border-color: rgba($color-primary, 0.3);
+  }
+
+  &.frame-saas {
+    border-color: rgba(245, 158, 11, 0.35);
+  }
+}
+
+/* Window Chrome Bar */
+.browser-chrome-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: $color-surface;
+  border-bottom: 1px solid $color-border;
+  user-select: none;
+}
+
+.window-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+
+    &.dot-close { background-color: #ef4444; }
+    &.dot-minimize { background-color: #f59e0b; }
+    &.dot-expand { background-color: #10b981; }
+  }
+}
+
+.window-address-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 14px;
+  background: $color-surface-white;
+  border: 1px solid rgba($color-border, 0.9);
+  border-radius: $radius-full;
+  font-family: $font-mono;
+  font-size: 11px;
+  color: $color-text-muted;
+
+  .address-icon {
+    color: $color-accent;
+  }
+}
+
+.secure-beacon {
+  color: $color-success;
+  display: flex;
+  align-items: center;
+}
+
+/* Mockup Interior */
+.mockup-interior {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 0%, rgba($color-primary, 0.03) 0%, #ffffff 75%);
+
+  @media (max-width: 600px) {
+    padding: 18px 14px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Case 1: SGTC India Preview
+   --------------------------------------------------------- */
+.preview-website-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pw-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba($color-border, 0.8);
+
+  .pw-logo-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: $radius-lg;
+    background: #f8fafc;
+    border: 1px solid $color-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    box-shadow: $shadow-xs;
+    flex-shrink: 0;
+
+    .pw-logo-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .pw-tagline {
+    display: flex;
+    flex-direction: column;
+
+    .pw-brand-title {
+      font-family: $font-sans;
+      font-size: 16px;
+      font-weight: 850;
+      color: $color-heading;
+    }
+
+    .pw-brand-sub {
+      font-family: $font-sans;
+      font-size: 11.5px;
+      color: $color-text-muted;
+    }
+  }
+}
+
+.pw-catalog-preview {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.catalog-card {
+  background: $color-surface-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 10px 14px;
+  box-shadow: $shadow-xs;
+  display: flex;
+  flex-direction: column;
+  transition: all 180ms ease;
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateX(3px);
+  }
+
+  .catalog-badge {
+    align-self: flex-start;
+    font-family: $font-mono;
+    font-size: 9.5px;
+    font-weight: 800;
+    color: $color-primary;
+    background: $color-primary-light;
+    padding: 2px 7px;
+    border-radius: $radius-xs;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .catalog-item-title {
+    font-family: $font-sans;
+    font-size: 13px;
+    font-weight: 750;
+    color: $color-heading;
+    line-height: 1.3;
+  }
+
+  .catalog-item-meta {
+    font-family: $font-sans;
+    font-size: 11px;
+    color: $color-text-muted;
+  }
+}
+
+.pw-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+
+  .pw-engine-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: $font-mono;
+    font-size: 11px;
+    font-weight: 700;
+    color: $color-primary;
+    background: $color-surface;
+    border: 1px solid rgba($color-border, 0.9);
+    padding: 4px 12px;
+    border-radius: $radius-full;
+  }
+}
+
+/* ---------------------------------------------------------
+   Case 2: OonLoop Multi-Platform Ecosystem Preview
+   --------------------------------------------------------- */
+.preview-ecosystem-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+}
+
+.eco-center-hub {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-shadow: 0 0 24px rgba($color-primary, 0.25);
+  z-index: 2;
+
+  .eco-hub-pulse {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px dashed rgba($color-accent, 0.5);
+    animation: rotate-hub 16s linear infinite;
+  }
+
+  .eco-hub-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+}
+
+@keyframes rotate-hub {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.eco-satellites-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.eco-satellite-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: $color-surface-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xs;
+  transition: all 180ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: $color-primary;
+    box-shadow: $shadow-sm;
+  }
+
+  .sat-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-md;
+    flex-shrink: 0;
+
+    &.bg-blue { background: rgba($color-primary, 0.12); color: $color-primary; }
+    &.bg-cyan { background: rgba($color-accent, 0.12); color: $color-accent-hover; }
+    &.bg-green { background: rgba($color-success, 0.12); color: $color-success; }
+    &.bg-indigo { background: rgba(99, 102, 241, 0.12); color: #6366f1; }
+  }
+
+  .sat-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    .sat-title {
+      font-family: $font-sans;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: $color-heading;
+      line-height: 1.25;
+    }
+
+    .sat-sub {
+      font-family: $font-sans;
+      font-size: 10px;
+      color: $color-text-muted;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.eco-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 14px;
+  background: $color-surface;
+  border: 1px solid rgba($color-border, 0.9);
+  border-radius: $radius-full;
+
+  .eco-beacon {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: $color-accent;
+    box-shadow: 0 0 8px $color-accent;
+  }
+
+  .eco-status-text {
+    font-family: $font-mono;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: $color-heading;
+  }
+}
+
+/* ---------------------------------------------------------
+   Case 3: StickyJi SaaS Workspace Preview
+   --------------------------------------------------------- */
+.preview-saas-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.saas-mockup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+
+  .saas-brand-identity {
+    height: 38px;
+    display: flex;
+    align-items: center;
+
+    .saas-header-brand-img {
+      max-height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+  }
+
+  .saas-mascot-peek {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: mascot-wiggle 4s ease-in-out infinite;
+
+    .saas-mascot-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.12));
+    }
+  }
+}
+
+@keyframes mascot-wiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(4deg) scale(1.05); }
+}
+
+.saas-kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kanban-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kanban-header-tag {
+  font-family: $font-mono;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: $radius-xs;
+  align-self: flex-start;
+
+  &.tag-amber { background: #fef3c7; color: #b45309; }
+  &.tag-cyan { background: #ecfeff; color: #0891b2; }
+  &.tag-green { background: #ecfdf5; color: #059669; }
+}
+
+.sticky-note-card {
+  position: relative;
+  padding: 10px 12px;
+  border-radius: $radius-sm;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 180ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  &.note-yellow {
+    background: #fef08a;
+    border-left: 3px solid #eab308;
+    color: #713f12;
+  }
+
+  &.note-cyan {
+    background: #cffafe;
+    border-left: 3px solid #06b6d4;
+    color: #155e75;
+  }
+
+  &.note-green {
+    background: #bbf7d0;
+    border-left: 3px solid #10b981;
+    color: #14532d;
+  }
+
+  .note-pin {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  .note-heading {
+    font-family: $font-sans;
+    font-size: 11.5px;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .note-body {
+    font-family: $font-sans;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.35;
+    opacity: 0.9;
+  }
+}
+
+.saas-footer-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #ffffff;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: $radius-full;
+  font-family: $font-mono;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #b45309;
+  box-shadow: $shadow-xs;
+}
+
+/* =========================================================
+   Interactive Case Study Modal / Drawer
+   ========================================================= */
+.project-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: modal-fade-in 200ms ease-out;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.project-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  background: $color-surface-white;
+  border-radius: 24px;
+  border: 1px solid $color-border;
+  box-shadow: $shadow-xl;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modal-card-in 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modal-card-in {
+  from { transform: scale(0.95) translateY(12px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: $color-surface-muted;
+  border: 1px solid $color-border;
+  color: $color-text-body;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 180ms ease;
+  z-index: 5;
+
+  &:hover {
+    background: $color-primary-light;
+    color: $color-primary;
+    border-color: $color-primary;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid $color-border;
+
+  .modal-logo-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: $radius-lg;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    flex-shrink: 0;
+
+    .modal-brand-logo {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .modal-title-wrap {
+    display: flex;
+    flex-direction: column;
+
+    .modal-category {
+      font-family: $font-mono;
+      font-size: 11px;
+      font-weight: 800;
+      color: $color-primary;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-family: $font-sans;
+      font-size: 24px;
+      font-weight: 850;
+      color: $color-heading;
+      letter-spacing: -0.02em;
+    }
+  }
+}
+
+.modal-body {
+  padding: 24px 28px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-subheading {
+  margin: 0 0 10px 0;
+  font-family: $font-sans;
+  font-size: 14px;
+  font-weight: 800;
+  color: $color-heading;
+  letter-spacing: -0.01em;
+}
+
+.modal-text {
+  margin: 0;
+  font-family: $font-sans;
+  font-size: $font-size-body;
+  line-height: $line-height-body;
+  color: $color-text-body;
+}
+
+.modal-platforms-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal-platform-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+
+  .plat-icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: $color-primary-light;
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  .plat-info {
+    display: flex;
+    flex-direction: column;
+
+    .plat-name {
+      font-family: $font-sans;
+      font-size: 13px;
+      font-weight: 750;
+      color: $color-heading;
+    }
+
+    .plat-role {
+      font-family: $font-sans;
+      font-size: 11px;
+      color: $color-text-muted;
+    }
+  }
+}
+
+.modal-features-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal-feature-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #fffdf8;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: $radius-md;
+  font-family: $font-sans;
+  font-size: 12.5px;
+  font-weight: 650;
+  color: $color-heading;
+
+  app-icon {
+    color: #d97706;
+  }
+}
+
+.modal-specs-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: $color-surface;
+  padding: 14px 18px;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+}
+
+.modal-spec-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 12px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .m-spec-key {
+    font-family: $font-sans;
+    font-size: 12.5px;
+    font-weight: 750;
+    color: $color-text-muted;
+  }
+
+  .m-spec-val {
+    font-family: $font-sans;
+    font-size: 13px;
+    font-weight: 600;
+    color: $color-heading;
+  }
+}
+
+.modal-tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.m-tech-tag {
+  font-family: $font-mono;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: $color-primary;
+  background: $color-primary-light;
+  padding: 4px 12px;
+  border-radius: $radius-sm;
+  border: 1px solid rgba($color-primary, 0.2);
+}
+
+.modal-footer {
+  padding: 18px 28px;
+  border-top: 1px solid $color-border;
+  background: $color-surface;
+  display: flex;
+  justify-content: flex-end;
+}
+

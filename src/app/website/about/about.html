@@ -1,0 +1,220 @@
+<section id="about" class="about-section" appScrollReveal>
+  <!-- Ambient Glow Elements -->
+  <div class="about-ambient-glow" aria-hidden="true">
+    <div class="about-glow-orb glow-orb-1"></div>
+    <div class="about-glow-orb glow-orb-2"></div>
+  </div>
+
+  <div class="about-container">
+    <!-- =======================================================
+         Part 1: Top Hero Introduction & Editorial Visual
+         ======================================================= -->
+    <div class="about-intro-block">
+      <!-- Centered Eyebrow Pill -->
+      <div class="about-eyebrow">
+        <span class="eyebrow-beacon" aria-hidden="true"></span>
+        <span class="eyebrow-text">ABOUT AADITYA SOFTWARES</span>
+      </div>
+
+      <!-- Main Heading (Display Typography) -->
+      <h2 class="about-main-heading">
+        We Turn Technology Into Meaningful Business Solutions.
+      </h2>
+
+      <!-- Introduction Copy -->
+      <div class="about-lead-copy">
+        <p class="lead-text">
+          At Aaditya Softwares, we believe great software starts with understanding real problems.
+          We work with businesses, startups and entrepreneurs to transform ideas into reliable,
+          scalable and user-friendly digital products.
+        </p>
+        <p class="sub-text">
+          From product planning and design to development, testing and deployment, we focus on building
+          software that delivers real value. By combining modern technologies, experienced engineering
+          practices and AI-powered workflows, we help businesses move forward with confidence.
+        </p>
+      </div>
+
+      <!-- Highlighted Statement & CTA Link -->
+      <div class="about-statement-row">
+        <div class="about-highlight-box">
+          <span class="highlight-quote-mark" aria-hidden="true">&ldquo;</span>
+          <span class="highlight-quote-text">Not just writing code. Building solutions that make a difference.</span>
+        </div>
+
+        <a href="#contact" class="about-cta-link" (click)="onWorkTogether($event)">
+          <span>Let's Work Together</span>
+          <app-icon [icon]="LucideArrowRight" size="sm" class="link-arrow-icon" />
+        </a>
+      </div>
+
+      <!-- Editorial Team & Engineering Visual Frame (Matching Reference Image Style) -->
+      <div class="about-editorial-visual">
+        <div class="editorial-image-frame">
+          <img
+            src="/images/hero-team.jpg"
+            alt="Aaditya Softwares Engineering & Architecture Planning"
+            class="editorial-main-img"
+            loading="lazy"
+          />
+
+          <!-- Floating Engineering UI Overlay Badges -->
+          <div class="floating-badge badge-top-right">
+            <div class="badge-icon-wrap bg-blue">
+              <app-icon [icon]="LucideCode2" size="xs" />
+            </div>
+            <div class="badge-meta">
+              <span class="b-title">Clean Architecture</span>
+              <span class="b-sub">Modular &amp; Maintainable</span>
+            </div>
+          </div>
+
+          <div class="floating-badge badge-bottom-left">
+            <div class="badge-icon-wrap bg-cyan">
+              <app-icon [icon]="LucideCpu" size="xs" />
+            </div>
+            <div class="badge-meta">
+              <span class="b-title">AI-Assisted Workflows</span>
+              <span class="b-sub">Human-Led Oversight</span>
+            </div>
+          </div>
+
+          <div class="floating-badge badge-bottom-right">
+            <div class="badge-icon-wrap bg-green">
+              <app-icon [icon]="LucideShieldCheck" size="xs" />
+            </div>
+            <div class="badge-meta">
+              <span class="b-title">Secure by Design</span>
+              <span class="b-sub">Enterprise Validation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Part 2: Our Approach (4 Key Principles)
+         ======================================================= -->
+    <div class="about-approach-block">
+      <div class="approach-header">
+        <span class="section-sub-eyebrow">OUR METHODOLOGY</span>
+        <h3 class="approach-title">Our Approach to Engineering</h3>
+        <p class="approach-subtitle">
+          How we take complex challenges and turn them into dependable, production-grade applications.
+        </p>
+      </div>
+
+      <div class="approach-grid">
+        @for (item of approaches; track item.id) {
+          <div class="approach-card">
+            <div class="approach-top-bar">
+              <span class="approach-num">{{ item.num }}</span>
+              <div class="approach-icon-wrap">
+                <app-icon [icon]="item.icon" size="sm" />
+              </div>
+            </div>
+            <h4 class="approach-card-title">{{ item.title }}</h4>
+            <p class="approach-card-desc">{{ item.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Part 3: Development Philosophy Highlight (Modern Architectural Grid)
+         ======================================================= -->
+    <div class="about-philosophy-banner">
+      <div class="philosophy-card">
+        <!-- Aaditya Electric Blue & Cyan Accent Line -->
+        <div class="philosophy-accent-bar" aria-hidden="true"></div>
+
+        <div class="philosophy-header">
+          <span class="section-sub-eyebrow">CORE PHILOSOPHY</span>
+          <h3 class="philosophy-heading">Good Software Is More Than Just Features.</h3>
+          <p class="philosophy-statement">
+            It is about building secure foundations, writing maintainable code, creating great
+            user experiences and delivering solutions that businesses can depend on.
+          </p>
+        </div>
+
+        <!-- The 4 Core Pillars Architectural Grid -->
+        <div class="philosophy-pillars-grid" role="list" aria-label="Core Engineering Pillars">
+          @for (pillar of pillars; track pillar) {
+            @let detail = pillarDetails[pillar];
+            <div class="pillar-card" role="listitem">
+              <div class="pillar-top-row">
+                <div class="pillar-icon-box">
+                  <app-icon [icon]="detail.icon" size="sm" />
+                </div>
+                <span class="pillar-token-badge">{{ pillar }}</span>
+              </div>
+
+              <h4 class="pillar-card-title">{{ detail.title }}</h4>
+              <p class="pillar-card-desc">{{ detail.description }}</p>
+
+              <div class="pillar-footer">
+                <span class="pillar-metric-tag">
+                  <span class="metric-dot" aria-hidden="true"></span>
+                  {{ detail.metric }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Part 4: What Makes Us Different (6 Differentiators & Trust Bar)
+         ======================================================= -->
+    <div class="about-differentiators-block">
+      <!-- Section Header -->
+      <div class="diff-header">
+        <span class="section-sub-eyebrow">WHAT SETS US APART</span>
+        <h3 class="diff-main-title">Why Companies Choose Aaditya Softwares</h3>
+        <p class="diff-main-desc">
+          We blend deep technical capability with a dedicated partnership mentality.
+          We don't just complete tickets—we engineer reliable software that performs in the real world.
+        </p>
+      </div>
+
+      <!-- 6 Differentiators Grid (3x2 Desktop Layout) -->
+      <div class="diff-cards-grid">
+        @for (diff of differentiators; track diff.id) {
+          <div class="diff-card">
+            <div class="diff-card-top">
+              <div class="diff-index-group">
+                <span class="diff-num">{{ diff.num }}</span>
+                <div class="diff-icon-box">
+                  <app-icon [icon]="diff.icon" size="sm" />
+                </div>
+              </div>
+              <span class="diff-tag">{{ diff.tag }}</span>
+            </div>
+
+            <div class="diff-content">
+              <h4 class="diff-title">{{ diff.title }}</h4>
+              <p class="diff-desc">{{ diff.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Trust & Commitment Bar -->
+      <div class="diff-trust-bar">
+        @for (point of trustPoints; track point.title) {
+          <div class="trust-point-item">
+            <div class="trust-icon-wrap">
+              <app-icon [icon]="point.icon" size="sm" />
+            </div>
+            <div class="trust-text">
+              <span class="trust-title">{{ point.title }}</span>
+              <span class="trust-desc">{{ point.desc }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+

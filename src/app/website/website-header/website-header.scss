@@ -123,19 +123,19 @@
   font-family: $font-sans;
   font-size: 14px;
   font-weight: 500;
-  color: #475569;
+  color: $color-text-body;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: $radius-md;
   transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 
   .nav-item-icon {
-    color: #64748b;
+    color: $color-text-muted;
     transition: color 180ms ease, transform 180ms ease;
   }
 
   &:hover {
-    color: #0f172a;
+    color: $color-heading;
     background-color: rgba(15, 23, 42, 0.05);
 
     .nav-item-icon {
@@ -229,12 +229,12 @@
   transition: all 150ms ease;
 
   .mobile-nav-icon {
-    color: #64748b;
+    color: $color-text-muted;
   }
 
   &:hover {
     background-color: rgba(15, 23, 42, 0.04);
-    color: #0f172a;
+    color: $color-heading;
 
     .mobile-nav-icon {
       color: $color-primary;
@@ -244,7 +244,7 @@
   &.is-active {
     color: $color-primary;
     font-weight: 600;
-    background-color: rgba(30, 64, 175, 0.08);
+    background-color: rgba($color-primary, 0.08);
 
     .mobile-nav-icon {
       color: $color-primary;

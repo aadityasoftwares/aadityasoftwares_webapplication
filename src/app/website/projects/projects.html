@@ -1,0 +1,465 @@
+<section id="projects" class="projects-section" appScrollReveal>
+  <!-- Ambient Glow Elements -->
+  <div class="projects-ambient-glow" aria-hidden="true">
+    <div class="projects-glow-orb glow-orb-1"></div>
+    <div class="projects-glow-orb glow-orb-2"></div>
+  </div>
+
+  <div class="projects-container">
+    <!-- =======================================================
+         Section Header (Matching Reference Image Header Structure)
+         ======================================================= -->
+    <div class="projects-header-row">
+      <div class="projects-header-text">
+        <span class="section-sub-eyebrow">FEATURED PORTFOLIO</span>
+        <h2 class="projects-main-heading">Projects That Bring Ideas to Life</h2>
+        <p class="projects-main-desc">
+          From business websites to multi-platform applications and SaaS products,
+          we turn ideas into reliable digital solutions.
+        </p>
+      </div>
+
+      <div class="projects-header-action">
+        <app-button
+          variant="primary"
+          size="sm"
+          [iconRight]="LucideArrowRight"
+          (buttonClick)="onDiscussProject()"
+        >
+          Discuss Your Project
+        </app-button>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Alternating Showcase Cards (Matching Reference Layout)
+         ======================================================= -->
+    <div class="projects-cards-list">
+      @for (project of projects; track project.id; let idx = $index; let isEven = $even) {
+        <article
+          class="project-showcase-card"
+          [class.card-reversed]="!isEven"
+          [class.is-saas-card]="project.isProprietarySaaS"
+        >
+          <!-- Proprietary SaaS Ribbon for StickyJi -->
+          @if (project.isProprietarySaaS) {
+            <div class="saas-highlight-ribbon">
+              <app-icon [icon]="LucideSparkles" size="xs" />
+              <span>In-House SaaS Product</span>
+            </div>
+          }
+
+          <!-- Column A: Project Narrative & Technical Specifications -->
+          <div class="project-content-col">
+            <!-- Category Badge -->
+            <div class="project-badge-wrap">
+              <span class="project-category-badge" [class.badge-saas]="project.isProprietarySaaS">
+                @if (project.isProprietarySaaS) {
+                  <app-icon [icon]="LucideSparkles" size="xs" class="badge-sparkle" />
+                }
+                {{ project.badgeLabel }}
+              </span>
+            </div>
+
+            <!-- Title & Short Description -->
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-desc">{{ project.shortDesc }}</p>
+
+            <!-- OonLoop Special: 4 Interconnected Platforms Grid -->
+            @if (project.platforms) {
+              <div class="platforms-highlight-block">
+                <span class="platforms-title">FOUR INTEGRATED PLATFORMS:</span>
+                <div class="platforms-grid">
+                  @for (platform of project.platforms; track platform.name) {
+                    <div class="platform-chip">
+                      <div class="platform-icon-wrap">
+                        <app-icon [icon]="platform.icon" size="xs" />
+                      </div>
+                      <div class="platform-meta">
+                        <span class="platform-name">{{ platform.name }}</span>
+                        <span class="platform-role">{{ platform.role }}</span>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- StickyJi Special: 6 In-House SaaS Features Grid -->
+            @if (project.features) {
+              <div class="saas-features-block">
+                <span class="features-title">KEY SAAS CAPABILITIES:</span>
+                <div class="features-grid">
+                  @for (feature of project.features; track feature.title) {
+                    <div class="feature-item">
+                      <span class="feature-icon-box">
+                        <app-icon [icon]="feature.icon" size="xs" />
+                      </span>
+                      <span class="feature-name">{{ feature.title }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Specifications Key-Value Grid (Matching Reference Spec Table) -->
+            <div class="project-specs-grid" role="table" [attr.aria-label]="project.title + ' Specifications'">
+              @for (spec of project.specs; track spec.label) {
+                <div class="spec-row" role="row">
+                  <span class="spec-label" role="rowheader">{{ spec.label }}:</span>
+                  <span class="spec-value" role="cell">{{ spec.value }}</span>
+                </div>
+              }
+            </div>
+
+            <!-- Technology Stack Tags -->
+            <div class="project-tech-row" aria-label="Technology Stack">
+              @for (tech of project.techStack; track tech) {
+                <span class="tech-tag">{{ tech }}</span>
+              }
+            </div>
+
+            <!-- Action Button (Matching Reference "See More" Button) -->
+            <div class="project-action-row">
+              <button
+                type="button"
+                class="project-cta-btn"
+                [class.btn-saas]="project.isProprietarySaaS"
+                (click)="openProjectModal(project)"
+                [attr.aria-label]="'See more details about ' + project.title"
+              >
+                <span>See More</span>
+                <app-icon [icon]="LucideArrowRight" size="xs" class="btn-arrow" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Column B: Project Visual Preview Frame (Matching Reference Visual Side) -->
+          <div class="project-visual-col">
+            <div class="visual-mockup-frame" [class.frame-saas]="project.isProprietarySaaS">
+              <!-- Window Chrome Bar -->
+              <div class="browser-chrome-bar">
+                <div class="window-dots" aria-hidden="true">
+                  <span class="dot dot-close"></span>
+                  <span class="dot dot-minimize"></span>
+                  <span class="dot dot-expand"></span>
+                </div>
+                <div class="window-address-pill">
+                  <app-icon [icon]="LucideGlobe" size="xs" class="address-icon" />
+                  <span class="address-text">{{ project.domainUrl }}</span>
+                </div>
+                <span class="secure-beacon">
+                  <app-icon [icon]="LucideShieldCheck" size="xs" />
+                </span>
+              </div>
+
+              <!-- Interactive Mockup Interior by Preview Type -->
+              <div class="mockup-interior">
+                <!-- Case 1: SGTC India (Laboratory & Scientific Catalog Portal) -->
+                @if (project.previewType === 'website') {
+                  <div class="preview-website-wrapper">
+                    <!-- Brand Banner -->
+                    <div class="pw-header">
+                      <div class="pw-logo-badge">
+                        <img
+                          [src]="project.logoUrl"
+                          [alt]="project.logoAlt"
+                          class="pw-logo-img"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="pw-tagline">
+                        <span class="pw-brand-title">SGTC India</span>
+                        <span class="pw-brand-sub">Laboratory Equipment &amp; Scientific Products</span>
+                      </div>
+                    </div>
+
+                    <!-- Catalog Showcase Cards Preview -->
+                    <div class="pw-catalog-preview">
+                      <div class="catalog-card">
+                        <div class="catalog-badge">Glassware</div>
+                        <span class="catalog-item-title">Borosilicate Laboratory Glass</span>
+                        <span class="catalog-item-meta">Beakers, Flasks, Cylinders &bull; High Precision</span>
+                      </div>
+                      <div class="catalog-card">
+                        <div class="catalog-badge">Instruments</div>
+                        <span class="catalog-item-title">Analytical Lab Instruments</span>
+                        <span class="catalog-item-meta">Digital pH Meters, Spectrophotometers</span>
+                      </div>
+                      <div class="catalog-card">
+                        <div class="catalog-badge">Consumables</div>
+                        <span class="catalog-item-title">Chemical Consumables &amp; Reagents</span>
+                        <span class="catalog-item-meta">Certified Reagents, Filter Paper, Pipettes</span>
+                      </div>
+                    </div>
+
+                    <!-- Tech Badge Footer -->
+                    <div class="pw-footer-bar">
+                      <span class="pw-engine-pill">
+                        <app-icon [icon]="LucideCode2" size="xs" />
+                        <span>Angular SPA &bull; Ultra-Responsive Architecture</span>
+                      </span>
+                    </div>
+                  </div>
+                }
+
+                <!-- Case 2: OonLoop (4-Application Interconnected Ecosystem) -->
+                @if (project.previewType === 'ecosystem') {
+                  <div class="preview-ecosystem-wrapper">
+                    <!-- Central Hub Node -->
+                    <div class="eco-center-hub">
+                      <div class="eco-hub-pulse" aria-hidden="true"></div>
+                      <img
+                        [src]="project.logoUrl"
+                        [alt]="project.logoAlt"
+                        class="eco-hub-logo"
+                        loading="lazy"
+                      />
+                    </div>
+
+                    <!-- 4 Interconnected Node Cards -->
+                    <div class="eco-satellites-grid">
+                      <!-- Node 1: User App -->
+                      <div class="eco-satellite-card sat-top-left">
+                        <div class="sat-icon-wrap bg-blue">
+                          <app-icon [icon]="LucideSmartphone" size="xs" />
+                        </div>
+                        <div class="sat-text">
+                          <span class="sat-title">User App</span>
+                          <span class="sat-sub">React Native (iOS/Android)</span>
+                        </div>
+                      </div>
+
+                      <!-- Node 2: Vendor App -->
+                      <div class="eco-satellite-card sat-top-right">
+                        <div class="sat-icon-wrap bg-cyan">
+                          <app-icon [icon]="LucideStore" size="xs" />
+                        </div>
+                        <div class="sat-text">
+                          <span class="sat-title">Vendor App</span>
+                          <span class="sat-sub">Store &amp; Catalog Management</span>
+                        </div>
+                      </div>
+
+                      <!-- Node 3: Rider App -->
+                      <div class="eco-satellite-card sat-bottom-left">
+                        <div class="sat-icon-wrap bg-green">
+                          <app-icon [icon]="LucideBike" size="xs" />
+                        </div>
+                        <div class="sat-text">
+                          <span class="sat-title">Rider App</span>
+                          <span class="sat-sub">GPS Dispatch &amp; Tracking</span>
+                        </div>
+                      </div>
+
+                      <!-- Node 4: Admin Dashboard -->
+                      <div class="eco-satellite-card sat-bottom-right">
+                        <div class="sat-icon-wrap bg-indigo">
+                          <app-icon [icon]="LucideLayoutDashboard" size="xs" />
+                        </div>
+                        <div class="sat-text">
+                          <span class="sat-title">Admin Hub</span>
+                          <span class="sat-sub">Angular Enterprise Suite</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Bottom Mesh Status -->
+                    <div class="eco-status-indicator">
+                      <span class="eco-beacon" aria-hidden="true"></span>
+                      <span class="eco-status-text">Coordinated Real-Time Platform Mesh</span>
+                    </div>
+                  </div>
+                }
+
+                <!-- Case 3: StickyJi (In-House Digital Workspace SaaS Platform) -->
+                @if (project.previewType === 'saas') {
+                  <div class="preview-saas-wrapper">
+                    <!-- StickyJi Brand Header -->
+                    <div class="saas-mockup-header">
+                      <div class="saas-brand-identity">
+                        <img
+                          src="/companylogos/StickyJiHorizontalLogo.png"
+                          alt="StickyJi Horizontal Brand"
+                          class="saas-header-brand-img"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="saas-mascot-peek">
+                        <img
+                          [src]="project.logoUrl"
+                          [alt]="project.logoAlt"
+                          class="saas-mascot-img"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Digital Workspace Kanban Preview -->
+                    <div class="saas-kanban-board">
+                      <!-- Kanban Column 1: Sprints & Ideas -->
+                      <div class="kanban-col">
+                        <span class="kanban-header-tag tag-amber">WORKSPACE NOTES</span>
+                        <div class="sticky-note-card note-yellow">
+                          <div class="note-pin" aria-hidden="true"></div>
+                          <span class="note-heading">Product Roadmap Sprints</span>
+                          <span class="note-body">Collaborative team brainstorming and task assignments &bull; v2.0</span>
+                        </div>
+                      </div>
+
+                      <!-- Kanban Column 2: In-Progress -->
+                      <div class="kanban-col">
+                        <span class="kanban-header-tag tag-cyan">IN PROGRESS</span>
+                        <div class="sticky-note-card note-cyan">
+                          <div class="note-pin" aria-hidden="true"></div>
+                          <span class="note-heading">Cloudflare R2 Storage</span>
+                          <span class="note-body">Instant document and image uploads via distributed edge storage</span>
+                        </div>
+                      </div>
+
+                      <!-- Kanban Column 3: Active Boards -->
+                      <div class="kanban-col">
+                        <span class="kanban-header-tag tag-green">ORGANIZED</span>
+                        <div class="sticky-note-card note-green">
+                          <div class="note-pin" aria-hidden="true"></div>
+                          <span class="note-heading">Kanban Board Sync</span>
+                          <span class="note-body">Custom color labels, checklists &amp; multi-user permissions</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- SaaS Infrastructure Proof Pill -->
+                    <div class="saas-footer-badge">
+                      <app-icon [icon]="LucideCloud" size="xs" />
+                      <span>Cloudflare R2 Object Storage &bull; Multi-Tenant Workspace Architecture</span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+
+  <!-- =======================================================
+       Interactive Case Study Overview Modal (Triggered by "See More")
+       ======================================================= -->
+  @if (activeModalProject(); as activeProject) {
+    <div
+      class="project-modal-backdrop"
+      (click)="closeProjectModal()"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="activeProject.title + ' Project Overview'"
+    >
+      <div class="project-modal-card" (click)="$event.stopPropagation()">
+        <!-- Close Button -->
+        <button
+          type="button"
+          class="modal-close-btn"
+          (click)="closeProjectModal()"
+          aria-label="Close project details"
+        >
+          <app-icon [icon]="LucideX" size="sm" />
+        </button>
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <div class="modal-logo-wrap">
+            <img
+              [src]="activeProject.logoUrl"
+              [alt]="activeProject.logoAlt"
+              class="modal-brand-logo"
+            />
+          </div>
+
+          <div class="modal-title-wrap">
+            <span class="modal-category">{{ activeProject.category }}</span>
+            <h3 class="modal-title">{{ activeProject.title }}</h3>
+          </div>
+        </div>
+
+        <!-- Modal Body Content -->
+        <div class="modal-body">
+          <div class="modal-desc-box">
+            <h4 class="modal-subheading">Project Overview</h4>
+            <p class="modal-text">{{ activeProject.detailedDesc }}</p>
+          </div>
+
+          <!-- If Platforms exist (OonLoop) -->
+          @if (activeProject.platforms) {
+            <div class="modal-section-block">
+              <h4 class="modal-subheading">Platform Architecture (4 Dedicated Applications)</h4>
+              <div class="modal-platforms-list">
+                @for (plat of activeProject.platforms; track plat.name) {
+                  <div class="modal-platform-card">
+                    <div class="plat-icon-circle">
+                      <app-icon [icon]="plat.icon" size="sm" />
+                    </div>
+                    <div class="plat-info">
+                      <span class="plat-name">{{ plat.name }}</span>
+                      <span class="plat-role">{{ plat.role }}</span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- If Features exist (StickyJi) -->
+          @if (activeProject.features) {
+            <div class="modal-section-block">
+              <h4 class="modal-subheading">Core SaaS Capabilities</h4>
+              <div class="modal-features-list">
+                @for (feat of activeProject.features; track feat.title) {
+                  <div class="modal-feature-pill">
+                    <app-icon [icon]="feat.icon" size="xs" />
+                    <span>{{ feat.title }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Technical Specs Matrix -->
+          <div class="modal-section-block">
+            <h4 class="modal-subheading">Engineering Specifications</h4>
+            <div class="modal-specs-table">
+              @for (spec of activeProject.specs; track spec.label) {
+                <div class="modal-spec-row">
+                  <span class="m-spec-key">{{ spec.label }}:</span>
+                  <span class="m-spec-val">{{ spec.value }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Technologies Used -->
+          <div class="modal-section-block">
+            <h4 class="modal-subheading">Technologies Used</h4>
+            <div class="modal-tech-pills">
+              @for (tech of activeProject.techStack; track tech) {
+                <span class="m-tech-tag">{{ tech }}</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="modal-footer">
+          <app-button
+            variant="primary"
+            size="md"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onDiscussProject()"
+          >
+            Discuss a Similar Solution
+          </app-button>
+        </div>
+      </div>
+    </div>
+  }
+</section>
+

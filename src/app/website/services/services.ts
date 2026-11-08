@@ -1,87 +1,304 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Output,
+  ViewChild,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideArrowUpRight, LucideChevronRight } from '@lucide/angular';
-import { AppIcon } from '../../shared/components/icon/icon';
+import {
+  LucideArrowRight,
+  LucideArrowUpRight,
+  LucideChevronLeft,
+  LucideChevronRight,
+  LucideCheck,
+  LucideX,
+  LucideShieldCheck,
+  LucideCpu,
+  LucideCode2,
+  LucideCircleCheck,
+  LucideZap,
+  LucideRocket,
+} from '@lucide/angular';
+import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
+import { Button } from '../../shared/components/button/button';
 import { ScrollReveal } from '../scroll-reveal';
 
 export interface ServiceItem {
   id: string;
   num: string;
   title: string;
-  description?: string;
-  image?: string;
-  linkText: string;
-  href: string;
+  category: string;
+  highlight: string;
+  description: string;
+  deliverables: string[];
+  image: string;
+  isFeatured?: boolean;
+}
+
+export interface PrincipleItem {
+  id: string;
+  num: string;
+  title: string;
+  description: string;
+  icon: AppIconDefinition;
 }
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, AppIcon, ScrollReveal],
+  imports: [CommonModule, AppIcon, Button, ScrollReveal],
   templateUrl: './services.html',
   styleUrl: './services.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Services {
-  readonly LucideArrowUpRight = LucideArrowUpRight;
-  readonly LucideChevronRight = LucideChevronRight;
+  @ViewChild('cardsTrack') cardsTrackRef?: ElementRef<HTMLDivElement>;
 
-  readonly activeServiceId = signal<string>('02');
+  readonly LucideArrowRight = LucideArrowRight;
+  readonly LucideArrowUpRight = LucideArrowUpRight;
+  readonly LucideChevronLeft = LucideChevronLeft;
+  readonly LucideChevronRight = LucideChevronRight;
+  readonly LucideCheck = LucideCheck;
+  readonly LucideX = LucideX;
+
+  @Output() ctaClick = new EventEmitter<void>();
+
+  readonly scrollProgress = signal<number>(0);
+  readonly selectedService = signal<ServiceItem | null>(null);
 
   readonly services: ServiceItem[] = [
     {
-      id: '01',
-      num: '01/',
-      title: 'Software Design',
+      id: 'ui-ux',
+      num: '01',
+      title: 'Product Strategy & UI/UX Design',
+      category: 'Design with purpose',
+      highlight: 'Design with purpose. Build with clarity.',
       description:
-        'Human-centered UI/UX design, interactive prototyping, and modern design systems crafted for high conversion and intuitive user engagement.',
-      image: '/images/service-mockup.jpg',
-      linkText: 'More Information',
-      href: '#contact',
+        'We transform your ideas into intuitive digital experiences through thoughtful planning, user-focused design and modern interfaces.',
+      deliverables: [
+        'Product planning and requirement analysis',
+        'User journey and workflow design',
+        'Wireframes and interactive prototypes',
+        'Modern UI/UX design systems',
+        'Responsive web and mobile interfaces',
+        'Figma-based design handoff',
+      ],
+      image: '/images/services/service-uiux.jpg',
+      isFeatured: true,
     },
     {
-      id: '02',
-      num: '02/',
-      title: 'Software Development',
+      id: 'custom-software',
+      num: '02',
+      title: 'Custom Software Development',
+      category: 'Tailored for your business',
+      highlight: 'Software built around your business.',
       description:
-        'We provide you the best and most innovative software and mobile app development services. Join us to build well-designed and fast-growing digital products.',
-      image: '/images/service-mockup.jpg',
-      linkText: 'More Information',
-      href: '#contact',
+        'We build tailored software applications designed around your business requirements, with clean architecture, reliable functionality and room to grow.',
+      deliverables: [
+        'Custom web application development',
+        'SaaS product development',
+        'Business management systems',
+        'Admin panels and dashboards',
+        'REST API development and integrations',
+        'Database architecture and optimization',
+        'Third-party service integrations',
+      ],
+      image: '/images/services/service-software.jpg',
     },
     {
-      id: '03',
-      num: '03/',
-      title: 'Digital Marketing',
+      id: 'ai-engineering',
+      num: '03',
+      title: 'AI-Powered Engineering',
+      category: 'Human expertise + AI efficiency',
+      highlight: 'Human expertise. AI-powered efficiency.',
       description:
-        'Data-driven digital marketing, technical SEO, content strategy, and performance growth channels designed to scale your software brand.',
-      image: '/images/service-mockup.jpg',
-      linkText: 'More Information',
-      href: '#contact',
+        'We combine experienced engineering with modern AI tools to improve development workflows, solve complex problems and deliver software more efficiently.',
+      deliverables: [
+        'AI-assisted development workflows',
+        'AI-powered features and integrations',
+        'Intelligent automation solutions',
+        'AI API integration',
+        'Development productivity improvements',
+        'Human-reviewed AI-generated code',
+      ],
+      image: '/images/services/service-ai.jpg',
     },
     {
-      id: '04',
-      num: '04/',
-      title: 'Cloud & DevOps',
+      id: 'mobile-apps',
+      num: '04',
+      title: 'Mobile App Development',
+      category: 'One experience across platforms',
+      highlight: 'One experience. Multiple platforms.',
       description:
-        'Resilient cloud architecture, automated CI/CD pipelines, containerization, and 24/7 high-availability infrastructure deployments.',
-      image: '/images/service-mockup.jpg',
-      linkText: 'More Information',
-      href: '#contact',
+        'We create smooth, scalable and user-friendly mobile applications that connect your business with customers wherever they are.',
+      deliverables: [
+        'Android and iOS applications',
+        'React Native development',
+        'Cross-platform applications',
+        'E-commerce mobile apps',
+        'API and backend integration',
+        'Push notifications and real-time features',
+        'App performance optimization',
+      ],
+      image: '/images/services/service-mobile.jpg',
+    },
+    {
+      id: 'qa-testing',
+      num: '05',
+      title: 'Quality Assurance & Testing',
+      category: 'Find issues early',
+      highlight: 'Find issues early. Release with confidence.',
+      description:
+        'We make quality an essential part of development, identifying issues early and validating every important workflow before software reaches users.',
+      deliverables: [
+        'Manual software testing',
+        'Functional and regression testing',
+        'API testing',
+        'Cross-browser and device testing',
+        'Bug tracking and reporting',
+        'Release validation',
+        'Quality checks before production deployment',
+      ],
+      image: '/images/services/service-qa.jpg',
+    },
+    {
+      id: 'cloud-devops',
+      num: '06',
+      title: 'Cloud Infrastructure & DevOps',
+      category: 'Reliable cloud environments',
+      highlight: 'Reliable infrastructure. Smoother deployments.',
+      description:
+        'We help applications run reliably with secure infrastructure, streamlined deployments and performance-focused cloud environments.',
+      deliverables: [
+        'Cloud infrastructure setup',
+        'Server configuration and management',
+        'CI/CD pipeline setup',
+        'Production deployment',
+        'Database and storage configuration',
+        'Application monitoring',
+        'Backup and recovery planning',
+      ],
+      image: '/images/services/service-cloud.jpg',
+    },
+    {
+      id: 'maintenance',
+      num: '07',
+      title: 'Maintenance & Continuous Support',
+      category: 'Long-term partnership',
+      highlight: 'Long-term partnership. Ongoing value.',
+      description:
+        'Our work doesn\'t end at launch. We help keep your applications updated, secure and ready for changing business needs.',
+      deliverables: [
+        'Bug fixes and troubleshooting',
+        'Performance optimization',
+        'Security updates and patching',
+        'Code refactoring and debt reduction',
+        'Feature enhancements',
+        'Dependency and framework upgrades',
+        'Long-term technical support',
+      ],
+      image: '/images/services/service-maintenance.jpg',
     },
   ];
 
-  @Output() selectService = new EventEmitter<ServiceItem>();
+  readonly principles: PrincipleItem[] = [
+    {
+      id: 'p1',
+      num: '01',
+      title: 'Security First',
+      description: 'Secure development practices at every stage.',
+      icon: LucideShieldCheck,
+    },
+    {
+      id: 'p2',
+      num: '02',
+      title: 'AI + Human Expertise',
+      description: 'Smarter workflows backed by developer experience.',
+      icon: LucideCpu,
+    },
+    {
+      id: 'p3',
+      num: '03',
+      title: 'Clean Architecture',
+      description: 'Maintainable and scalable codebases.',
+      icon: LucideCode2,
+    },
+    {
+      id: 'p4',
+      num: '04',
+      title: 'Quality Driven',
+      description: 'Testing and reviews before every release.',
+      icon: LucideCircleCheck,
+    },
+    {
+      id: 'p5',
+      num: '05',
+      title: 'Performance Focused',
+      description: 'Applications optimized for speed and reliability.',
+      icon: LucideZap,
+    },
+    {
+      id: 'p6',
+      num: '06',
+      title: 'Reliable Delivery',
+      description: 'Structured development and deployment processes.',
+      icon: LucideRocket,
+    },
+  ];
 
-  toggleService(service: ServiceItem): void {
-    this.activeServiceId.set(service.id);
-    this.selectService.emit(service);
+  scrollPrev(): void {
+    const el = this.cardsTrackRef?.nativeElement;
+    if (el) {
+      el.scrollBy({ left: -320, behavior: 'smooth' });
+    }
+  }
+
+  scrollNext(): void {
+    const el = this.cardsTrackRef?.nativeElement;
+    if (el) {
+      el.scrollBy({ left: 320, behavior: 'smooth' });
+    }
+  }
+
+  onTrackScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target) return;
+    const maxScroll = target.scrollWidth - target.clientWidth;
+    if (maxScroll <= 0) {
+      this.scrollProgress.set(0);
+    } else {
+      const progress = Math.min(100, Math.max(0, (target.scrollLeft / maxScroll) * 100));
+      this.scrollProgress.set(progress);
+    }
+  }
+
+  openDetail(service: ServiceItem): void {
+    this.selectedService.set(service);
+  }
+
+  closeDetail(): void {
+    this.selectedService.set(null);
+  }
+
+  scrollToTrack(event?: Event): void {
+    if (event) event.preventDefault();
+    const track = this.cardsTrackRef?.nativeElement;
+    if (track) {
+      track.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  onDiscussProject(): void {
+    this.ctaClick.emit();
+    this.closeDetail();
+    const contactElem = document.getElementById('contact');
+    if (contactElem) {
+      contactElem.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.hash = 'contact';
+    }
   }
 }
-

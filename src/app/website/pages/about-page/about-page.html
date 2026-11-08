@@ -1,0 +1,428 @@
+<app-website-header></app-website-header>
+
+<main class="page-main about-page">
+  <!-- =======================================================
+       Section 1: Increased-Height Editorial Hero (Reference: Top-Left Hero)
+       ======================================================= -->
+  <section class="page-hero-section editorial-tall-hero">
+    <!-- Ambient Glow Mesh (Aaditya Softwares Brand Theme) -->
+    <div class="hero-ambient-glow" aria-hidden="true">
+      <div class="glow-orb glow-orb-top-right"></div>
+      <div class="glow-orb glow-orb-top-left"></div>
+      <div class="glow-orb glow-orb-center"></div>
+    </div>
+
+    <div class="page-hero-container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="page-breadcrumb" aria-label="Breadcrumb">
+        <a href="/" class="crumb-link">Home</a>
+        <span class="crumb-separator" aria-hidden="true">/</span>
+        <span class="crumb-current">About Us</span>
+      </nav>
+
+      <!-- Eyebrow & Display Title -->
+      <div class="hero-center-copy">
+        <span class="section-sub-eyebrow">ABOUT AADITYA SOFTWARES</span>
+        <h1 class="page-hero-title">
+          Software Excellence Begins With Simplicity.
+        </h1>
+        <p class="page-hero-subtitle">
+          At Aaditya Softwares, we believe great digital products start with understanding real problems,
+          writing clean maintainable code, and engineering solutions designed for everyday business reliability.
+        </p>
+
+        <!-- Hero Actions (Centered Pill Button) -->
+        <div class="page-hero-actions">
+          <app-button
+            variant="primary"
+            size="md"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onContact()"
+          >
+            Start Your Project
+          </app-button>
+          <app-button
+            variant="secondary"
+            size="md"
+            [iconRight]="LucideLayers"
+            (buttonClick)="onViewServices()"
+          >
+            Explore Services
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Centerpiece Visual Pedestal (Inspired by Reference Centerpiece Product Focal) -->
+      <div class="hero-centerpiece-wrapper">
+        <div class="centerpiece-pedestal-card">
+          <!-- Ambient Ring Glow -->
+          <div class="pedestal-ambient-ring" aria-hidden="true"></div>
+
+          <div class="pedestal-inner">
+            <div class="pedestal-logo-badge">
+              <img
+                src="/companylogos/AadityaSoftwaresLogo.png"
+                alt="Aaditya Softwares Core Logo"
+                class="pedestal-brand-logo"
+              />
+            </div>
+
+            <div class="pedestal-terminal-preview">
+              <div class="terminal-dots" aria-hidden="true">
+                <span class="tdot red"></span>
+                <span class="tdot yellow"></span>
+                <span class="tdot green"></span>
+              </div>
+              <span class="terminal-tagline">Clean Architecture &bull; Modular &bull; Scalable &bull; Secure</span>
+            </div>
+
+            <!-- Floating Status Beacons -->
+            <div class="pedestal-beacons">
+              <div class="beacon-chip">
+                <span class="b-dot blue" aria-hidden="true"></span>
+                <span>Production Mesh Active</span>
+              </div>
+              <div class="beacon-chip">
+                <span class="b-dot green" aria-hidden="true"></span>
+                <span>99.99% Architecture SLA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust Badges Row -->
+        <div class="hero-proof-chips-row">
+          <div class="proof-chip">
+            <app-icon [icon]="LucideMapPin" size="xs" class="chip-icon" />
+            <span>Vadodara, Gujarat, India</span>
+          </div>
+          <div class="proof-chip">
+            <app-icon [icon]="LucideShieldCheck" size="xs" class="chip-icon" />
+            <span>100% Code Ownership</span>
+          </div>
+          <div class="proof-chip">
+            <app-icon [icon]="LucideRocket" size="xs" class="chip-icon" />
+            <span>Bi-Weekly Sprints</span>
+          </div>
+          <div class="proof-chip">
+            <app-icon [icon]="LucideUsers" size="xs" class="chip-icon" />
+            <span>Direct Senior Engineers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 2: Why We Exist & The Architectural Balance Arc
+       (Reference: Bottom-Left Arc Diagram & Two Comparison Cards)
+       ======================================================= -->
+  <section class="about-balance-section" appScrollReveal>
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-sub-eyebrow">WHY AADITYA SOFTWARES EXISTS</span>
+        <h2 class="section-heading">Created for Everyday Business Reliability</h2>
+        <p class="section-subtitle">
+          Balancing simplicity, speed, and durability so your software scales seamlessly without chaos.
+        </p>
+      </div>
+
+      <!-- The Balance Arc Visual Diagram -->
+      <div class="balance-arc-container" aria-hidden="true">
+        <div class="arc-curve-line"></div>
+
+        <!-- Arc Apex Node (Top) -->
+        <div class="arc-node node-top">
+          <div class="node-pill">
+            <span class="node-bullet cyan"></span>
+            <span class="node-label">Less Complexity &bull; Clean Architecture</span>
+          </div>
+        </div>
+
+        <!-- Arc Left Anchor -->
+        <div class="arc-node node-left">
+          <div class="node-pill">
+            <span class="node-bullet blue"></span>
+            <span class="node-label">More Consistency &bull; Sprint Velocity</span>
+          </div>
+        </div>
+
+        <!-- Arc Right Anchor -->
+        <div class="arc-node node-right">
+          <div class="node-pill">
+            <span class="node-bullet green"></span>
+            <span class="node-label">Better Everyday Business Choices</span>
+          </div>
+        </div>
+
+        <!-- Center Floating Tech Nodes -->
+        <div class="arc-center-visual">
+          <div class="floating-capsule cap-1">
+            <app-icon [icon]="LucideCode2" size="sm" />
+            <span>Zero Tech Debt</span>
+          </div>
+          <div class="floating-capsule cap-2">
+            <app-icon [icon]="LucideShieldCheck" size="sm" />
+            <span>Secure Foundations</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two Comparison Columns (Direct Reference Adaptation) -->
+      <div class="balance-comparison-grid">
+        <div class="comparison-card card-dilemma">
+          <span class="card-eyebrow">THE INDUSTRY DILEMMA</span>
+          <p class="card-text">
+            Modern software development often feels overwhelming. Fragile codebases, conflicting architectural
+            opinions, bloated third-party dependencies, and complicated handovers make it difficult to scale
+            with confidence.
+          </p>
+        </div>
+
+        <div class="comparison-card card-standard">
+          <span class="card-eyebrow text-blue">THE AADITYA SOFTWARES STANDARD</span>
+          <p class="card-text">
+            Aaditya Softwares was created to bring software development back to its essentials—clean
+            architecture, disciplined engineering, secure foundations, and dependable solutions that support
+            your company's long-term business health.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 3: Four Foundational Commitments
+       (Reference: Top-Right 2x2 Clean Cards Grid)
+       ======================================================= -->
+  <section class="about-commitments-section" appScrollReveal>
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-sub-eyebrow">OUR CORE PRINCIPLES</span>
+        <h2 class="section-heading">Built on Rigor, Formulated with Intention</h2>
+        <p class="section-subtitle">
+          Four foundational engineering standards that define every solution we architect.
+        </p>
+      </div>
+
+      <!-- 2x2 Clean Glass Cards Grid -->
+      <div class="commitments-2x2-grid">
+        @for (item of commitments; track item.num) {
+          <div class="commitment-card">
+            <div class="cc-header">
+              <div class="cc-icon-box">
+                <app-icon [icon]="item.icon" size="sm" />
+              </div>
+              <span class="cc-index">{{ item.num }}</span>
+            </div>
+
+            <h3 class="cc-title">{{ item.title }}</h3>
+            <span class="cc-subtitle">{{ item.subtitle }}</span>
+            <p class="cc-desc">{{ item.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 4: The 4-Step Process Surrounding Central Hub
+       (Reference: Middle-Right "Every Formula Starts with Intention")
+       ======================================================= -->
+  <section class="about-formula-section" appScrollReveal>
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-sub-eyebrow">CONCEPT TO PRODUCTION</span>
+        <h2 class="section-heading">Every Solution Starts with Intention.</h2>
+        <p class="section-subtitle">
+          Every line of code is carefully considered to balance effectiveness, simplicity, and daily usability.
+        </p>
+      </div>
+
+      <!-- 4 Steps Flanking the Central Focal Core -->
+      <div class="formula-hub-layout">
+        <!-- Left Column: Steps 01 and 02 -->
+        <div class="formula-col col-left">
+          <div class="formula-step-card step-01">
+            <span class="f-num">01</span>
+            <h3 class="f-title">{{ processStages[0].title }}</h3>
+            <span class="f-tagline">{{ processStages[0].tagline }}</span>
+            <p class="f-desc">{{ processStages[0].description }}</p>
+          </div>
+
+          <div class="formula-step-card step-02">
+            <span class="f-num">02</span>
+            <h3 class="f-title">{{ processStages[1].title }}</h3>
+            <span class="f-tagline">{{ processStages[1].tagline }}</span>
+            <p class="f-desc">{{ processStages[1].description }}</p>
+          </div>
+        </div>
+
+        <!-- Center Column: Focal Tech Core (Direct Reference Center Hub) -->
+        <div class="formula-center-focal">
+          <div class="focal-pulse-ring" aria-hidden="true"></div>
+          <div class="focal-core-unit">
+            <div class="focal-emblem-badge">
+              <img
+                src="/companylogos/AadityaSoftwaresLogo.png"
+                alt="Aaditya Softwares Core Engine"
+                class="focal-logo"
+              />
+            </div>
+            <div class="focal-status">
+              <span class="focal-status-text">Core Engine</span>
+              <span class="focal-status-sub">Zero-Debt Architecture</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Steps 03 and 04 -->
+        <div class="formula-col col-right">
+          <div class="formula-step-card step-03">
+            <span class="f-num">03</span>
+            <h3 class="f-title">{{ processStages[2].title }}</h3>
+            <span class="f-tagline">{{ processStages[2].tagline }}</span>
+            <p class="f-desc">{{ processStages[2].description }}</p>
+          </div>
+
+          <div class="formula-step-card step-04">
+            <span class="f-num">04</span>
+            <h3 class="f-title">{{ processStages[3].title }}</h3>
+            <span class="f-tagline">{{ processStages[3].tagline }}</span>
+            <p class="f-desc">{{ processStages[3].description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 5: Real-World Engineering in Practice
+       (Reference: Bottom-Right 3-Card Showcase "Part of your everyday routine")
+       ======================================================= -->
+  <section class="about-routine-section" appScrollReveal>
+    <div class="section-container">
+      <div class="routine-header-row">
+        <div class="routine-title-block">
+          <span class="section-sub-eyebrow">ENGINEERING IN PRACTICE</span>
+          <h2 class="section-heading">Part of Your Everyday Business Growth.</h2>
+        </div>
+        <div class="routine-subtitle-block">
+          <p class="routine-sub-text">
+            Aaditya Softwares is designed to support the moments that matter—from morning sprint standups
+            and continuous integration to enterprise mission-critical operations.
+          </p>
+        </div>
+      </div>
+
+      <!-- 3 Horizontal Showcase Cards -->
+      <div class="routine-cards-grid">
+        @for (card of practiceCards; track card.num) {
+          <article class="routine-showcase-card">
+            <div class="routine-img-box">
+              <img
+                [src]="card.image"
+                [alt]="card.title"
+                class="routine-photo"
+                loading="lazy"
+              />
+              <span class="routine-tag-pill">{{ card.tag }}</span>
+            </div>
+
+            <div class="routine-content">
+              <div class="rc-header">
+                <span class="rc-num">{{ card.num }}</span>
+                <h3 class="rc-title">{{ card.title }}</h3>
+              </div>
+              <span class="rc-tagline">{{ card.tagline }}</span>
+              <p class="rc-desc">{{ card.description }}</p>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 6: Headquarters Showcase (Vadodara, Gujarat, India)
+       ======================================================= -->
+  <section class="about-hq-section" appScrollReveal>
+    <div class="section-container">
+      <div class="hq-card">
+        <div class="hq-content">
+          <span class="section-sub-eyebrow">HEADQUARTERS</span>
+          <h2 class="hq-heading">Engineering from Vadodara, Serving Worldwide</h2>
+          <p class="hq-desc">
+            Headquartered in Vadodara, Gujarat, India, Aaditya Softwares combines top-tier regional
+            engineering talent with global delivery practices. We collaborate with startups, businesses,
+            and enterprise partners with transparent time-zone overlap and direct senior engineer access.
+          </p>
+
+          <div class="hq-details-grid">
+            <div class="hq-item">
+              <app-icon [icon]="LucideMapPin" size="sm" class="hq-icon" />
+              <div class="hq-text">
+                <span class="hq-label">Headquarters Location</span>
+                <span class="hq-value">Vadodara, Gujarat, India</span>
+              </div>
+            </div>
+
+            <div class="hq-item">
+              <app-icon [icon]="LucidePhone" size="sm" class="hq-icon" />
+              <div class="hq-text">
+                <span class="hq-label">Direct Phone Line</span>
+                <a href="tel:+918849863872" class="hq-link">+91 8849863872</a>
+              </div>
+            </div>
+
+            <div class="hq-item">
+              <app-icon [icon]="LucideMail" size="sm" class="hq-icon" />
+              <div class="hq-text">
+                <span class="hq-label">Official Inquiries</span>
+                <a href="mailto:contact@aadityasoftwares.in" class="hq-link">contact@aadityasoftwares.in</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 7: Consultation CTA Banner
+       ======================================================= -->
+  <section class="about-cta-section" appScrollReveal>
+    <div class="section-container">
+      <div class="about-cta-banner">
+        <div class="cta-inner">
+          <span class="section-sub-eyebrow text-cyan">LET'S COLLABORATE</span>
+          <h2 class="cta-title">Ready to Build with Simplicity and Rigor?</h2>
+          <p class="cta-sub">
+            Schedule a free technical consultation with our engineering leads to discuss your specifications,
+            system architecture, and project timeline.
+          </p>
+          <div class="cta-buttons">
+            <app-button
+              variant="primary"
+              size="md"
+              [iconRight]="LucideArrowRight"
+              (buttonClick)="onContact()"
+            >
+              Start Your Project Discussion
+            </app-button>
+            <app-button
+              variant="secondary"
+              size="md"
+              [iconRight]="LucideLayers"
+              (buttonClick)="onViewProjects()"
+            >
+              Explore Featured Case Studies
+            </app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-website-footer></app-website-footer>

@@ -3,200 +3,819 @@
 :host {
   display: block;
   width: 100%;
-  background-color: #5b54e0;
-  color: #ffffff;
+  background-color: $color-surface-white;
+  color: $color-heading;
   position: relative;
+  font-family: $font-sans;
   overflow: hidden;
 }
 
 .services-section {
   width: 100%;
-  padding-top: clamp(140px, 14vw, 190px);
-  padding-bottom: clamp(64px, 8vw, 110px);
+  padding-top: clamp(36px, 4.5vw, 56px);
+  padding-bottom: clamp(40px, 5vw, 60px);
+  position: relative;
   box-sizing: border-box;
+  background-color: $color-surface-white;
+}
 
-  @media (max-width: 992px) {
-    padding-top: 60px;
-  }
+/* Subtle Ambient Glow Orbs */
+.services-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.45;
+}
+
+.glow-top-left {
+  top: -80px;
+  left: -80px;
+  width: 500px;
+  height: 450px;
+  background: radial-gradient(circle, rgba($color-primary, 0.12) 0%, rgba($color-accent, 0.05) 60%, transparent 75%);
+}
+
+.glow-bottom-right {
+  bottom: 0;
+  right: -100px;
+  width: 580px;
+  height: 520px;
+  background: radial-gradient(circle, rgba($color-primary-hover, 0.1) 0%, rgba($color-accent, 0.04) 65%, transparent 80%);
 }
 
 .services-container {
-  display: grid;
-  grid-template-columns: 1fr 1.25fr;
-  align-items: flex-start;
-  gap: clamp(32px, 6vw, 80px);
+  position: relative;
+  z-index: 1;
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 32px;
 
-  @media (max-width: 992px) {
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+/* =========================================================
+   Part 1: Header (Unified Design Tokens)
+   ========================================================= */
+.services-header-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: flex-end;
+  margin-bottom: clamp(24px, 3vw, 36px);
+
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    gap: 48px;
-    padding: 0 24px;
+    gap: 24px;
+    align-items: flex-start;
   }
 }
 
-/* Left Column */
-.services-header-col {
-  position: sticky;
-  top: 120px;
-
-  @media (max-width: 992px) {
-    position: static;
-  }
-}
-
-.services-heading {
-  margin: 0;
-  font-family: $font-sans;
-  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  color: #ffffff;
-}
-
-/* Right Column */
-.services-list-col {
-  width: 100%;
-}
-
-.services-list {
+.header-left {
   display: flex;
   flex-direction: column;
 }
 
-.service-divider {
-  width: 100%;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.22);
+.services-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-family: $font-sans;
+  font-size: $font-size-eyebrow;
+  font-weight: $font-weight-eyebrow;
+  letter-spacing: $letter-spacing-eyebrow;
+  color: $color-primary;
+  text-transform: uppercase;
 }
 
-.service-item {
-  padding: 22px 0;
-  cursor: pointer;
-  transition: background-color 160ms ease;
+.services-headline {
+  margin: 0;
+  font-family: $font-sans;
+  font-size: $font-size-display;
+  font-weight: 850;
+  line-height: $line-height-display;
+  letter-spacing: $letter-spacing-display;
+  color: $color-heading;
 
-  &:hover {
-    .service-title {
-      color: #ffffff;
-    }
-
-    .service-action-link {
-      color: #ffffff;
-    }
+  .headline-row {
+    display: block;
   }
 }
 
-.service-row {
+.header-right {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.services-lead-text {
+  margin: 0 0 20px 0;
+  font-family: $font-sans;
+  font-size: $font-size-lead;
+  font-weight: 450;
+  line-height: $line-height-body;
+  color: $color-text-body;
+  max-width: 520px;
+}
+
+.services-header-actions {
+  display: flex;
+  align-items: center;
   gap: 24px;
-}
+  flex-wrap: wrap;
 
-.service-num {
-  font-family: $font-sans;
-  font-size: 15px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  min-width: 28px;
-}
+  .services-action-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: $font-sans;
+    font-size: $font-size-body;
+    font-weight: 700;
+    color: $color-heading;
+    text-decoration: none;
+    transition: all 180ms ease;
 
-.service-title {
-  font-family: $font-sans;
-  font-size: clamp(18px, 2vw, 22px);
-  font-weight: 600;
-  color: #ffffff;
-  flex: 1;
-  letter-spacing: -0.01em;
-}
+    .action-chevron {
+      font-size: 17px;
+      line-height: 1;
+      color: $color-primary;
+      transition: transform 180ms ease;
+    }
 
-.service-action-link {
-  font-family: $font-sans;
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: color 150ms ease;
+    &:hover {
+      color: $color-primary;
 
-  &:hover {
-    color: #ffffff;
+      .action-chevron {
+        transform: translateX(4px);
+      }
+    }
+
+    &.primary {
+      color: $color-primary;
+
+      .action-chevron {
+        color: $color-primary;
+      }
+
+      &:hover {
+        color: $color-primary-hover;
+      }
+    }
   }
 }
 
-/* Expanded Body */
-.service-body {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 28px;
-  margin-top: 16px;
-  padding-left: 52px;
-  animation: service-slide-down 220ms ease;
+/* =========================================================
+   Part 2: Horizontal Showcase Track (Cards)
+   ========================================================= */
+.services-showcase-wrapper {
+  width: 100%;
+  margin-bottom: clamp(36px, 4.5vw, 56px);
+}
 
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    padding-left: 0;
+.services-cards-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 8px 4px 20px 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
-.service-description {
-  margin: 0 0 14px 0;
-  font-family: $font-sans;
-  font-size: 14px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
-  max-width: 440px;
-}
-
-.service-action-link-inline {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: $font-sans;
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: opacity 150ms ease;
-
-  &:hover {
-    opacity: 0.9;
-  }
-}
-
-.service-image-container {
-  width: 170px;
-  height: 120px;
-  border-radius: 12px;
+.service-card {
+  flex: 0 0 clamp(260px, 23vw, 290px);
+  height: clamp(380px, 32vw, 420px);
+  border-radius: 22px;
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
-  background-color: rgba(255, 255, 255, 0.12);
-  flex-shrink: 0;
+  scroll-snap-align: start;
+  cursor: pointer;
+  background-color: $color-heading;
+  box-shadow: $shadow-md;
+  transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
 
-  @media (max-width: 640px) {
-    width: 100%;
-    height: 180px;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: $shadow-xl;
+
+    .card-bg-img {
+      transform: scale(1.06);
+    }
+
+    .card-arrow-circle:not(.accent-gold) {
+      background: $color-primary;
+      border-color: $color-primary;
+      color: $color-surface-white;
+      transform: scale(1.08);
+    }
+
+    .card-arrow-circle.accent-gold {
+      transform: scale(1.08);
+      box-shadow: 0 4px 14px rgba(250, 204, 21, 0.4);
+    }
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px $color-primary;
   }
 }
 
-.service-thumb-image {
+.card-bg-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes service-slide-down {
+.card-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.08) 0%,
+    rgba(15, 23, 42, 0.25) 40%,
+    rgba(15, 23, 42, 0.65) 70%,
+    rgba(15, 23, 42, 0.94) 100%
+  );
+  pointer-events: none;
+}
+
+.card-top-bar {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+
+  .card-index {
+    font-family: $font-sans;
+    font-size: $font-size-xs;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    padding: 3px 8px;
+    border-radius: $radius-xs;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+}
+
+.card-bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 20px 18px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.card-meta-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+
+  .card-category {
+    font-family: $font-sans;
+    font-size: $font-size-xs;
+    font-weight: 700;
+    color: $color-accent;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-title {
+    margin: 0;
+    font-family: $font-sans;
+    font-size: $font-size-card-title;
+    font-weight: 800;
+    line-height: 1.25;
+    color: $color-surface-white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  }
+}
+
+.card-action-corner {
+  flex-shrink: 0;
+}
+
+.card-arrow-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: $color-surface-white;
+  cursor: pointer;
+  transition: all 220ms ease;
+
+  &.accent-gold {
+    background: #facc15;
+    border: none;
+    color: $color-heading;
+    font-weight: 800;
+  }
+}
+
+/* Bottom Progress Track & Navigation */
+.services-track-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 0 6px;
+}
+
+.track-progress-bar {
+  flex: 1;
+  max-width: 320px;
+  height: 3px;
+  background: $color-border;
+  border-radius: $radius-full;
+  position: relative;
+  overflow: hidden;
+
+  .track-progress-indicator {
+    width: 35%;
+    height: 100%;
+    background: $color-heading;
+    border-radius: $radius-full;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: left 180ms ease-out;
+  }
+}
+
+.track-nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .track-nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: $color-surface-white;
+    border: 1px solid $color-border;
+    color: $color-text-body;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: $shadow-xs;
+    transition: all 180ms ease;
+
+    &:hover {
+      background: $color-primary;
+      border-color: $color-primary;
+      color: $color-surface-white;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+/* =========================================================
+   Part 3: Our Engineering Philosophy (Unified Tokens)
+   ========================================================= */
+.services-philosophy-block {
+  width: 100%;
+  padding-top: clamp(32px, 4vw, 48px);
+  border-top: 1px solid $color-border;
+}
+
+.philosophy-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto clamp(20px, 2.5vw, 32px);
+}
+
+.philosophy-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-family: $font-sans;
+  font-size: $font-size-eyebrow;
+  font-weight: $font-weight-eyebrow;
+  letter-spacing: $letter-spacing-eyebrow;
+  color: $color-primary;
+  text-transform: uppercase;
+}
+
+.philosophy-title {
+  margin: 0 0 12px 0;
+  font-family: $font-sans;
+  font-size: $font-size-h2;
+  font-weight: 850;
+  line-height: $line-height-heading;
+  letter-spacing: $letter-spacing-heading;
+  color: $color-heading;
+}
+
+.philosophy-sub {
+  margin: 0;
+  font-family: $font-sans;
+  font-size: $font-size-lead;
+  font-weight: 400;
+  line-height: $line-height-body;
+  color: $color-text-muted;
+}
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: clamp(32px, 4vw, 48px);
+
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+.principle-card {
+  padding: 28px 24px;
+  background: $color-surface-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+  transition: all 220ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px -6px rgba($color-primary, 0.15);
+
+    .principle-icon-box {
+      background: $color-primary;
+      color: $color-surface-white;
+      border-color: $color-primary;
+    }
+  }
+}
+
+.principle-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.principle-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-md;
+  background: rgba($color-primary, 0.08);
+  border: 1px solid rgba($color-primary, 0.15);
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms ease;
+}
+
+.principle-index {
+  font-family: $font-sans;
+  font-size: $font-size-sm;
+  font-weight: 800;
+  color: $color-primary;
+  letter-spacing: 0.05em;
+}
+
+.principle-card-title {
+  margin: 0 0 8px 0;
+  font-family: $font-sans;
+  font-size: $font-size-card-title;
+  font-weight: 800;
+  color: $color-heading;
+  letter-spacing: $letter-spacing-card;
+}
+
+.principle-card-desc {
+  margin: 0;
+  font-family: $font-sans;
+  font-size: $font-size-sm;
+  line-height: 1.58;
+  color: $color-text-body;
+}
+
+/* =========================================================
+   Part 4: Bottom Call-to-Action (CTA) Block
+   ========================================================= */
+.services-cta-block {
+  width: 100%;
+}
+
+.cta-inner-card {
+  padding: clamp(24px, 3vw, 36px) clamp(20px, 3vw, 36px);
+  background: linear-gradient(135deg, $color-surface 0%, $color-primary-light 100%);
+  border: 1px solid $color-info-border;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px -4px rgba($color-primary, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+
+  @media (max-width: 860px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.cta-content {
+  max-width: 680px;
+
+  .cta-badge {
+    display: inline-block;
+    font-family: $font-sans;
+    font-size: $font-size-eyebrow;
+    font-weight: $font-weight-eyebrow;
+    letter-spacing: $letter-spacing-eyebrow;
+    color: $color-primary;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .cta-title {
+    margin: 0 0 10px 0;
+    font-family: $font-sans;
+    font-size: $font-size-h3;
+    font-weight: 850;
+    line-height: $line-height-heading;
+    letter-spacing: $letter-spacing-heading;
+    color: $color-heading;
+  }
+
+  .cta-desc {
+    margin: 0;
+    font-family: $font-sans;
+    font-size: $font-size-body;
+    line-height: $line-height-body;
+    color: $color-text-body;
+  }
+}
+
+.cta-action {
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Part 5: Service Detail Modal
+   ========================================================= */
+.service-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 200ms ease;
+}
+
+.service-modal-dialog {
+  background: $color-surface-white;
+  border-radius: 20px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.35);
+  border: 1px solid $color-border;
+  position: relative;
+  animation: scaleIn 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: $color-surface-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 180ms ease;
+
+  &:hover {
+    background: $color-primary;
+    transform: scale(1.08);
+  }
+}
+
+.modal-banner {
+  position: relative;
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+
+  .modal-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .modal-banner-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.85) 100%);
+  }
+
+  .modal-banner-meta {
+    position: absolute;
+    bottom: 18px;
+    left: 24px;
+    right: 24px;
+    z-index: 2;
+
+    .modal-badge {
+      display: inline-block;
+      font-size: $font-size-xs;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: $color-accent;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-family: $font-sans;
+      font-size: clamp(20px, 2.4vw, 24px);
+      font-weight: 800;
+      color: $color-surface-white;
+      line-height: 1.25;
+    }
+  }
+}
+
+.modal-body {
+  padding: 24px 28px 28px;
+}
+
+.modal-highlight-box {
+  padding: 12px 16px;
+  background: rgba($color-primary, 0.06);
+  border-left: 3px solid $color-primary;
+  border-radius: 0 10px 10px 0;
+  margin-bottom: 20px;
+
+  .highlight-label {
+    display: block;
+    font-size: $font-size-xs;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: $color-primary;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .highlight-text {
+    margin: 0;
+    font-family: $font-sans;
+    font-size: $font-size-body;
+    font-weight: 600;
+    font-style: italic;
+    color: $color-heading;
+    line-height: 1.45;
+  }
+}
+
+.modal-subheading {
+  margin: 0 0 10px 0;
+  font-family: $font-sans;
+  font-size: $font-size-body;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: $color-heading;
+  text-transform: uppercase;
+}
+
+.modal-desc-box {
+  margin-bottom: 22px;
+
+  .modal-description {
+    margin: 0;
+    font-size: $font-size-lead;
+    line-height: $line-height-body;
+    color: $color-text-body;
+  }
+}
+
+.modal-deliverables-box {
+  margin-bottom: 28px;
+
+  .deliverables-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .deliverable-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: $font-size-sm;
+    line-height: 1.5;
+    color: $color-text-body;
+
+    .d-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: $color-success-light;
+      color: $color-success;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+  }
+}
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  .modal-secondary-btn {
+    padding: 10px 18px;
+    background: $color-surface-muted;
+    border: 1px solid $color-border;
+    border-radius: 10px;
+    font-family: $font-sans;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-text-body;
+    cursor: pointer;
+    transition: all 180ms ease;
+
+    &:hover {
+      background: $color-border;
+      color: $color-heading;
+    }
+  }
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

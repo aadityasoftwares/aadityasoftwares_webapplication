@@ -1,0 +1,345 @@
+<app-website-header></app-website-header>
+
+<main class="page-main services-page">
+  <!-- =======================================================
+       Dedicated Page Hero Section (Matching Hero Ambient Background)
+       ======================================================= -->
+  <section class="page-hero-section">
+    <div class="hero-ambient-glow" aria-hidden="true">
+      <div class="glow-orb glow-orb-top-right"></div>
+      <div class="glow-orb glow-orb-top-left"></div>
+    </div>
+
+    <div class="page-hero-container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="page-breadcrumb" aria-label="Breadcrumb">
+        <a href="/" class="crumb-link">Home</a>
+        <span class="crumb-separator" aria-hidden="true">/</span>
+        <span class="crumb-current">Services</span>
+      </nav>
+
+      <!-- Eyebrow & Display Title -->
+      <div class="page-hero-content">
+        <span class="section-sub-eyebrow">COMPREHENSIVE CAPABILITIES</span>
+        <h1 class="page-hero-title">
+          Full-Cycle Software Engineering &amp; Digital Transformation
+        </h1>
+        <p class="page-hero-subtitle">
+          From modern web platforms and cross-platform mobile apps to cloud infrastructure and
+          human-led AI workflows, we build dependable digital solutions engineered for durability,
+          performance, and scale.
+        </p>
+
+        <!-- Category Filter Tabs -->
+        <div class="services-filter-pills" role="tablist" aria-label="Filter Services">
+          <button
+            type="button"
+            class="filter-pill"
+            [class.is-active]="activeCategory() === 'all'"
+            (click)="filterCategory('all')"
+          >
+            All Services (7)
+          </button>
+          <button
+            type="button"
+            class="filter-pill"
+            [class.is-active]="activeCategory() === 'web'"
+            (click)="filterCategory('web')"
+          >
+            Web Engineering
+          </button>
+          <button
+            type="button"
+            class="filter-pill"
+            [class.is-active]="activeCategory() === 'mobile'"
+            (click)="filterCategory('mobile')"
+          >
+            Mobile Apps
+          </button>
+          <button
+            type="button"
+            class="filter-pill"
+            [class.is-active]="activeCategory() === 'cloud'"
+            (click)="filterCategory('cloud')"
+          >
+            Cloud &amp; DevOps
+          </button>
+          <button
+            type="button"
+            class="filter-pill"
+            [class.is-active]="activeCategory() === 'ai'"
+            (click)="filterCategory('ai')"
+          >
+            AI Solutions
+          </button>
+          <button
+            type="button"
+            class="filter-pill"
+            [class.is-active]="activeCategory() === 'uiux'"
+            (click)="filterCategory('uiux')"
+          >
+            UI/UX Design
+          </button>
+          <button
+            type="button"
+            class="filter-pill"
+            [class.is-active]="activeCategory() === 'qa'"
+            (click)="filterCategory('qa')"
+          >
+            QA &amp; Testing
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 1: Detailed Services Showcase
+       ======================================================= -->
+  <section class="services-showcase-section" appScrollReveal>
+    <div class="section-container">
+      <div class="services-detailed-list">
+        @for (service of filteredServices; track service.id; let isEven = $even) {
+          <article class="service-detail-card" [class.reversed]="!isEven">
+            <!-- Visual Photographic Frame -->
+            <div class="service-visual-col">
+              <div class="service-img-frame">
+                <img
+                  [src]="service.image"
+                  [alt]="service.title"
+                  class="service-img"
+                  loading="lazy"
+                />
+                <div class="img-badge-overlay">
+                  <div class="badge-icon-box">
+                    <app-icon [icon]="service.icon" size="sm" />
+                  </div>
+                  <span class="badge-tag-text">{{ service.badge }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Specifications -->
+            <div class="service-content-col">
+              <span class="service-badge">{{ service.badge }}</span>
+              <h2 class="service-title">{{ service.title }}</h2>
+              <span class="service-sub">{{ service.subtitle }}</span>
+              <p class="service-desc">{{ service.description }}</p>
+
+              <!-- Deliverables Checklist -->
+              <div class="deliverables-box">
+                <span class="box-lead">Key Deliverables &amp; Outcomes:</span>
+                <ul class="deliverables-list">
+                  @for (del of service.deliverables; track del) {
+                    <li>
+                      <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                      <span>{{ del }}</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+
+              <!-- Tech Stack Tags -->
+              <div class="service-tech-row">
+                <span class="tech-lead">Technologies:</span>
+                <div class="tech-tags">
+                  @for (tech of service.techStack; track tech) {
+                    <span class="tech-tag">{{ tech }}</span>
+                  }
+                </div>
+              </div>
+
+              <!-- Ideal For -->
+              <div class="ideal-for-bar">
+                <span class="ideal-label">Ideal For:</span>
+                <span class="ideal-value">{{ service.idealFor }}</span>
+              </div>
+
+              <!-- CTA Action -->
+              <div class="service-card-action">
+                <app-button
+                  variant="primary"
+                  size="sm"
+                  [iconRight]="LucideArrowRight"
+                  (buttonClick)="onContact()"
+                >
+                  Inquire This Service
+                </app-button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 2: Flexible Engagement Models
+       ======================================================= -->
+  <section class="services-models-section" appScrollReveal>
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-sub-eyebrow">PARTNERSHIP MODELS</span>
+        <h2 class="section-heading">How We Collaborate With You</h2>
+        <p class="section-subtitle">
+          Choose the engagement structure that aligns best with your team's velocity and requirements.
+        </p>
+      </div>
+
+      <div class="models-grid">
+        @for (model of engagementModels; track model.title) {
+          <div class="model-card">
+            <div class="model-top">
+              <div class="model-icon-box">
+                <app-icon [icon]="model.icon" size="sm" />
+              </div>
+              <span class="model-badge">{{ model.badge }}</span>
+            </div>
+
+            <h3 class="model-title">{{ model.title }}</h3>
+            <span class="model-tagline">{{ model.tagline }}</span>
+            <p class="model-desc">{{ model.description }}</p>
+
+            <div class="model-features-list">
+              <span class="features-lead">Model Inclusions:</span>
+              <ul>
+                @for (feat of model.features; track feat) {
+                  <li>
+                    <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                    <span>{{ feat }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+
+            <div class="model-footer">
+              <span class="best-for-text">
+                <strong>Best For:</strong> {{ model.bestFor }}
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 3: Technology Stack Overview
+       ======================================================= -->
+  <section class="services-tech-matrix-section" appScrollReveal>
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-sub-eyebrow">TECHNICAL MASTERY</span>
+        <h2 class="section-heading">Modern, Battle-Tested Engineering Stacks</h2>
+        <p class="section-subtitle">
+          We leverage proven frameworks and modern cloud architectures built for speed and stability.
+        </p>
+      </div>
+
+      <div class="tech-matrix-grid">
+        <div class="tech-matrix-card">
+          <div class="matrix-header">
+            <app-icon [icon]="LucideCode2" size="sm" class="m-icon" />
+            <h3 class="m-title">Frontend Frameworks</h3>
+          </div>
+          <p class="m-desc">Single-page applications, design systems, and responsive user interfaces.</p>
+          <div class="m-tags">
+            <span class="m-chip">Angular 22</span>
+            <span class="m-chip">React</span>
+            <span class="m-chip">TypeScript</span>
+            <span class="m-chip">SCSS / SASS</span>
+            <span class="m-chip">Tailwind CSS</span>
+            <span class="m-chip">HTML5 / Web APIs</span>
+          </div>
+        </div>
+
+        <div class="tech-matrix-card">
+          <div class="matrix-header">
+            <app-icon [icon]="LucideServer" size="sm" class="m-icon" />
+            <h3 class="m-title">Backend &amp; Microservices</h3>
+          </div>
+          <p class="m-desc">High-throughput REST and GraphQL APIs, event buses, and microservices.</p>
+          <div class="m-tags">
+            <span class="m-chip">Node.js</span>
+            <span class="m-chip">Express.js</span>
+            <span class="m-chip">NestJS</span>
+            <span class="m-chip">Spring Boot</span>
+            <span class="m-chip">Python / FastAPI</span>
+            <span class="m-chip">WebSockets</span>
+          </div>
+        </div>
+
+        <div class="tech-matrix-card">
+          <div class="matrix-header">
+            <app-icon [icon]="LucideSmartphone" size="sm" class="m-icon" />
+            <h3 class="m-title">Mobile Development</h3>
+          </div>
+          <p class="m-desc">Cross-platform mobile applications with native device integrations.</p>
+          <div class="m-tags">
+            <span class="m-chip">React Native</span>
+            <span class="m-chip">Flutter</span>
+            <span class="m-chip">iOS / Android</span>
+            <span class="m-chip">Redux Toolkit</span>
+            <span class="m-chip">Zustand</span>
+            <span class="m-chip">Offline Sync</span>
+          </div>
+        </div>
+
+        <div class="tech-matrix-card">
+          <div class="matrix-header">
+            <app-icon [icon]="LucideCloud" size="sm" class="m-icon" />
+            <h3 class="m-title">Cloud &amp; Databases</h3>
+          </div>
+          <p class="m-desc">Resilient distributed storage, managed clusters, and edge infrastructure.</p>
+          <div class="m-tags">
+            <span class="m-chip">Cloudflare R2</span>
+            <span class="m-chip">Cloudflare Workers</span>
+            <span class="m-chip">AWS (EC2, S3, RDS)</span>
+            <span class="m-chip">MongoDB</span>
+            <span class="m-chip">PostgreSQL</span>
+            <span class="m-chip">Docker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 4: Consultation CTA Banner
+       ======================================================= -->
+  <section class="services-cta-section" appScrollReveal>
+    <div class="section-container">
+      <div class="services-cta-banner">
+        <div class="cta-inner">
+          <span class="section-sub-eyebrow text-cyan">LET'S BUILD TOGETHER</span>
+          <h2 class="cta-title">Have a Project with Complex Engineering Requirements?</h2>
+          <p class="cta-sub">
+            Speak directly with our senior software engineers. We will analyze your specifications,
+            outline architectural options, and provide a clear timeline.
+          </p>
+          <div class="cta-buttons">
+            <app-button
+              variant="primary"
+              size="md"
+              [iconRight]="LucideArrowRight"
+              (buttonClick)="onContact()"
+            >
+              Request Technical Consultation
+            </app-button>
+            <app-button
+              variant="secondary"
+              size="md"
+              [iconRight]="LucideLayers"
+              (buttonClick)="onViewProjects()"
+            >
+              View Featured Case Studies
+            </app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-website-footer></app-website-footer>
+
