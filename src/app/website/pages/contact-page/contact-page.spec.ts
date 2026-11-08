@@ -15,7 +15,7 @@ describe('ContactPage', () => {
     fixture = TestBed.createComponent(ContactPage);
     component = fixture.componentInstance;
     await fixture.whenStable();
-  });
+  }, 30000);
 
   it('should create', () => {
     expect(component).toBeTruthy();

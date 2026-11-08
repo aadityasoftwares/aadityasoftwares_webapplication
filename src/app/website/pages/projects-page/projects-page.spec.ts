@@ -45,5 +45,20 @@ describe('ProjectsPage', () => {
     expect(stickyji.features?.length).toBe(6);
     expect(stickyji.isProprietarySaaS).toBe(true);
   });
-});
 
+  it('should have 3 strategic methodology steps', () => {
+    expect(component.strategySteps.length).toBe(3);
+    expect(component.strategySteps[0].step).toBe('01');
+    expect(component.strategySteps[1].step).toBe('02');
+    expect(component.strategySteps[2].step).toBe('03');
+  });
+
+  it('should support navigating client testimonials', () => {
+    expect(component.testimonials.length).toBe(2);
+    expect(component.activeTestimonialIndex()).toBe(0);
+    component.nextTestimonial();
+    expect(component.activeTestimonialIndex()).toBe(1);
+    component.prevTestimonial();
+    expect(component.activeTestimonialIndex()).toBe(0);
+  });
+});

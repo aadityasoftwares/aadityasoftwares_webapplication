@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   LucideArrowRight,
   LucidePhone,
@@ -16,6 +17,11 @@ import {
   LucideChevronDown,
   LucideSparkles,
   LucideSend,
+  LucideRocket,
+  LucideLayers,
+  LucideArrowUpRight,
+  LucideBuilding,
+  LucideGlobe,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../../shared/components/icon/icon';
 import { Button } from '../../../shared/components/button/button';
@@ -30,6 +36,8 @@ export interface FaqItem {
 }
 
 export interface ContactFormData {
+  firstName?: string;
+  lastName?: string;
   fullName: string;
   email: string;
   phone: string;
@@ -55,6 +63,8 @@ export interface ContactFormData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactPage {
+  private readonly router = inject(Router);
+
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucidePhone = LucidePhone;
   readonly LucideMail = LucideMail;
@@ -69,12 +79,19 @@ export class ContactPage {
   readonly LucideChevronDown = LucideChevronDown;
   readonly LucideSparkles = LucideSparkles;
   readonly LucideSend = LucideSend;
+  readonly LucideRocket = LucideRocket;
+  readonly LucideLayers = LucideLayers;
+  readonly LucideArrowUpRight = LucideArrowUpRight;
+  readonly LucideBuilding = LucideBuilding;
+  readonly LucideGlobe = LucideGlobe;
 
   readonly isSubmitting = signal(false);
   readonly isSubmitted = signal(false);
   readonly errorMessage = signal('');
 
   formData: ContactFormData = {
+    firstName: '',
+    lastName: '',
     fullName: '',
     email: '',
     phone: '',
@@ -82,6 +99,16 @@ export class ContactPage {
     budgetRange: '$15k - $30k',
     projectDetails: '',
   };
+
+  readonly serviceOptions = [
+    'Custom Software & Web Engineering',
+    'Mobile Application Ecosystems (iOS & Android)',
+    'Cloud Architecture & DevOps Automation',
+    'AI & Machine Learning Workflows',
+    'UI/UX & Design Systems',
+    'QA Automation & Security Audits',
+    'Full-Cycle Dedicated Team',
+  ];
 
   readonly faqs = signal<FaqItem[]>([
     {
@@ -127,12 +154,36 @@ export class ContactPage {
     );
   }
 
+  scrollToForm(): void {
+    const el = document.getElementById('contact-form');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  onViewServices(): void {
+    this.router.navigate(['/services']).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  onViewProjects(): void {
+    this.router.navigate(['/projects']).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   onSubmit(): void {
-    if (!this.formData.fullName.trim() || !this.formData.email.trim() || !this.formData.projectDetails.trim()) {
+    const name =
+      this.formData.fullName.trim() ||
+      `${this.formData.firstName || ''} ${this.formData.lastName || ''}`.trim();
+
+    if (!name || !this.formData.email.trim() || !this.formData.projectDetails.trim()) {
       this.errorMessage.set('Please fill out all required fields (Name, Email, and Project Details).');
       return;
     }
 
+    this.formData.fullName = name;
     this.errorMessage.set('');
     this.isSubmitting.set(true);
 
@@ -145,6 +196,8 @@ export class ContactPage {
 
   resetForm(): void {
     this.formData = {
+      firstName: '',
+      lastName: '',
       fullName: '',
       email: '',
       phone: '',
@@ -156,4 +209,3 @@ export class ContactPage {
     this.errorMessage.set('');
   }
 }
-

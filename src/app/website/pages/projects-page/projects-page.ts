@@ -23,6 +23,16 @@ import {
   LucideServer,
   LucideClock,
   LucideX,
+  LucideMapPin,
+  LucidePhone,
+  LucideMail,
+  LucideRocket,
+  LucideArrowUpRight,
+  LucideQuote,
+  LucideChevronRight,
+  LucideChevronLeft,
+  LucideAward,
+  LucideCpu,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../../shared/components/icon/icon';
 import { Button } from '../../../shared/components/button/button';
@@ -67,6 +77,27 @@ export interface CaseStudy {
   logoAlt: string;
   previewType: 'website' | 'ecosystem' | 'saas';
   domainUrl: string;
+  previewImage: string;
+}
+
+export interface StrategyStep {
+  step: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  deliverable: string;
+  icon: AppIconDefinition;
+}
+
+export interface ClientTestimonial {
+  id: string;
+  quote: string;
+  highlightWords: string;
+  clientName: string;
+  clientRole: string;
+  clientCompany: string;
+  clientAvatar: string;
+  metricBadge: string;
 }
 
 @Component({
@@ -108,8 +139,20 @@ export class ProjectsPage {
   readonly LucideServer = LucideServer;
   readonly LucideClock = LucideClock;
   readonly LucideX = LucideX;
+  readonly LucideMapPin = LucideMapPin;
+  readonly LucidePhone = LucidePhone;
+  readonly LucideMail = LucideMail;
+  readonly LucideRocket = LucideRocket;
+  readonly LucideArrowUpRight = LucideArrowUpRight;
+  readonly LucideQuote = LucideQuote;
+  readonly LucideChevronRight = LucideChevronRight;
+  readonly LucideChevronLeft = LucideChevronLeft;
+  readonly LucideAward = LucideAward;
+  readonly LucideCpu = LucideCpu;
 
   readonly activeFilter = signal<string>('all');
+  readonly activeStrategyIndex = signal<number>(0);
+  readonly activeTestimonialIndex = signal<number>(0);
 
   readonly projects: CaseStudy[] = [
     {
@@ -142,6 +185,7 @@ export class ProjectsPage {
       logoAlt: 'SGTC India Scientific Glassware Logo',
       previewType: 'website',
       domainUrl: 'sgtcindia.com',
+      previewImage: '/sgtc.png',
     },
     {
       id: 'oonloop',
@@ -199,6 +243,7 @@ export class ProjectsPage {
       logoAlt: 'OonLoop E-Commerce Marketplace Logo',
       previewType: 'ecosystem',
       domainUrl: 'oonloop.app',
+      previewImage: '/oonloop.png',
     },
     {
       id: 'stickyji',
@@ -269,6 +314,64 @@ export class ProjectsPage {
       logoAlt: 'StickyJi Mascot Logo',
       previewType: 'saas',
       domainUrl: 'stickyji.com',
+      previewImage: '/companylogos/StickyJiHorizontalLogo.png',
+    },
+  ];
+
+  // Strategy Steps matching middle section in reference
+  readonly strategySteps: StrategyStep[] = [
+    {
+      step: '01',
+      title: 'Product Strategy & UX Thinking',
+      subtitle: 'Align business domain logic, workflows, and user personas',
+      description:
+        'We define core user flows, technical constraints, data architecture, and clear sprint milestones before touching the code editor.',
+      deliverable: 'Domain Blueprints & Clickable Prototypes',
+      icon: LucideCode2,
+    },
+    {
+      step: '02',
+      title: 'Clean Architecture & Digital Systems',
+      subtitle: 'Strictly typed TypeScript, modular APIs, and design tokens',
+      description:
+        'We engineer scalable component systems and stateless API contracts designed for high testability and frictionless feature extension.',
+      deliverable: 'Reusable Component Libraries & Schema Models',
+      icon: LucideLayers,
+    },
+    {
+      step: '03',
+      title: 'Resilient Cloud & DevOps Deployment',
+      subtitle: 'Edge caching, automated CI/CD, and 99.99% uptime',
+      description:
+        'We automate deployment pipelines, containerization, database clustering, and security monitoring with 100% intellectual property transfer.',
+      deliverable: 'Production Cloud Mesh & 24/7 SLA Telemetry',
+      icon: LucideCloud,
+    },
+  ];
+
+  // Testimonials matching reference
+  readonly testimonials: ClientTestimonial[] = [
+    {
+      id: 'sgtc',
+      quote:
+        'Aaditya Softwares engineered our scientific catalog platform with exceptional speed and technical rigor. Client-side navigation is instant, product specs are clean, and our quotation inquiries grew significantly.',
+      highlightWords: 'exceptional speed and technical rigor',
+      clientName: 'Institutional Procurement Partner',
+      clientRole: 'Laboratory Supply Division',
+      clientCompany: 'SGTC India',
+      clientAvatar: '/images/engineer-1.jpg',
+      metricBadge: 'Sub-Second Speeds',
+    },
+    {
+      id: 'oonloop',
+      quote:
+        'Managing live commerce across 4 interdependent apps was complex. Aaditya Softwares handled the real-time GPS tracking, rider dispatch, and vendor portals seamlessly without architectural bottlenecks.',
+      highlightWords: 'handled real-time dispatch seamlessly',
+      clientName: 'Platform Operations Director',
+      clientRole: 'Logistics & Marketplace',
+      clientCompany: 'OonLoop Ecosystem',
+      clientAvatar: '/images/engineer-2.jpg',
+      metricBadge: '4 Apps Synchronized',
     },
   ];
 
@@ -284,10 +387,29 @@ export class ProjectsPage {
     return this.projects.filter((p) => p.filterKey === f);
   }
 
+  selectStrategy(index: number): void {
+    this.activeStrategyIndex.set(index);
+  }
+
+  nextTestimonial(): void {
+    const next = (this.activeTestimonialIndex() + 1) % this.testimonials.length;
+    this.activeTestimonialIndex.set(next);
+  }
+
+  prevTestimonial(): void {
+    const prev = (this.activeTestimonialIndex() - 1 + this.testimonials.length) % this.testimonials.length;
+    this.activeTestimonialIndex.set(prev);
+  }
+
   onContact(): void {
     this.router.navigate(['/contact']).then(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-}
 
+  onViewServices(): void {
+    this.router.navigate(['/services']).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+}

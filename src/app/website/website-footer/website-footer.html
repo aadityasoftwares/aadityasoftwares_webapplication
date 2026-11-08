@@ -1,5 +1,5 @@
 <footer class="app-site-footer" role="contentinfo">
-  <!-- Subtle Ambient Top Glow -->
+  <!-- Subtle Ambient Glow -->
   <div class="footer-ambient-glow" aria-hidden="true">
     <div class="glow-orb footer-glow-top"></div>
     <div class="glow-orb footer-glow-right"></div>
@@ -7,216 +7,250 @@
 
   <div class="footer-container">
     <!-- =======================================================
-         Part 1: Top Brand Banner & Newsletter Subscribe
+         Part 1: Floating Newsletter Card (Overlapping Top Banner)
+         (Reference: Blue Rounded Card with 3D Centerpiece & Embedded Pill)
          ======================================================= -->
-    <div class="footer-top-banner">
-      <div class="footer-brand-summary">
-        <a href="#home" class="footer-brand-link" (click)="scrollToSection('#home', $event)"
-          aria-label="Aaditya Softwares Homepage">
-          <div class="brand-badge">
-            <img src="/companylogos/AadityaSoftwaresLogo.png" alt="Aaditya Softwares Logo" class="brand-logo-img" />
+    <div class="footer-floating-newsletter-wrapper">
+      <div class="floating-newsletter-card">
+        <!-- Left Side: 3D Illustration / Brand Centerpiece -->
+        <div class="newsletter-visual-col" aria-hidden="true">
+          <div class="pedestal-glow-aura"></div>
+          <div class="pedestal-floating-stars">
+            <span class="star-sparkle s1"><app-icon [icon]="LucideSparkles" size="sm" /></span>
+            <span class="star-sparkle s2"><app-icon [icon]="LucideSparkles" size="xs" /></span>
+            <span class="star-sparkle s3"><app-icon [icon]="LucideSparkles" size="xs" /></span>
           </div>
-          <div class="brand-text">
-            <span class="brand-name-main">Aaditya</span><span class="brand-name-accent">Softwares</span>
+
+          <div class="newsletter-3d-pedestal">
+            <div class="brand-pedestal-box">
+              <img
+                src="/companylogos/AadityaSoftwaresLogo.png"
+                alt="Aaditya Softwares Brand Mark"
+                class="brand-pedestal-img"
+              />
+            </div>
           </div>
-        </a>
-
-        <p class="footer-brand-tagline">
-          Engineering production-grade digital products, scalable cloud architectures,
-          and intelligent AI workflows for forward-thinking businesses worldwide.
-        </p>
-
-        <!-- Live Operations Indicator Badge -->
-        <div class="footer-system-status">
-          <span class="status-beacon">
-            <span class="status-ping"></span>
-            <span class="status-dot"></span>
-          </span>
-          <span class="status-text">All Systems Operational &bull; Production Mesh Active</span>
         </div>
-      </div>
 
-      <!-- Newsletter / Tech Dispatch Form -->
-      <div class="footer-newsletter-box">
-        <div class="newsletter-header">
-          <span class="newsletter-badge">ENGINEERING DISPATCH</span>
-          <h3 class="newsletter-title">Stay Updated with Our Latest Insights</h3>
-          <p class="newsletter-sub">
-            Curated articles on modern frontend architecture, cloud infrastructure, and AI engineering.
+        <!-- Right Side: Heading, Subtitle & Embedded Pill Form -->
+        <div class="newsletter-content-col">
+          <h3 class="floating-newsletter-title">
+            Subscribe to our newsletter to get updates to our latest collections
+          </h3>
+          <p class="floating-newsletter-sub">
+            Get regular architectural insights, framework benchmarks, and product engineering guides delivered to your inbox.
+          </p>
+
+          @if (!isSubscribed()) {
+            <form class="floating-newsletter-form" (submit)="onSubscribe($event)">
+              <div class="floating-input-pill">
+                <span class="pill-mail-icon" aria-hidden="true">
+                  <app-icon [icon]="LucideMail" size="sm" />
+                </span>
+                <input
+                  type="email"
+                  class="pill-input-field"
+                  placeholder="Enter your email"
+                  [value]="newsletterEmail()"
+                  (input)="newsletterEmail.set($any($event.target).value)"
+                  required
+                  aria-label="Email address for newsletter subscription"
+                />
+                <button type="submit" class="pill-submit-btn" aria-label="Subscribe to newsletter">
+                  <span>Subscribe</span>
+                </button>
+              </div>
+            </form>
+          } @else {
+            <div class="floating-newsletter-success">
+              <app-icon [icon]="LucideCheck" size="sm" class="success-icon" />
+              <span>Thank you! You are now subscribed to our engineering dispatch.</span>
+            </div>
+          }
+
+          <p class="floating-newsletter-disclaimer">
+            You will be able to unsubscribe at any time.
+            <a href="/about" class="disclaimer-link" (click)="scrollToSection('/about', $event)">Read our privacy policy here</a>
           </p>
         </div>
-
-        @if (!isSubscribed()) {
-        <form class="newsletter-form" (submit)="onSubscribe($event)">
-          <div class="newsletter-input-group">
-            <span class="input-icon" aria-hidden="true">
-              <app-icon [icon]="LucideMail" size="sm" />
-            </span>
-            <input type="email" class="newsletter-input" placeholder="Enter your business email..."
-              [value]="newsletterEmail()" (input)="newsletterEmail.set($any($event.target).value)" required
-              aria-label="Email address for engineering updates" />
-            <button type="submit" class="newsletter-submit-btn" aria-label="Subscribe to newsletter">
-              <span>Subscribe</span>
-              <app-icon [icon]="LucideSend" size="xs" />
-            </button>
-          </div>
-        </form>
-        } @else {
-        <div class="newsletter-success">
-          <app-icon [icon]="LucideCheck" size="sm" class="success-icon" />
-          <span>Thank you for subscribing! You're now on the priority dispatch list.</span>
-        </div>
-        }
       </div>
     </div>
 
     <!-- =======================================================
-         Part 2: Main Multi-Column Navigation & Direct Contact
+         Part 2: Main Multi-Column Clean Navigation Row
+         (Reference: Brand Col + Company + Support + Links + Contact Us)
          ======================================================= -->
-    <div class="footer-main-grid">
-      <!-- Nav Columns (Company, Services, Tech Stack) -->
-      @for (col of footerCols; track col.title) {
-      <div class="footer-nav-col">
-        <h4 class="col-title">{{ col.title }}</h4>
-        <ul class="col-links-list">
-          @for (link of col.links; track link.label) {
-          <li class="col-link-item">
-            @if (link.isExternal) {
-            <a [href]="link.href" target="_blank" rel="noopener noreferrer" class="nav-anchor external">
-              <span>{{ link.label }}</span>
-              @if (link.badge) {
-              <span class="link-badge badge-accent">{{ link.badge }}</span>
-              }
-              <app-icon [icon]="LucideExternalLink" size="xs" class="ext-icon" />
+    <div class="footer-columns-row">
+      <!-- Column 1: Brand Column (Left) -->
+      <div class="footer-col brand-col">
+        <a
+          href="/"
+          class="footer-brand-title-link"
+          (click)="scrollToSection('/', $event)"
+          aria-label="Aaditya Softwares Homepage"
+        >
+          <div class="brand-icon-tile">
+            <img
+              src="/companylogos/AadityaSoftwaresLogo.png"
+              alt="Aaditya Softwares Logo"
+              class="brand-icon-img"
+            />
+          </div>
+          <span class="brand-title-text">Aaditya Softwares</span>
+        </a>
+
+        <p class="brand-short-desc">
+          Engineering production-grade digital products, scalable cloud architectures,
+          and intelligent AI workflows for forward-thinking businesses worldwide.
+        </p>
+
+        <!-- Circular Social Media Icons Row matching Reference -->
+        <div class="footer-social-circle-row" aria-label="Social media channels">
+          @for (social of socialLinks; track social.id) {
+            <a
+              [href]="social.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-circle-btn"
+              [attr.aria-label]="social.ariaLabel"
+              [title]="social.name"
+              [style.--social-hover]="social.hoverColor"
+            >
+              <svg class="social-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path [attr.d]="social.iconPath"></path>
+              </svg>
             </a>
-            } @else {
-            <a [href]="link.href" class="nav-anchor" (click)="scrollToSection(link.href, $event)">
-              <span>{{ link.label }}</span>
-              @if (link.badge) {
-              <span class="link-badge">{{ link.badge }}</span>
-              }
-            </a>
-            }
-          </li>
           }
-        </ul>
+        </div>
       </div>
+
+      <!-- Columns 2, 3, 4: Navigation Columns -->
+      @for (col of footerCols; track col.title) {
+        <div class="footer-col nav-col">
+          <h4 class="footer-col-heading">{{ col.title }}</h4>
+          <ul class="footer-links-list">
+            @for (link of col.links; track link.label) {
+              <li class="footer-link-item">
+                @if (link.isExternal) {
+                  <a
+                    [href]="link.href"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="footer-link-anchor external"
+                  >
+                    <span>{{ link.label }}</span>
+                    @if (link.badge) {
+                      <span class="link-badge">{{ link.badge }}</span>
+                    }
+                    <app-icon [icon]="LucideExternalLink" size="xs" class="ext-icon" />
+                  </a>
+                } @else {
+                  <a
+                    [href]="link.href"
+                    class="footer-link-anchor"
+                    (click)="scrollToSection(link.href, $event)"
+                  >
+                    <span>{{ link.label }}</span>
+                    @if (link.badge) {
+                      <span class="link-badge">{{ link.badge }}</span>
+                    }
+                  </a>
+                }
+              </li>
+            }
+          </ul>
+        </div>
       }
 
-      <!-- Contact & Office Column -->
-      <div class="footer-nav-col footer-contact-col">
-        <h4 class="col-title">Get In Touch</h4>
-        <ul class="contact-details-list">
-          <li class="contact-item">
-            <span class="c-icon"><app-icon [icon]="LucideMail" size="sm" /></span>
-            <div class="c-meta">
-              <span class="c-label">Direct Inquiry</span>
-              <a href="mailto:contact@aadityasoftwares.in" class="c-value">
-                contact@aadityasoftwares.in
-              </a>
-            </div>
-          </li>
-
-          <li class="contact-item">
-            <span class="c-icon"><app-icon [icon]="LucidePhone" size="sm" /></span>
-            <div class="c-meta">
-              <span class="c-label">Phone &amp; WhatsApp</span>
-              <a href="tel:+918849863872" class="c-value">
+      <!-- Column 5: Contact Us Column (Right) matching Reference -->
+      <div class="footer-col contact-col">
+        <h4 class="footer-col-heading">Contact Us</h4>
+        <ul class="contact-items-list">
+          <!-- Phone Item -->
+          <li class="contact-line-item">
+            <span class="c-icon-circle" aria-hidden="true">
+              <app-icon [icon]="LucidePhone" size="xs" />
+            </span>
+            <div class="c-line-content">
+              <a href="tel:+918849863872" class="c-line-link">
                 +91 88498 63872
               </a>
             </div>
           </li>
 
-          <li class="contact-item">
-            <span class="c-icon"><app-icon [icon]="LucideMapPin" size="sm" /></span>
-            <div class="c-meta">
-              <span class="c-label">Headquarters</span>
-              <span class="c-value text-muted">
+          <!-- Email Item -->
+          <li class="contact-line-item">
+            <span class="c-icon-circle" aria-hidden="true">
+              <app-icon [icon]="LucideMail" size="xs" />
+            </span>
+            <div class="c-line-content">
+              <a href="mailto:contact@aadityasoftwares.in" class="c-line-link">
+                contact@aadityasoftwares.in
+              </a>
+            </div>
+          </li>
+
+          <!-- Location Item -->
+          <li class="contact-line-item">
+            <span class="c-icon-circle" aria-hidden="true">
+              <app-icon [icon]="LucideMapPin" size="xs" />
+            </span>
+            <div class="c-line-content">
+              <span class="c-line-text">
                 Vadodara, Gujarat, India
               </span>
             </div>
           </li>
         </ul>
-
-        <!-- In-House Product Spotlight Box (StickyJi) -->
-        <a href="https://stickyji.com/" target="_blank" rel="noopener noreferrer" class="stickyji-spotlight-card"
-          aria-label="Visit StickyJi in-house platform">
-          <div class="spotlight-header">
-            <img src="/companylogos/StickyJiLogo.png" alt="StickyJi" class="spotlight-logo" />
-            <span class="spotlight-badge">In-House Product</span>
-          </div>
-          <p class="spotlight-desc">
-            Organize, collaborate, and boost daily productivity with StickyJi.
-          </p>
-          <span class="spotlight-cta">
-            <span>Explore stickyji.com</span>
-            <app-icon [icon]="LucideExternalLink" size="xs" />
-          </span>
-        </a>
       </div>
     </div>
 
     <!-- =======================================================
-         Part 3: Social Media Showcase Strip
-         ======================================================= -->
-    <div class="footer-social-strip">
-      <div class="social-strip-header">
-        <span class="social-eyebrow">CONNECT WITH OUR TEAM</span>
-        <h4 class="social-headline">Follow Aaditya Softwares Across the Web</h4>
-      </div>
-
-      <div class="social-cards-grid">
-        @for (social of socialLinks; track social.id) {
-        <a [href]="social.href" target="_blank" rel="noopener noreferrer" class="social-card"
-          [attr.aria-label]="social.ariaLabel" [style.--social-hover]="social.hoverColor">
-          <div class="social-icon-box">
-            <svg class="social-svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-              <path [attr.d]="social.iconPath"></path>
-            </svg>
-          </div>
-          <div class="social-meta">
-            <span class="social-name">{{ social.name }}</span>
-            <span class="social-handle">&#64;aadityasoftwares</span>
-          </div>
-          <span class="social-arrow" aria-hidden="true">
-            <app-icon [icon]="LucideArrowRight" size="xs" />
-          </span>
-        </a>
-        }
-      </div>
-    </div>
-
-    <!-- =======================================================
-         Part 4: Bottom Copyright, Legal & Back to Top Bar
+         Part 3: Bottom Copyright & Legal Links Bar
+         (Reference: Bottom Copyright on Left, Legal Links on Right)
          ======================================================= -->
     <div class="footer-bottom-bar">
-      <div class="bottom-left">
-        <p class="copyright-text">
-          &copy; {{ currentYear }} <strong>Aaditya Softwares</strong>. All rights reserved.
+      <div class="bottom-left-copy">
+        <p class="copyright-p">
+          &copy; Copyright {{ currentYear }} <strong>Aaditya Softwares</strong>. All rights reserved.
         </p>
-        <span class="bottom-divider" aria-hidden="true">&bull;</span>
-        <span class="tech-tag">Engineered with Angular 19+ &amp; Clean Architecture</span>
       </div>
 
-      <div class="bottom-center">
-        <ul class="legal-links">
-          <li><a href="#home" class="legal-link" (click)="scrollToSection('#home', $event)">Privacy Policy</a></li>
-          <li class="legal-sep">&bull;</li>
-          <li><a href="#home" class="legal-link" (click)="scrollToSection('#home', $event)">Terms of Service</a></li>
-          <li class="legal-sep">&bull;</li>
-          <li><a href="#home" class="legal-link" (click)="scrollToSection('#home', $event)">Security Practices</a></li>
-          <li class="legal-sep">&bull;</li>
-          <li><a href="#home" class="legal-link" (click)="scrollToSection('#home', $event)">Cookie Policy</a></li>
+      <div class="bottom-right-links">
+        <ul class="legal-nav-list">
+          <li>
+            <a href="/about" class="legal-anchor" (click)="scrollToSection('/about', $event)">
+              Privacy Policy
+            </a>
+          </li>
+          <li class="legal-dot" aria-hidden="true">&bull;</li>
+          <li>
+            <a href="/about" class="legal-anchor" (click)="scrollToSection('/about', $event)">
+              Terms of Use
+            </a>
+          </li>
+          <li class="legal-dot" aria-hidden="true">&bull;</li>
+          <li>
+            <a href="/about" class="legal-anchor" (click)="scrollToSection('/about', $event)">
+              Legal
+            </a>
+          </li>
+          <li class="legal-dot" aria-hidden="true">&bull;</li>
+          <li>
+            <a href="/services" class="legal-anchor" (click)="scrollToSection('/services', $event)">
+              Site Map
+            </a>
+          </li>
         </ul>
-      </div>
 
-      <div class="bottom-right">
-        <button type="button" class="back-to-top-btn" (click)="scrollToTop()"
-          aria-label="Scroll back to top of the page">
-          <span>Back to Top</span>
-          <div class="arrow-up-circle">
-            <app-icon [icon]="LucideArrowUp" size="xs" />
-          </div>
+        <button
+          type="button"
+          class="footer-back-to-top"
+          (click)="scrollToTop()"
+          aria-label="Back to top"
+          title="Back to top"
+        >
+          <app-icon [icon]="LucideArrowUp" size="xs" />
         </button>
       </div>
     </div>

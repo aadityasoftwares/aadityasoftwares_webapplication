@@ -2,47 +2,103 @@
 
 <main class="page-main contact-page">
   <!-- =======================================================
-       Dedicated Page Hero Section (Matching Hero Ambient Background)
+       Section 1: Increased-Height Editorial Hero (Matching Other Pages)
        ======================================================= -->
-  <section class="page-hero-section">
+  <section class="page-hero-section editorial-tall-hero">
+    <!-- Ambient Glow Mesh (Aaditya Softwares Brand Theme) -->
     <div class="hero-ambient-glow" aria-hidden="true">
       <div class="glow-orb glow-orb-top-right"></div>
       <div class="glow-orb glow-orb-top-left"></div>
+      <div class="glow-orb glow-orb-center"></div>
     </div>
 
     <div class="page-hero-container">
-      <!-- Breadcrumb Navigation -->
-      <nav class="page-breadcrumb" aria-label="Breadcrumb">
-        <a href="/" class="crumb-link">Home</a>
-        <span class="crumb-separator" aria-hidden="true">/</span>
-        <span class="crumb-current">Contact Us</span>
-      </nav>
-
       <!-- Eyebrow & Display Title -->
-      <div class="page-hero-content">
-        <span class="section-sub-eyebrow">START A CONVERSATION</span>
+      <div class="hero-center-copy">
+        <span class="section-sub-eyebrow">CONTACT &amp; TECHNICAL CONSULTATION</span>
         <h1 class="page-hero-title">
-          Let's Engineer Something Exceptional Together
+          Let's Engineer Something <span class="highlight-blue">Exceptional</span> Together.
         </h1>
         <p class="page-hero-subtitle">
-          Have an ambitious product idea, a complex architectural challenge, or need a dedicated
-          software development team? Reach out to our senior engineers and receive a thorough
-          technical assessment within 24 hours.
+          Have an ambitious product idea, a complex architectural challenge, or need a dedicated software engineering team? Speak directly with our senior developers in Vadodara, Gujarat, India.
         </p>
 
-        <!-- Verified Quick Contact Badges -->
-        <div class="contact-hero-chips">
-          <a href="tel:+918849863872" class="c-hero-chip">
-            <app-icon [icon]="LucidePhone" size="xs" class="chip-icon" />
-            <span>+91 8849863872</span>
-          </a>
-          <a href="mailto:contact@aadityasoftwares.in" class="c-hero-chip">
-            <app-icon [icon]="LucideMail" size="xs" class="chip-icon" />
-            <span>contact@aadityasoftwares.in</span>
-          </a>
-          <div class="c-hero-chip">
+        <!-- Hero Actions -->
+        <div class="page-hero-actions">
+          <app-button
+            variant="primary"
+            size="md"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="scrollToForm()"
+          >
+            Start Your Consultation
+          </app-button>
+          <app-button
+            variant="secondary"
+            size="md"
+            [iconRight]="LucideLayers"
+            (buttonClick)="onViewServices()"
+          >
+            Explore Services
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Centerpiece Visual Pedestal (Filled Logo) -->
+      <div class="hero-centerpiece-wrapper">
+        <div class="centerpiece-pedestal-card">
+          <!-- Ambient Ring Glow -->
+          <div class="pedestal-ambient-ring" aria-hidden="true"></div>
+
+          <div class="pedestal-inner">
+            <div class="pedestal-logo-badge">
+              <img
+                src="/companylogos/AadityaSoftwaresLogo.png"
+                alt="Aaditya Softwares Core Logo"
+                class="pedestal-brand-logo"
+              />
+            </div>
+
+            <div class="pedestal-terminal-preview">
+              <div class="terminal-dots" aria-hidden="true">
+                <span class="tdot red"></span>
+                <span class="tdot yellow"></span>
+                <span class="tdot green"></span>
+              </div>
+              <span class="terminal-tagline">Direct Senior Engineer Access &bull; 24hr Assessment SLA &bull; Full IP Rights</span>
+            </div>
+
+            <!-- Floating Status Beacons -->
+            <div class="pedestal-beacons">
+              <div class="beacon-chip">
+                <span class="b-dot blue" aria-hidden="true"></span>
+                <span>Consultation Desk Open</span>
+              </div>
+              <div class="beacon-chip">
+                <span class="b-dot green" aria-hidden="true"></span>
+                <span>Vadodara Hub Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust Badges Row -->
+        <div class="hero-proof-chips-row">
+          <div class="proof-chip">
             <app-icon [icon]="LucideMapPin" size="xs" class="chip-icon" />
             <span>Vadodara, Gujarat, India</span>
+          </div>
+          <div class="proof-chip">
+            <app-icon [icon]="LucideShieldCheck" size="xs" class="chip-icon" />
+            <span>100% Code Ownership</span>
+          </div>
+          <div class="proof-chip">
+            <app-icon [icon]="LucideRocket" size="xs" class="chip-icon" />
+            <span>Senior Engineers Only</span>
+          </div>
+          <div class="proof-chip">
+            <app-icon [icon]="LucideUsers" size="xs" class="chip-icon" />
+            <span>Zero Hidden Fees</span>
           </div>
         </div>
       </div>
@@ -50,276 +106,269 @@
   </section>
 
   <!-- =======================================================
-       Section 1: Consultation Hub & Interactive Form
+       Section 2: Contact Split Layout (Matching Reference Image)
+       (Reference: Left Contact Info + Right Elevated Form Card)
        ======================================================= -->
-  <section class="contact-hub-section" appScrollReveal>
+  <section id="contact-form" class="contact-split-section" appScrollReveal>
     <div class="section-container">
-      <div class="contact-hub-layout">
-        <!-- Left Side: Verified Contact Channels & Guarantees -->
+      <div class="contact-split-grid">
+        <!-- Left Column: Title, Subtitle & 3 Info Cards matching Reference -->
         <div class="contact-info-col">
-          <span class="section-sub-eyebrow">DIRECT REACH</span>
-          <h2 class="col-heading">Talk Directly to Our Engineering Team</h2>
-          <p class="col-desc">
-            No aggressive sales reps, automated chatbots, or endless discovery delays. You connect
-            directly with the senior software architects who will plan, build, and deploy your product.
+          <div class="contact-eyebrow-pill">
+            <app-icon [icon]="LucideMail" size="xs" class="pill-icon" />
+            <span>Contact</span>
+          </div>
+
+          <h2 class="contact-main-heading">
+            How can we help you today?
+          </h2>
+
+          <p class="contact-lead-desc">
+            Our dedicated engineering team in Vadodara is just a message or call away. Reach out to discuss project scope, architecture, or resource capacity.
           </p>
 
-          <!-- Contact Cards List -->
-          <div class="direct-channels-list">
-            <!-- Phone Card -->
-            <a href="tel:+918849863872" class="channel-card">
-              <div class="channel-icon-wrap bg-blue">
-                <app-icon [icon]="LucidePhone" size="sm" />
-              </div>
-              <div class="channel-meta">
-                <span class="ch-label">Direct Phone Line</span>
-                <span class="ch-value">+91 8849863872</span>
-                <span class="ch-sub">Mon &ndash; Fri &bull; 9:00 AM &ndash; 7:00 PM IST</span>
-              </div>
-            </a>
-
-            <!-- Email Card -->
-            <a href="mailto:contact@aadityasoftwares.in" class="channel-card">
-              <div class="channel-icon-wrap bg-cyan">
+          <!-- 3 Info Items matching Reference layout -->
+          <div class="contact-items-stack">
+            <!-- Email -->
+            <div class="contact-item-row">
+              <div class="item-icon-square" aria-hidden="true">
                 <app-icon [icon]="LucideMail" size="sm" />
               </div>
-              <div class="channel-meta">
-                <span class="ch-label">Official Business Email</span>
-                <span class="ch-value">contact@aadityasoftwares.in</span>
-                <span class="ch-sub">Guaranteed response within 24 hours</span>
+              <div class="item-text">
+                <span class="item-label">Email:</span>
+                <a href="mailto:contact@aadityasoftwares.in" class="item-value link">
+                  contact@aadityasoftwares.in
+                </a>
               </div>
-            </a>
+            </div>
 
-            <!-- HQ Location Card -->
-            <div class="channel-card no-hover">
-              <div class="channel-icon-wrap bg-indigo">
+            <!-- Phone -->
+            <div class="contact-item-row">
+              <div class="item-icon-square" aria-hidden="true">
+                <app-icon [icon]="LucidePhone" size="sm" />
+              </div>
+              <div class="item-text">
+                <span class="item-label">Phone:</span>
+                <a href="tel:+918849863872" class="item-value link">
+                  +91 8849863872
+                </a>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="contact-item-row">
+              <div class="item-icon-square" aria-hidden="true">
                 <app-icon [icon]="LucideMapPin" size="sm" />
               </div>
-              <div class="channel-meta">
-                <span class="ch-label">Headquarters Location</span>
-                <span class="ch-value">Vadodara, Gujarat, India</span>
-                <span class="ch-sub">Serving clients across India, US, UK &amp; Global</span>
+              <div class="item-text">
+                <span class="item-label">Location:</span>
+                <span class="item-value">
+                  Vadodara, Gujarat, India
+                </span>
               </div>
             </div>
           </div>
 
-          <!-- Client Guarantees Box -->
-          <div class="client-guarantees-card">
-            <span class="cg-title">OUR CLIENT COMMITMENTS:</span>
-            <ul class="cg-list">
-              <li>
-                <app-icon [icon]="LucideCheckCircle2" size="xs" class="cg-check" />
-                <span><strong>100% IP Ownership:</strong> Complete code, Git repo, and infrastructure transfer.</span>
-              </li>
-              <li>
-                <app-icon [icon]="LucideCheckCircle2" size="xs" class="cg-check" />
-                <span><strong>Mutual NDA:</strong> We sign non-disclosure agreements before reviewing proprietary specs.</span>
-              </li>
-              <li>
-                <app-icon [icon]="LucideCheckCircle2" size="xs" class="cg-check" />
-                <span><strong>Transparent Pricing:</strong> Detailed sprint estimates with zero hidden overheads.</span>
-              </li>
-            </ul>
+          <!-- Working Hours & Direct Assessment SLA Note -->
+          <div class="sla-trust-card">
+            <div class="sla-header">
+              <app-icon [icon]="LucideClock" size="xs" class="sla-icon" />
+              <span>Office Hours &bull; Mon - Sat, 9:30 AM - 7:00 PM IST</span>
+            </div>
+            <p class="sla-desc">
+              All inquiries receive a technical review by a senior software engineer within 24 business hours.
+            </p>
           </div>
         </div>
 
-        <!-- Right Side: Interactive Project Inquiry Form -->
+        <!-- Right Column: Elevated Form Card matching Reference -->
         <div class="contact-form-col">
-          <div class="form-card">
+          <div class="contact-elevated-card">
             @if (isSubmitted()) {
-              <!-- Confirmation Success State -->
-              <div class="submitted-confirmation" role="alert">
-                <div class="success-icon-wrap">
+              <div class="submit-success-state">
+                <div class="success-icon-box" aria-hidden="true">
                   <app-icon [icon]="LucideCheckCircle2" size="lg" />
                 </div>
-                <h3 class="success-title">Inquiry Received Successfully!</h3>
-                <p class="success-text">
-                  Thank you, <strong>{{ formData.fullName }}</strong>. Our senior engineering leads will
-                  review your project specifications and email you at
-                  <strong>{{ formData.email }}</strong> within 24 hours with architectural options.
+                <h3 class="success-title">Consultation Request Received!</h3>
+                <p class="success-desc">
+                  Thank you, <strong>{{ formData.fullName }}</strong>. Our senior engineering team in Vadodara has received your inquiry. We will review your requirements and reach out to <strong>{{ formData.email }}</strong> within 24 hours.
                 </p>
-                <div class="success-actions">
-                  <app-button
-                    variant="secondary"
-                    size="md"
-                    (buttonClick)="resetForm()"
-                  >
-                    Send Another Inquiry
+                <div class="success-action">
+                  <app-button variant="secondary" size="md" (buttonClick)="resetForm()">
+                    Submit Another Request
                   </app-button>
                 </div>
               </div>
             } @else {
-              <!-- Active Form -->
-              <div class="form-header">
-                <h3 class="form-title">Tell Us About Your Project</h3>
-                <p class="form-sub">
-                  Fill out this brief overview to help us prepare for your technical consultation.
-                </p>
-              </div>
-
-              @if (errorMessage()) {
-                <div class="form-error-banner" role="alert">
-                  <span>{{ errorMessage() }}</span>
+              <form class="consultation-form" (ngSubmit)="onSubmit()" novalidate>
+                <!-- Name Row (First name & Last name) -->
+                <div class="form-row-2col">
+                  <div class="form-group">
+                    <label for="firstName" class="form-label">First name*</label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      class="form-control"
+                      placeholder="e.g. Billy"
+                      [(ngModel)]="formData.firstName"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName" class="form-label">Last name*</label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      class="form-control"
+                      placeholder="e.g. Jhons"
+                      [(ngModel)]="formData.lastName"
+                    />
+                  </div>
                 </div>
-              }
 
-              <form (submit)="$event.preventDefault(); onSubmit()" class="inquiry-form" novalidate>
-                <!-- Full Name -->
+                <!-- Work Email -->
                 <div class="form-group">
-                  <label for="fullName" class="form-label">
-                    Full Name <span class="required-star">*</span>
-                  </label>
+                  <label for="email" class="form-label">Work email*</label>
                   <input
-                    type="text"
-                    id="fullName"
-                    class="form-input"
-                    placeholder="e.g. Rahul Sharma"
-                    [(ngModel)]="formData.fullName"
-                    name="fullName"
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Enter email"
+                    [(ngModel)]="formData.email"
                     required
                   />
                 </div>
 
-                <!-- Email & Phone Grid -->
-                <div class="form-grid-2">
-                  <div class="form-group">
-                    <label for="email" class="form-label">
-                      Work Email <span class="required-star">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      class="form-input"
-                      placeholder="name@company.com"
-                      [(ngModel)]="formData.email"
-                      name="email"
-                      required
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="phone" class="form-label">Phone Number (Optional)</label>
+                <!-- Phone Number with prefix -->
+                <div class="form-group">
+                  <label for="phone" class="form-label">Phone number*</label>
+                  <div class="phone-input-group">
+                    <div class="phone-prefix-badge">
+                      <span>🇮🇳 +91</span>
+                      <app-icon [icon]="LucideChevronDown" size="xs" />
+                    </div>
                     <input
                       type="tel"
                       id="phone"
-                      class="form-input"
-                      placeholder="+91 88498 63872"
-                      [(ngModel)]="formData.phone"
                       name="phone"
+                      class="form-control phone-field"
+                      placeholder="Enter phone number"
+                      [(ngModel)]="formData.phone"
                     />
                   </div>
                 </div>
 
-                <!-- Service Category Selection -->
+                <!-- Service Category -->
                 <div class="form-group">
-                  <label for="serviceCategory" class="form-label">Primary Service Area</label>
+                  <label for="serviceCategory" class="form-label">Engineering Discipline Needed</label>
                   <select
                     id="serviceCategory"
-                    class="form-select"
-                    [(ngModel)]="formData.serviceCategory"
                     name="serviceCategory"
+                    class="form-control select-field"
+                    [(ngModel)]="formData.serviceCategory"
                   >
-                    <option value="Custom Software & Web Engineering">Custom Software &amp; Web Engineering (Angular / React)</option>
-                    <option value="Mobile Application Development">Mobile Application Development (React Native / Flutter)</option>
-                    <option value="SaaS Platform Development">SaaS Platform Architecture &amp; Engineering</option>
-                    <option value="Cloud Architecture & DevOps">Cloud Architecture &amp; DevOps (Cloudflare / AWS)</option>
-                    <option value="AI & Machine Learning Solutions">AI &amp; Machine Learning Integration</option>
-                    <option value="UI/UX & Product Design">UI/UX &amp; Product Design Systems</option>
-                    <option value="Technical Advisory & CTO Support">Technical Advisory &amp; Architecture Audit</option>
+                    @for (opt of serviceOptions; track opt) {
+                      <option [value]="opt">{{ opt }}</option>
+                    }
                   </select>
                 </div>
 
-                <!-- Estimated Budget Range -->
+                <!-- Message -->
                 <div class="form-group">
-                  <label for="budgetRange" class="form-label">Estimated Budget Range</label>
-                  <select
-                    id="budgetRange"
-                    class="form-select"
-                    [(ngModel)]="formData.budgetRange"
-                    name="budgetRange"
-                  >
-                    <option value="Under $10k">Under $10,000 / ₹8 Lakhs</option>
-                    <option value="$10k - $25k">$10,000 - $25,000 / ₹8 - ₹20 Lakhs</option>
-                    <option value="$25k - $50k">$25,000 - $50,000 / ₹20 - ₹40 Lakhs</option>
-                    <option value="$50k+">$50,000+ / Enterprise Scale</option>
-                    <option value="Not sure / Flexible">Flexible / Need Scoping Assistance</option>
-                  </select>
-                </div>
-
-                <!-- Project Details -->
-                <div class="form-group">
-                  <label for="projectDetails" class="form-label">
-                    Project Overview &amp; Requirements <span class="required-star">*</span>
-                  </label>
+                  <label for="projectDetails" class="form-label">Message*</label>
                   <textarea
                     id="projectDetails"
-                    class="form-textarea"
-                    rows="4"
-                    placeholder="Briefly describe what you're looking to build, key timeline requirements, or existing tech stack..."
-                    [(ngModel)]="formData.projectDetails"
                     name="projectDetails"
+                    rows="4"
+                    class="form-control textarea-field"
+                    placeholder="Enter a question, feedback, or suggestions..."
+                    [(ngModel)]="formData.projectDetails"
                     required
                   ></textarea>
                 </div>
 
-                <!-- Submit Button -->
-                <div class="form-action">
+                <!-- Error Message -->
+                @if (errorMessage()) {
+                  <div class="form-error-banner" role="alert">
+                    <span class="error-text">{{ errorMessage() }}</span>
+                  </div>
+                }
+
+                <!-- Submit Button matching reference -->
+                <div class="form-actions">
                   <button
                     type="submit"
-                    class="form-submit-btn"
+                    class="reference-submit-btn"
                     [disabled]="isSubmitting()"
                   >
-                    @if (isSubmitting()) {
-                      <span>Dispatching Inquiry...</span>
-                    } @else {
-                      <span>Send Project Inquiry</span>
-                      <app-icon [icon]="LucideSend" size="xs" />
-                    }
+                    <span>{{ isSubmitting() ? 'Submitting...' : 'Submit' }}</span>
                   </button>
-                  <span class="privacy-note">
-                    <app-icon [icon]="LucideShieldCheck" size="xs" />
-                    <span>Your data is strictly confidential. Zero spam.</span>
-                  </span>
+                </div>
+
+                <div class="form-privacy-note">
+                  <app-icon [icon]="LucideShieldCheck" size="xs" class="note-icon" />
+                  <span>Strict NDA Protected &bull; 100% Intellectual Property Rights Guaranteed</span>
                 </div>
               </form>
             }
           </div>
         </div>
       </div>
+
+      <!-- Trust Bar matching Reference Bottom ("Trusted by exceptional brands around the world") -->
+      <div class="reference-trust-strip">
+        <span class="trust-strip-title">Trusted by exceptional businesses &bull; Built on modern engineering standards</span>
+        <div class="trust-tech-badges">
+          <span class="t-badge">TypeScript</span>
+          <span class="t-badge">Angular 22</span>
+          <span class="t-badge">React Native</span>
+          <span class="t-badge">Node.js</span>
+          <span class="t-badge">Express.js</span>
+          <span class="t-badge">Cloudflare R2</span>
+          <span class="t-badge">MongoDB</span>
+          <span class="t-badge">Docker</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- =======================================================
-       Section 2: Frequently Asked Questions (FAQ Accordion)
+       Section 3: Frequently Asked Questions (Interactive Accordion)
        ======================================================= -->
   <section class="contact-faq-section" appScrollReveal>
     <div class="section-container">
       <div class="section-header-center">
-        <span class="section-sub-eyebrow">FREQUENT QUESTIONS</span>
-        <h2 class="section-heading">Everything You Need to Know</h2>
+        <span class="section-sub-eyebrow">CLEAR ANSWERS</span>
+        <h2 class="section-heading">Frequently Asked Questions</h2>
         <p class="section-subtitle">
-          Transparent answers about our engineering process, intellectual property, and sprint cadence.
+          Everything you need to know about our engagement models, development processes, and IP ownership.
         </p>
       </div>
 
       <div class="faq-accordion-list">
-        @for (faq of faqs(); track faq.question; let i = $index) {
-          <div class="faq-item" [class.is-open]="faq.open">
-            <button
-              type="button"
-              class="faq-question-btn"
-              (click)="toggleFaq(i)"
-              [attr.aria-expanded]="faq.open"
-            >
-              <span class="faq-question-text">{{ faq.question }}</span>
-              <span class="faq-icon-chevron" [class.rotated]="faq.open">
+        @for (faq of faqs(); track faq.question; let idx = $index) {
+          <div
+            class="faq-item-card"
+            [class.is-open]="faq.open"
+            (click)="toggleFaq(idx)"
+            role="button"
+            tabindex="0"
+            (keydown.enter)="toggleFaq(idx)"
+            [attr.aria-expanded]="faq.open"
+          >
+            <div class="faq-question-bar">
+              <h3 class="faq-question">{{ faq.question }}</h3>
+              <div class="faq-chevron-circle" aria-hidden="true">
                 <app-icon [icon]="LucideChevronDown" size="sm" />
-              </span>
-            </button>
+              </div>
+            </div>
 
             @if (faq.open) {
-              <div class="faq-answer-panel">
-                <p class="faq-answer-text">{{ faq.answer }}</p>
+              <div class="faq-answer-body">
+                <p>{{ faq.answer }}</p>
               </div>
             }
           </div>
@@ -330,4 +379,3 @@
 </main>
 
 <app-website-footer></app-website-footer>
-

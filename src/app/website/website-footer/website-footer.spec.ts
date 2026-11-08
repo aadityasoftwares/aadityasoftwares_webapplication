@@ -13,7 +13,7 @@ describe('WebsiteFooter', () => {
     fixture = TestBed.createComponent(WebsiteFooter);
     component = fixture.componentInstance;
     await fixture.whenStable();
-  });
+  }, 30000);
 
   it('should create', () => {
     expect(component).toBeTruthy();

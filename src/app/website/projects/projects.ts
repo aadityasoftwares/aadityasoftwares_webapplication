@@ -27,6 +27,14 @@ import {
   LucideDatabase,
   LucideServer,
   LucideX,
+  LucideSearch,
+  LucideCpu,
+  LucideActivity,
+  LucideCheckCircle2,
+  LucideZap,
+  LucideBarChart3,
+  LucideWorkflow,
+  LucideRadio,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { Button } from '../../shared/components/button/button';
@@ -58,6 +66,7 @@ export interface ProjectItem {
   detailedDesc: string;
   techStack: string[];
   specs: ProjectSpecification[];
+  highlights?: string[];
   platforms?: PlatformItem[];
   features?: FeatureItem[];
   logoUrl: string;
@@ -96,6 +105,14 @@ export class Projects {
   readonly LucideDatabase = LucideDatabase;
   readonly LucideServer = LucideServer;
   readonly LucideX = LucideX;
+  readonly LucideSearch = LucideSearch;
+  readonly LucideCpu = LucideCpu;
+  readonly LucideActivity = LucideActivity;
+  readonly LucideCheckCircle2 = LucideCheckCircle2;
+  readonly LucideZap = LucideZap;
+  readonly LucideBarChart3 = LucideBarChart3;
+  readonly LucideWorkflow = LucideWorkflow;
+  readonly LucideRadio = LucideRadio;
 
   // Selected project for the interactive case-study drawer/modal
   readonly activeModalProject = signal<ProjectItem | null>(null);
@@ -105,13 +122,19 @@ export class Projects {
       id: 'sgtc-india',
       title: 'SGTC India',
       category: 'Business Website',
-      badgeLabel: 'BUSINESS WEBSITE',
+      badgeLabel: 'BUSINESS WEB APPLICATION',
       isProprietarySaaS: false,
       shortDesc:
         'A professional business website showcasing laboratory equipment, scientific products and consumables through a clean and responsive digital experience.',
       detailedDesc:
         'Engineered as a modern digital showcase and product catalog for SGTC India. The platform structures an extensive inventory of laboratory glassware, scientific instruments, and chemical consumables into an intuitive, high-performance web experience with instant search, technical specs, and seamless customer inquiry workflows.',
       techStack: ['Angular', 'TypeScript', 'SCSS', 'Responsive Architecture'],
+      highlights: [
+        'Comprehensive Laboratory Catalog & Instant Search',
+        'Responsive Angular SPA with High Performance',
+        'Interactive Chemical & Glassware Specifications',
+        'Direct B2B Customer Quote Inquiry Pipeline',
+      ],
       specs: [
         { label: 'Industry', value: 'Scientific & Laboratory Consumables' },
         { label: 'Architecture', value: 'Angular Single Page Application (SPA)' },
@@ -128,13 +151,19 @@ export class Projects {
       id: 'oonloop',
       title: 'OonLoop',
       category: 'E-commerce Marketplace',
-      badgeLabel: 'E-COMMERCE MARKETPLACE',
+      badgeLabel: 'MULTI-PLATFORM MARKETPLACE ECOSYSTEM',
       isProprietarySaaS: false,
       shortDesc:
         'A complete e-commerce ecosystem connecting customers, vendors and delivery riders through dedicated applications and a centralized administration platform.',
       detailedDesc:
         'A full-scale commercial multi-sided ecosystem designed to orchestrate complex real-time commerce. OonLoop connects four distinct user roles through specialized applications: intuitive customer ordering and live tracking, vendor store management and order processing, rider GPS dispatch, and a centralized enterprise admin operations hub.',
       techStack: ['React Native', 'Node.js', 'Express.js', 'MongoDB', 'Angular'],
+      highlights: [
+        '4 Real-Time Synchronized Client & Admin Applications',
+        'Distributed Node.js & Express REST Microservices',
+        'MongoDB High-Throughput Cluster Architecture',
+        'Live Geolocation Tracking & Route Dispatch',
+      ],
       specs: [
         { label: 'Ecosystem', value: '4 Interconnected Production Platforms' },
         { label: 'Backend Architecture', value: 'Node.js & Express.js REST API' },
@@ -186,6 +215,12 @@ export class Projects {
         'MongoDB',
         'Cloudflare',
         'Cloudflare R2',
+      ],
+      highlights: [
+        'Proprietary Multi-Tenant Workspace & Note Platform',
+        'Cloudflare R2 Zero-Egress Cloud Storage Engine',
+        'Real-Time Drag-and-Drop Kanban Task Orchestration',
+        'Granular Role-Based Permissions & Encryption',
       ],
       specs: [
         { label: 'Product Model', value: 'Proprietary In-House Multi-Tenant SaaS' },

@@ -18,6 +18,14 @@ import {
   LucideCpu,
   LucideDatabase,
   LucideServer,
+  LucideMapPin,
+  LucidePhone,
+  LucideMail,
+  LucideRocket,
+  LucideExternalLink,
+  LucideChevronDown,
+  LucideArrowUpRight,
+  LucideEye,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../../shared/components/icon/icon';
 import { Button } from '../../../shared/components/button/button';
@@ -27,9 +35,11 @@ import { WebsiteFooter } from '../../website-footer/website-footer';
 
 export interface DetailedService {
   id: string;
+  num: string;
   category: 'web' | 'mobile' | 'cloud' | 'ai' | 'uiux' | 'qa' | 'devops';
   badge: string;
   title: string;
+  displayTitle: string;
   subtitle: string;
   description: string;
   image: string;
@@ -47,6 +57,18 @@ export interface EngagementModel {
   features: string[];
   bestFor: string;
   icon: AppIconDefinition;
+}
+
+export interface ServiceShowcaseProject {
+  id: string;
+  name: string;
+  category: string;
+  badge: string;
+  description: string;
+  tech: string[];
+  image: string;
+  statsLabel: string;
+  statsValue: string;
 }
 
 @Component({
@@ -83,15 +105,26 @@ export class ServicesPage {
   readonly LucideCpu = LucideCpu;
   readonly LucideDatabase = LucideDatabase;
   readonly LucideServer = LucideServer;
+  readonly LucideMapPin = LucideMapPin;
+  readonly LucidePhone = LucidePhone;
+  readonly LucideMail = LucideMail;
+  readonly LucideRocket = LucideRocket;
+  readonly LucideExternalLink = LucideExternalLink;
+  readonly LucideChevronDown = LucideChevronDown;
+  readonly LucideArrowUpRight = LucideArrowUpRight;
+  readonly LucideEye = LucideEye;
 
   readonly activeCategory = signal<string>('all');
+  readonly activeRibbonId = signal<string>('custom-software');
 
   readonly services: DetailedService[] = [
     {
       id: 'custom-software',
+      num: '01',
       category: 'web',
       badge: 'ENTERPRISE WEB PLATFORMS',
       title: 'Custom Software & Web Engineering',
+      displayTitle: 'CUSTOM SOFTWARE & ARCHITECTURE',
       subtitle: 'Scalable, performant, and secure single-page web applications',
       description:
         'We design and build bespoke web platforms tailored to your business operations. By adopting component-driven architectures, modular boundaries, and strict type safety, we ensure your software remains fast, maintainable, and cost-effective over years of growth.',
@@ -108,9 +141,11 @@ export class ServicesPage {
     },
     {
       id: 'mobile-development',
+      num: '02',
       category: 'mobile',
       badge: 'CROSS-PLATFORM MOBILE',
       title: 'Mobile Application Engineering',
+      displayTitle: 'MOBILE APPLICATION ECOSYSTEMS',
       subtitle: 'Native-feel iOS and Android applications with unified codebases',
       description:
         'We engineer fluid mobile applications that provide intuitive user experiences, rapid frame rates, offline data synchronization, and seamless integration with hardware features like GPS, camera, biometric auth, and push notifications.',
@@ -127,9 +162,11 @@ export class ServicesPage {
     },
     {
       id: 'cloud-devops',
+      num: '03',
       category: 'cloud',
       badge: 'CLOUD INFRASTRUCTURE',
       title: 'Cloud Architecture & DevOps Automation',
+      displayTitle: 'CLOUD & DEVOPS INFRASTRUCTURE',
       subtitle: 'Resilient, cost-efficient, and auto-scaling cloud deployments',
       description:
         'We design, configure, and maintain production cloud architectures that maximize uptime while optimizing infrastructure spend. From zero-downtime CI/CD deployment pipelines to serverless edge computing, your applications are engineered for 99.99% availability.',
@@ -146,9 +183,11 @@ export class ServicesPage {
     },
     {
       id: 'ai-workflows',
+      num: '04',
       category: 'ai',
       badge: 'INTELLIGENT WORKFLOWS',
       title: 'AI & Machine Learning Integration',
+      displayTitle: 'AI & INTELLIGENT WORKFLOWS',
       subtitle: 'Pragmatic AI systems that automate tasks and elevate productivity',
       description:
         'We implement practical AI capabilities that create real business value rather than gimmicks. From intelligent semantic search and custom LLM agent workflows to automated data extraction and conversational interfaces, we make your applications smarter.',
@@ -165,9 +204,11 @@ export class ServicesPage {
     },
     {
       id: 'ui-ux-design',
+      num: '05',
       category: 'uiux',
       badge: 'PRODUCT DESIGN',
       title: 'UI/UX & Design Systems',
+      displayTitle: 'UI/UX & DESIGN SYSTEMS',
       subtitle: 'Accessible, intuitive interfaces engineered for conversion',
       description:
         'Great engineering begins with thoughtful design. We craft interfaces that solve complex workflows through intuitive simplicity. Our design systems bridge the gap between design in Figma and production code in Angular and React.',
@@ -184,9 +225,11 @@ export class ServicesPage {
     },
     {
       id: 'quality-assurance',
+      num: '06',
       category: 'qa',
       badge: 'AUTOMATED TESTING',
       title: 'Quality Assurance & Automated Testing',
+      displayTitle: 'QA AUTOMATION & SECURITY',
       subtitle: 'Comprehensive automated test suites for zero-defect releases',
       description:
         'We embed testing deeply into the development lifecycle. With automated unit, integration, and end-to-end test suites, your application remains resilient against regressions, security vulnerabilities, and unexpected load spikes.',
@@ -203,9 +246,11 @@ export class ServicesPage {
     },
     {
       id: 'maintenance-devops',
+      num: '07',
       category: 'devops',
       badge: 'SUPPORT & EVOLUTION',
       title: 'Continuous Maintenance & DevOps SLA',
+      displayTitle: 'CONTINUOUS SLA & DEV MAINTENANCE',
       subtitle: 'Proactive monitoring, security patching, and ongoing feature sprints',
       description:
         'Software requires ongoing care to stay fast and secure. We provide dedicated post-launch SLA support, real-time error telemetry, cloud infrastructure tuning, and continuous development sprints to keep your application ahead of competitors.',
@@ -219,6 +264,46 @@ export class ServicesPage {
       techStack: ['Datadog', 'Sentry', 'Grafana', 'CloudWatch', 'Uptime Kuma', 'GitOps'],
       icon: LucideSettings,
       idealFor: 'Post-Launch Platforms, Mission-Critical Systems, Growing SaaS',
+    },
+  ];
+
+  // Section 02 from Reference Image: Project Showcase Gallery
+  readonly showcaseProjects: ServiceShowcaseProject[] = [
+    {
+      id: 'sgtc',
+      name: 'SGTC India',
+      category: 'Business Website & B2B Portal',
+      badge: 'ANGULAR PRODUCTION',
+      description:
+        'A professional commercial website showcasing laboratory equipment, scientific consumables, and automated quote generation.',
+      tech: ['Angular 22', 'TypeScript', 'SCSS', 'Node.js'],
+      image: '/sgtc.png',
+      statsLabel: 'Architecture',
+      statsValue: 'Sub-second Load & SEO Tuned',
+    },
+    {
+      id: 'oonloop',
+      name: 'OonLoop Marketplace Ecosystem',
+      category: 'Multi-Sided Commerce Platform',
+      badge: '4-APP ECOSYSTEM',
+      description:
+        'Complete on-demand ecosystem interconnecting Customer Apps, Merchant Vendor Apps, Delivery Rider Apps, and Centralized Super-Admin.',
+      tech: ['React Native', 'Node.js', 'Express', 'MongoDB', 'Angular'],
+      image: '/oonloop.png',
+      statsLabel: 'Platforms',
+      statsValue: '4 Dedicated Integrated Apps',
+    },
+    {
+      id: 'stickyji',
+      name: 'StickyJi Digital Workspace SaaS',
+      category: 'Proprietary Cloud Product',
+      badge: 'OUR OWN SAAS',
+      description:
+        'Our in-house digital workspace and task management SaaS platform featuring real-time sticky notes, Kanban workflows, and Cloudflare R2 storage.',
+      tech: ['Angular', 'Node.js', 'Cloudflare R2', 'MongoDB'],
+      image: '/companylogos/StickyJiHorizontalLogo.png',
+      statsLabel: 'Cloud Storage',
+      statsValue: 'Cloudflare Edge Mesh',
     },
   ];
 
@@ -274,6 +359,10 @@ export class ServicesPage {
     this.activeCategory.set(cat);
   }
 
+  selectRibbon(id: string): void {
+    this.activeRibbonId.set(id);
+  }
+
   get filteredServices(): DetailedService[] {
     const cat = this.activeCategory();
     if (cat === 'all') {
@@ -294,4 +383,3 @@ export class ServicesPage {
     });
   }
 }
-
