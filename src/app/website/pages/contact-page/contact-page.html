@@ -44,61 +44,68 @@
         </div>
       </div>
 
-      <!-- Centerpiece Visual Pedestal (Filled Logo) -->
-      <div class="hero-centerpiece-wrapper">
-        <div class="centerpiece-pedestal-card">
-          <!-- Ambient Ring Glow -->
-          <div class="pedestal-ambient-ring" aria-hidden="true"></div>
-
-          <div class="pedestal-inner">
-            <div class="pedestal-logo-badge">
-              <img
-                src="/companylogos/AadityaSoftwaresLogo.png"
-                alt="Aaditya Softwares Core Logo"
-                class="pedestal-brand-logo"
-              />
+      <!-- Contact Hero Consultation Guarantees (Contextual to Contact & Inquiries) -->
+      <div class="contact-hero-showcase">
+        <div class="contact-guarantees-grid">
+          <!-- Card 1: 24h Response -->
+          <div class="guarantee-card">
+            <div class="g-icon-circle blue">
+              <app-icon [icon]="LucideClock" size="sm" />
             </div>
-
-            <div class="pedestal-terminal-preview">
-              <div class="terminal-dots" aria-hidden="true">
-                <span class="tdot red"></span>
-                <span class="tdot yellow"></span>
-                <span class="tdot green"></span>
-              </div>
-              <span class="terminal-tagline">Direct Senior Engineer Access &bull; 24hr Assessment SLA &bull; Full IP Rights</span>
+            <div class="g-meta">
+              <span class="g-badge">&lt; 24h Response</span>
+              <h4 class="g-title">Rapid Technical Assessment</h4>
+              <p class="g-desc">
+                Receive an initial architectural analysis, tech stack recommendations, and scope assessment within one business day.
+              </p>
             </div>
+          </div>
 
-            <!-- Floating Status Beacons -->
-            <div class="pedestal-beacons">
-              <div class="beacon-chip">
-                <span class="b-dot blue" aria-hidden="true"></span>
-                <span>Consultation Desk Open</span>
-              </div>
-              <div class="beacon-chip">
-                <span class="b-dot green" aria-hidden="true"></span>
-                <span>Vadodara Hub Active</span>
-              </div>
+          <!-- Card 2: Direct Senior Engineers -->
+          <div class="guarantee-card">
+            <div class="g-icon-circle cyan">
+              <app-icon [icon]="LucideUsers" size="sm" />
+            </div>
+            <div class="g-meta">
+              <span class="g-badge">Direct Access</span>
+              <h4 class="g-title">Talk to Senior Engineers</h4>
+              <p class="g-desc">
+                No middle sales managers. You speak directly with hands-on software architects who write code and design systems.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 3: Non-Disclosure & IP Security -->
+          <div class="guarantee-card">
+            <div class="g-icon-circle green">
+              <app-icon [icon]="LucideShieldCheck" size="sm" />
+            </div>
+            <div class="g-meta">
+              <span class="g-badge">100% Protected</span>
+              <h4 class="g-title">Strict NDA &amp; Security</h4>
+              <p class="g-desc">
+                Mutual NDA executed before project discussions. Your proprietary ideas, data, and workflows remain 100% confidential.
+              </p>
             </div>
           </div>
         </div>
 
-        <!-- Trust Badges Row -->
-        <div class="hero-proof-chips-row">
-          <div class="proof-chip">
-            <app-icon [icon]="LucideMapPin" size="xs" class="chip-icon" />
-            <span>Vadodara, Gujarat, India</span>
+        <!-- Direct Instant Line Pill -->
+        <div class="contact-channels-strip">
+          <div class="c-strip-item">
+            <span class="strip-dot green"></span>
+            <span class="strip-label">Consultation Desk:</span>
+            <a href="tel:+918849863872" class="strip-val">+91 88498 63872</a>
           </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideShieldCheck" size="xs" class="chip-icon" />
-            <span>100% Code Ownership</span>
+          <div class="strip-divider" aria-hidden="true">&bull;</div>
+          <div class="c-strip-item">
+            <span class="strip-label">Direct Email:</span>
+            <a href="mailto:contact@aadityasoftwares.in" class="strip-val">contact@aadityasoftwares.in</a>
           </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideRocket" size="xs" class="chip-icon" />
-            <span>Senior Engineers Only</span>
-          </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideUsers" size="xs" class="chip-icon" />
-            <span>Zero Hidden Fees</span>
+          <div class="strip-divider" aria-hidden="true">&bull;</div>
+          <div class="c-strip-item">
+            <span class="strip-label">Engineering HQ:</span>
+            <span class="strip-val">Vadodara, Gujarat, India</span>
           </div>
         </div>
       </div>

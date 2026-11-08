@@ -44,61 +44,98 @@
         </div>
       </div>
 
-      <!-- Centerpiece Visual Pedestal (Matching Other Pages) -->
-      <div class="hero-centerpiece-wrapper">
-        <div class="centerpiece-pedestal-card">
-          <!-- Ambient Ring Glow -->
-          <div class="pedestal-ambient-ring" aria-hidden="true"></div>
+      <!-- Projects Hero Split Showcase (Matching Adrian Clarke Top Showcase Reference) -->
+      <div class="projects-hero-showcase">
+        <div class="projects-hero-split-grid">
+          <!-- Left Card: Strategic Problem Solving & Impact -->
+          <div class="projects-strategy-card">
+            <div class="strategy-badge-line">
+              <span class="strat-pill">SOFTWARE DELIVERY METHODOLOGY</span>
+              <span class="strat-metric-pill green">+99.98% SLA</span>
+            </div>
+            <h4 class="strat-title">Architecture That Solves Real-World Complexities</h4>
+            <p class="strat-desc">
+              We bridge business strategy and production engineering. From high-throughput multi-sided marketplaces to modular SaaS workspace platforms, our solutions drive verified commercial outcomes.
+            </p>
+            <div class="strat-pillars-list">
+              <div class="pillar-row">
+                <span class="p-num">01</span>
+                <div class="p-info">
+                  <span class="p-name">Full-Stack Business Applications</span>
+                  <span class="p-example">SGTC India Scientific Catalog &bull; Angular SPA</span>
+                </div>
+              </div>
+              <div class="pillar-row">
+                <span class="p-num">02</span>
+                <div class="p-info">
+                  <span class="p-name">Multi-Sided Mobile &amp; Web Ecosystems</span>
+                  <span class="p-example">OonLoop 4-Platform Real-Time Commerce Mesh</span>
+                </div>
+              </div>
+              <div class="pillar-row">
+                <span class="p-num">03</span>
+                <div class="p-info">
+                  <span class="p-name">Proprietary In-House Cloud SaaS</span>
+                  <span class="p-example">StickyJi Collaborative Workspace &bull; Cloudflare R2</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <div class="pedestal-inner">
-            <div class="pedestal-logo-badge">
-              <img
-                src="/companylogos/AadityaSoftwaresLogo.png"
-                alt="Aaditya Softwares Core Logo"
-                class="pedestal-brand-logo"
-              />
+          <!-- Right Card: Live Production Deliverables Preview Deck -->
+          <div class="projects-preview-deck-card">
+            <div class="deck-header">
+              <div class="deck-dots" aria-hidden="true">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="deck-title">Production Deliverables Preview</span>
+              <span class="deck-status-live">LIVE MESH</span>
             </div>
 
-            <div class="pedestal-terminal-preview">
-              <div class="terminal-dots" aria-hidden="true">
-                <span class="tdot red"></span>
-                <span class="tdot yellow"></span>
-                <span class="tdot green"></span>
+            <div class="deck-content-body">
+              <!-- Item 1: SGTC India -->
+              <div class="deck-project-tile">
+                <div class="dp-logo-wrap">
+                  <img src="/sgtc.png" alt="SGTC India Logo" class="dp-logo-img" />
+                </div>
+                <div class="dp-info">
+                  <span class="dp-title">SGTC India</span>
+                  <span class="dp-sub">B2B Scientific Products &bull; Angular SPA</span>
+                </div>
+                <span class="dp-badge">Web Portal</span>
               </div>
-              <span class="terminal-tagline">Production Verified &bull; 99.99% Architecture SLA &bull; Sub-Second Latency</span>
+
+              <!-- Item 2: OonLoop -->
+              <div class="deck-project-tile">
+                <div class="dp-logo-wrap dark">
+                  <img src="/oonloop.png" alt="OonLoop Logo" class="dp-logo-img" />
+                </div>
+                <div class="dp-info">
+                  <span class="dp-title">OonLoop</span>
+                  <span class="dp-sub">4-App Ecosystem &bull; React Native &amp; Node.js</span>
+                </div>
+                <span class="dp-badge">Marketplace</span>
+              </div>
+
+              <!-- Item 3: StickyJi -->
+              <div class="deck-project-tile highlight">
+                <div class="dp-logo-wrap saas">
+                  <img src="/companylogos/StickyJiLogo.png" alt="StickyJi Logo" class="dp-logo-img" />
+                </div>
+                <div class="dp-info">
+                  <span class="dp-title">StickyJi</span>
+                  <span class="dp-sub">Digital Workspace SaaS &bull; Cloudflare R2</span>
+                </div>
+                <span class="dp-badge saas">Our SaaS</span>
+              </div>
             </div>
 
-            <!-- Floating Status Beacons -->
-            <div class="pedestal-beacons">
-              <div class="beacon-chip">
-                <span class="b-dot blue" aria-hidden="true"></span>
-                <span>3 Flagship Deliverables Active</span>
-              </div>
-              <div class="beacon-chip">
-                <span class="b-dot green" aria-hidden="true"></span>
-                <span>100% IP Transferred</span>
-              </div>
+            <div class="deck-footer-bar">
+              <span class="deck-stat">3 Verified Production Deliverables</span>
+              <span class="deck-proof">100% Code Transfer</span>
             </div>
-          </div>
-        </div>
-
-        <!-- Trust Badges Row -->
-        <div class="hero-proof-chips-row">
-          <div class="proof-chip">
-            <app-icon [icon]="LucideMapPin" size="xs" class="chip-icon" />
-            <span>Vadodara, Gujarat, India</span>
-          </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideShieldCheck" size="xs" class="chip-icon" />
-            <span>100% Code Ownership</span>
-          </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideRocket" size="xs" class="chip-icon" />
-            <span>Bi-Weekly Agile Sprints</span>
-          </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideUsers" size="xs" class="chip-icon" />
-            <span>Senior Engineers Only</span>
           </div>
         </div>
       </div>

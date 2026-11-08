@@ -45,61 +45,79 @@
         </div>
       </div>
 
-      <!-- Centerpiece Visual Pedestal (Inspired by Reference Centerpiece Product Focal) -->
-      <div class="hero-centerpiece-wrapper">
-        <div class="centerpiece-pedestal-card">
-          <!-- Ambient Ring Glow -->
-          <div class="pedestal-ambient-ring" aria-hidden="true"></div>
-
-          <div class="pedestal-inner">
-            <div class="pedestal-logo-badge">
-              <img
-                src="/companylogos/AadityaSoftwaresLogo.png"
-                alt="Aaditya Softwares Core Logo"
-                class="pedestal-brand-logo"
-              />
+      <!-- About Hero Company Metrics & Culture Stage (Contextual to About Us) -->
+      <div class="about-hero-showcase">
+        <div class="about-metrics-deck">
+          <!-- Card 1: 100% IP & Code Ownership -->
+          <div class="about-metric-card">
+            <div class="metric-top">
+              <span class="metric-big-num">100%</span>
+              <span class="metric-badge blue">Client Owned</span>
             </div>
-
-            <div class="pedestal-terminal-preview">
-              <div class="terminal-dots" aria-hidden="true">
-                <span class="tdot red"></span>
-                <span class="tdot yellow"></span>
-                <span class="tdot green"></span>
-              </div>
-              <span class="terminal-tagline">Clean Architecture &bull; Modular &bull; Scalable &bull; Secure</span>
+            <h4 class="metric-title">Full IP &amp; Code Ownership</h4>
+            <p class="metric-desc">
+              Every repository, deployment script, and architectural blueprint is 100% yours. No licensing traps or vendor lock-in.
+            </p>
+            <div class="metric-footer">
+              <app-icon [icon]="LucideShieldCheck" size="xs" />
+              <span>Full Commercial Freedom</span>
             </div>
+          </div>
 
-            <!-- Floating Status Beacons -->
-            <div class="pedestal-beacons">
-              <div class="beacon-chip">
-                <span class="b-dot blue" aria-hidden="true"></span>
-                <span>Production Mesh Active</span>
-              </div>
-              <div class="beacon-chip">
-                <span class="b-dot green" aria-hidden="true"></span>
-                <span>99.99% Architecture SLA</span>
-              </div>
+          <!-- Card 2: Vadodara Engineering Center -->
+          <div class="about-metric-card">
+            <div class="metric-top">
+              <span class="metric-big-text">Vadodara</span>
+              <span class="metric-badge cyan">Gujarat, India</span>
+            </div>
+            <h4 class="metric-title">Global Engineering Center</h4>
+            <p class="metric-desc">
+              Engineering hub in Vadodara, delivering modern enterprise software systems across timezones for clients worldwide.
+            </p>
+            <div class="metric-footer">
+              <app-icon [icon]="LucideMapPin" size="xs" />
+              <span>Direct Technical Leadership</span>
+            </div>
+          </div>
+
+          <!-- Card 3: 99.99% Reliability & Agility -->
+          <div class="about-metric-card">
+            <div class="metric-top">
+              <span class="metric-big-num">99.99%</span>
+              <span class="metric-badge green">Architecture SLA</span>
+            </div>
+            <h4 class="metric-title">Zero-Technical-Debt Craft</h4>
+            <p class="metric-desc">
+              Rigorous clean-architecture standards, automated testing pipelines, and bi-weekly production delivery cadences.
+            </p>
+            <div class="metric-footer">
+              <app-icon [icon]="LucideRocket" size="xs" />
+              <span>Bi-Weekly Agile Sprints</span>
             </div>
           </div>
         </div>
 
-        <!-- Trust Badges Row -->
-        <div class="hero-proof-chips-row">
-          <div class="proof-chip">
-            <app-icon [icon]="LucideMapPin" size="xs" class="chip-icon" />
-            <span>Vadodara, Gujarat, India</span>
+        <!-- Culture & Values Trust Ribbon -->
+        <div class="about-culture-banner">
+          <div class="culture-quote-wrap">
+            <span class="quote-symbol">&ldquo;</span>
+            <p class="culture-quote-text">
+              We engineer software as a scalable asset, not a disposable contractor deliverable. Every line of code is structured for velocity, security, and long-term maintainability.
+            </p>
           </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideShieldCheck" size="xs" class="chip-icon" />
-            <span>100% Code Ownership</span>
-          </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideRocket" size="xs" class="chip-icon" />
-            <span>Bi-Weekly Sprints</span>
-          </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideUsers" size="xs" class="chip-icon" />
-            <span>Direct Senior Engineers</span>
+          <div class="culture-badges-row">
+            <div class="c-proof-pill">
+              <app-icon [icon]="LucideUsers" size="xs" />
+              <span>Senior Engineers Only</span>
+            </div>
+            <div class="c-proof-pill">
+              <app-icon [icon]="LucideCheckCircle2" size="xs" />
+              <span>Direct Communication</span>
+            </div>
+            <div class="c-proof-pill">
+              <app-icon [icon]="LucideAward" size="xs" />
+              <span>End-to-End Accountability</span>
+            </div>
           </div>
         </div>
       </div>
@@ -223,6 +241,12 @@
        (Reference: Middle-Right "Every Formula Starts with Intention")
        ======================================================= -->
   <section class="about-formula-section" appScrollReveal>
+    <!-- Ambient Filled Background Mesh -->
+    <div class="formula-ambient-bg" aria-hidden="true">
+      <div class="f-orb orb-left"></div>
+      <div class="f-orb orb-right"></div>
+    </div>
+
     <div class="section-container">
       <div class="section-header-center">
         <span class="section-sub-eyebrow">CONCEPT TO PRODUCTION</span>
@@ -251,9 +275,10 @@
           </div>
         </div>
 
-        <!-- Center Column: Focal Tech Core (Direct Reference Center Hub) -->
+        <!-- Center Column: Focal Tech Core (Filled Background & Edge-to-Edge Logo) -->
         <div class="formula-center-focal">
           <div class="focal-pulse-ring" aria-hidden="true"></div>
+          <div class="focal-backdrop-aura" aria-hidden="true"></div>
           <div class="focal-core-unit">
             <div class="focal-emblem-badge">
               <img

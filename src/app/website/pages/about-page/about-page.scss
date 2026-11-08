@@ -184,168 +184,192 @@
   margin-bottom: 36px;
 }
 
-/* Centerpiece Visual Pedestal (Reference Bottle Centerpiece Adaptation) */
-.hero-centerpiece-wrapper {
+/* About Hero Company Metrics & Culture Stage (Unique to About Us) */
+.about-hero-showcase {
   position: relative;
   width: 100%;
-  max-width: 760px;
+  max-width: 1060px;
   margin: 0 auto;
-}
-
-.centerpiece-pedestal-card {
-  position: relative;
-  background: linear-gradient(135deg, $color-heading 0%, #172554 60%, $color-primary-dark 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 28px;
-  padding: 32px 36px;
-  box-shadow: 0 24px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(6, 182, 212, 0.2);
-  color: $color-surface-white;
-  overflow: hidden;
-
-  @media (max-width: 600px) {
-    padding: 24px 18px;
-  }
-
-  .pedestal-ambient-ring {
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 240px;
-    height: 240px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba($color-accent, 0.25) 0%, transparent 70%);
-    pointer-events: none;
-  }
-}
-
-.pedestal-inner {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 18px;
+  gap: 24px;
 }
 
-.pedestal-logo-badge {
-  width: 96px;
-  height: 96px;
-  border-radius: 22px;
-  background: #0b1528;
-  border: 2px solid rgba($color-accent, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  overflow: hidden;
-  box-shadow: 0 0 35px rgba(6, 182, 212, 0.45), 0 12px 28px rgba(15, 23, 42, 0.35);
+.about-metrics-deck {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 
-  @media (max-width: 600px) {
-    width: 80px;
-    height: 80px;
-    border-radius: 18px;
-  }
-
-  .pedestal-brand-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: inherit;
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
-.pedestal-terminal-preview {
+.about-metric-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid $color-border;
+  border-radius: 20px;
+  padding: 24px 22px;
+  box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.02);
   display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 8px 18px;
-  border-radius: $radius-full;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  flex-direction: column;
+  text-align: left;
+  transition: all 220ms ease;
 
-  .terminal-dots {
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba($color-primary, 0.35);
+    box-shadow: 0 16px 36px -8px rgba(37, 99, 235, 0.14);
+  }
+
+  .metric-top {
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: space-between;
+    margin-bottom: 12px;
 
-    .tdot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
+    .metric-big-num {
+      font-family: $font-sans;
+      font-size: 32px;
+      font-weight: 850;
+      color: $color-heading;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
 
-      &.red { background: #ef4444; }
-      &.yellow { background: #f59e0b; }
-      &.green { background: #10b981; }
+    .metric-big-text {
+      font-family: $font-sans;
+      font-size: 24px;
+      font-weight: 850;
+      color: $color-heading;
+      letter-spacing: -0.015em;
+      line-height: 1;
+    }
+
+    .metric-badge {
+      font-family: $font-sans;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 10px;
+      border-radius: $radius-full;
+
+      &.blue {
+        background: #eff6ff;
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+      }
+      &.cyan {
+        background: #ecfeff;
+        color: #0891b2;
+        border: 1px solid #a5f3fc;
+      }
+      &.green {
+        background: #f0fdf4;
+        color: #059669;
+        border: 1px solid #bbf7d0;
+      }
     }
   }
 
-  .terminal-tagline {
-    font-family: $font-mono;
-    font-size: 11.5px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.9);
-    letter-spacing: 0.04em;
+  .metric-title {
+    margin: 0 0 8px 0;
+    font-family: $font-sans;
+    font-size: 15px;
+    font-weight: 800;
+    color: $color-heading;
   }
-}
 
-.pedestal-beacons {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
+  .metric-desc {
+    margin: 0 0 16px 0;
+    font-family: $font-sans;
+    font-size: 13px;
+    line-height: 1.5;
+    color: $color-text-body;
+    flex-grow: 1;
+  }
 
-  .beacon-chip {
+  .metric-footer {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 4px 12px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: $radius-full;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    gap: 6px;
+    padding-top: 10px;
+    border-top: 1px dashed $color-border;
     font-family: $font-sans;
-    font-size: 11.5px;
-    font-weight: 650;
-    color: rgba(255, 255, 255, 0.85);
-
-    .b-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-
-      &.blue { background: $color-primary; box-shadow: 0 0 8px $color-primary; }
-      &.green { background: $color-success; box-shadow: 0 0 8px $color-success; }
-    }
+    font-size: 12px;
+    font-weight: 700;
+    color: $color-primary;
   }
 }
 
-.hero-proof-chips-row {
+.about-culture-banner {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid $color-border;
+  border-radius: 18px;
+  padding: 18px 24px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 20px;
   flex-wrap: wrap;
-  margin-top: 24px;
-}
 
-.proof-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba($color-border, 0.9);
-  border-radius: $radius-full;
-  box-shadow: $shadow-xs;
-  font-family: $font-sans;
-  font-size: 12px;
-  font-weight: 700;
-  color: $color-heading;
+  @media (max-width: 860px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-  .chip-icon {
-    color: $color-primary;
+  .culture-quote-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 620px;
+    text-align: left;
+
+    .quote-symbol {
+      font-family: Georgia, serif;
+      font-size: 28px;
+      line-height: 1;
+      color: $color-primary;
+    }
+
+    .culture-quote-text {
+      margin: 0;
+      font-family: $font-sans;
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 500;
+      color: $color-heading;
+      font-style: italic;
+    }
+  }
+
+  .culture-badges-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .c-proof-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #f8fafc;
+      border: 1px solid $color-border;
+      border-radius: $radius-full;
+      font-family: $font-sans;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: $color-heading;
+
+      app-icon {
+        color: $color-primary;
+      }
+    }
   }
 }
 
@@ -622,19 +646,56 @@
 
 /* =========================================================
    Section 4: The 4-Step Process Surrounding Central Hub
-   (Reference: Middle-Right Process)
+   (Reference: Middle-Right Process with Filled Background)
    ========================================================= */
 .about-formula-section {
-  padding: clamp(48px, 6vw, 76px) 0;
-  background: $color-surface-white;
+  position: relative;
+  padding: clamp(56px, 7vw, 92px) 0;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef3f9 50%, #f8fafc 100%);
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+  overflow: hidden;
+}
+
+.formula-ambient-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+
+  .f-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.35;
+
+    &.orb-left {
+      top: 10%;
+      left: -6%;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba($color-primary, 0.16) 0%, transparent 70%);
+    }
+
+    &.orb-right {
+      bottom: 10%;
+      right: -6%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba($color-accent, 0.14) 0%, transparent 70%);
+    }
+  }
 }
 
 .formula-hub-layout {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 240px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 250px minmax(0, 1fr);
   gap: 32px;
   align-items: center;
-  max-width: 1100px;
+  max-width: 1120px;
   margin: 0 auto;
 
   @media (max-width: 900px) {
@@ -650,17 +711,17 @@
 }
 
 .formula-step-card {
-  background: $color-surface-white;
+  background: #ffffff;
   border: 1px solid $color-border;
   border-radius: $radius-xl;
-  padding: 22px 24px;
-  box-shadow: $shadow-xs;
+  padding: 24px 26px;
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
   transition: all 200ms ease;
 
   &:hover {
     border-color: $color-primary;
     transform: translateY(-2px);
-    box-shadow: $shadow-md;
+    box-shadow: 0 12px 30px -6px rgba(37, 99, 235, 0.12);
   }
 
   .f-num {
@@ -715,12 +776,21 @@
   }
 }
 
+.focal-backdrop-aura {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba($color-primary, 0.22) 0%, rgba($color-accent, 0.08) 60%, transparent 80%);
+  pointer-events: none;
+}
+
 .focal-pulse-ring {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 210px;
+  height: 210px;
   border-radius: 50%;
-  border: 2px dashed rgba($color-accent, 0.4);
+  border: 2px dashed rgba($color-accent, 0.45);
   animation: rotate-ring 20s linear infinite;
 }
 
@@ -732,47 +802,55 @@
 .focal-core-unit {
   position: relative;
   z-index: 2;
-  background: linear-gradient(135deg, $color-heading 0%, #1e1b4b 60%, $color-primary-hover 100%);
+  background: linear-gradient(135deg, $color-heading 0%, #0f172a 55%, #1e3a8a 100%);
   border-radius: 28px;
-  padding: 24px 20px;
+  padding: 26px 22px;
   text-align: center;
-  border: 2px solid $color-primary;
-  box-shadow: 0 0 32px rgba(59, 130, 246, 0.3);
+  border: 2px solid rgba($color-accent, 0.7);
+  box-shadow: 0 0 35px rgba(6, 182, 212, 0.35), 0 16px 36px rgba(15, 23, 42, 0.28);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  min-width: 170px;
 
+  /* Fill the box with the image! Edge to edge with dark base */
   .focal-emblem-badge {
-    width: 60px;
-    height: 60px;
-    border-radius: 16px;
-    background: #ffffff;
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+    background: #0b1528;
+    border: 2px solid rgba($color-accent, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
-    box-shadow: $shadow-md;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 0 24px rgba(6, 182, 212, 0.45);
 
     .focal-logo {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
   }
 
   .focal-status-text {
     display: block;
     font-family: $font-sans;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 850;
-    color: $color-surface-white;
+    color: #ffffff;
+    letter-spacing: -0.01em;
   }
 
   .focal-status-sub {
     font-family: $font-mono;
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.02em;
   }
 }
 

@@ -44,61 +44,101 @@
         </div>
       </div>
 
-      <!-- Centerpiece Visual Pedestal (Matching About Us Hero) -->
-      <div class="hero-centerpiece-wrapper">
-        <div class="centerpiece-pedestal-card">
-          <!-- Ambient Ring Glow -->
-          <div class="pedestal-ambient-ring" aria-hidden="true"></div>
-
-          <div class="pedestal-inner">
-            <div class="pedestal-logo-badge">
-              <img
-                src="/companylogos/AadityaSoftwaresLogo.png"
-                alt="Aaditya Softwares Core Logo"
-                class="pedestal-brand-logo"
-              />
+      <!-- Services Hero Capability & Architecture Stage (Contextual to Services) -->
+      <div class="services-hero-showcase">
+        <div class="services-disciplines-grid">
+          <!-- Discipline 1: Enterprise Web Applications -->
+          <div class="discipline-card">
+            <div class="discipline-top">
+              <div class="discipline-icon-box blue">
+                <app-icon [icon]="LucideCode2" size="sm" />
+              </div>
+              <span class="discipline-status">SPA &bull; SSR</span>
             </div>
-
-            <div class="pedestal-terminal-preview">
-              <div class="terminal-dots" aria-hidden="true">
-                <span class="tdot red"></span>
-                <span class="tdot yellow"></span>
-                <span class="tdot green"></span>
-              </div>
-              <span class="terminal-tagline">Clean Architecture &bull; Full-Stack &bull; Cloud Native &bull; AI Pipelines</span>
+            <h4 class="discipline-name">Enterprise Web Apps</h4>
+            <p class="discipline-desc">
+              High-performance Angular &amp; React single-page systems with reactive state and sub-second rendering.
+            </p>
+            <div class="discipline-tags">
+              <span class="d-tag">Angular</span>
+              <span class="d-tag">TypeScript</span>
+              <span class="d-tag">Micro-Frontends</span>
             </div>
+          </div>
 
-            <!-- Floating Status Beacons -->
-            <div class="pedestal-beacons">
-              <div class="beacon-chip">
-                <span class="b-dot blue" aria-hidden="true"></span>
-                <span>7 Core Engineering Practices Active</span>
+          <!-- Discipline 2: Cross-Platform Mobile -->
+          <div class="discipline-card">
+            <div class="discipline-top">
+              <div class="discipline-icon-box cyan">
+                <app-icon [icon]="LucideSmartphone" size="sm" />
               </div>
-              <div class="beacon-chip">
-                <span class="b-dot green" aria-hidden="true"></span>
-                <span>99.99% Architecture SLA</span>
+              <span class="discipline-status">iOS &bull; Android</span>
+            </div>
+            <h4 class="discipline-name">Mobile Ecosystems</h4>
+            <p class="discipline-desc">
+              Fluid 60-FPS React Native mobile applications with offline-first local data synchronization.
+            </p>
+            <div class="discipline-tags">
+              <span class="d-tag">React Native</span>
+              <span class="d-tag">Live GPS</span>
+              <span class="d-tag">Push Telemetry</span>
+            </div>
+          </div>
+
+          <!-- Discipline 3: Cloud Native & Distributed Backend -->
+          <div class="discipline-card">
+            <div class="discipline-top">
+              <div class="discipline-icon-box indigo">
+                <app-icon [icon]="LucideCloud" size="sm" />
               </div>
+              <span class="discipline-status">Edge &bull; Microservices</span>
+            </div>
+            <h4 class="discipline-name">Cloud Native Architecture</h4>
+            <p class="discipline-desc">
+              Node.js, Express, Docker, and Cloudflare R2 object storage with zero egress fee infrastructure.
+            </p>
+            <div class="discipline-tags">
+              <span class="d-tag">Node.js</span>
+              <span class="d-tag">Cloudflare R2</span>
+              <span class="d-tag">MongoDB</span>
+            </div>
+          </div>
+
+          <!-- Discipline 4: AI & Intelligent Workflows -->
+          <div class="discipline-card">
+            <div class="discipline-top">
+              <div class="discipline-icon-box amber">
+                <app-icon [icon]="LucideSparkles" size="sm" />
+              </div>
+              <span class="discipline-status">Enterprise RAG</span>
+            </div>
+            <h4 class="discipline-name">AI &amp; Automation Workflows</h4>
+            <p class="discipline-desc">
+              Custom LLM integration, automated document intelligence, and enterprise predictive workflows.
+            </p>
+            <div class="discipline-tags">
+              <span class="d-tag">LLM Orchestration</span>
+              <span class="d-tag">Pipelines</span>
+              <span class="d-tag">Vector DB</span>
             </div>
           </div>
         </div>
 
-        <!-- Trust Badges Row -->
-        <div class="hero-proof-chips-row">
-          <div class="proof-chip">
-            <app-icon [icon]="LucideMapPin" size="xs" class="chip-icon" />
-            <span>Vadodara, Gujarat, India</span>
+        <!-- Capability Execution Telemetry Ribbon -->
+        <div class="services-execution-ribbon">
+          <div class="exec-stat-item">
+            <span class="exec-dot green"></span>
+            <span class="exec-text"><strong>7 Core Practices</strong> Active &bull; Architecture to Deployment</span>
           </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideShieldCheck" size="xs" class="chip-icon" />
-            <span>100% Code Ownership</span>
+          <div class="exec-divider" aria-hidden="true">&bull;</div>
+          <div class="exec-stat-item">
+            <app-icon [icon]="LucideShieldCheck" size="xs" />
+            <span class="exec-text"><strong>100% In-House Engineers</strong> &bull; Zero Outsourcing</span>
           </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideRocket" size="xs" class="chip-icon" />
-            <span>Bi-Weekly Agile Sprints</span>
-          </div>
-          <div class="proof-chip">
-            <app-icon [icon]="LucideUsers" size="xs" class="chip-icon" />
-            <span>Direct Senior Engineers</span>
+          <div class="exec-divider" aria-hidden="true">&bull;</div>
+          <div class="exec-stat-item">
+            <app-icon [icon]="LucideRocket" size="xs" />
+            <span class="exec-text"><strong>Production-Grade SLA</strong> &bull; 99.99% Reliability</span>
           </div>
         </div>
       </div>
