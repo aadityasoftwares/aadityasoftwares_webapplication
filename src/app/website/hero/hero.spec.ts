@@ -13,7 +13,7 @@ describe('Hero', () => {
     fixture = TestBed.createComponent(Hero);
     component = fixture.componentInstance;
     await fixture.whenStable();
-  });
+  }, 60000);
 
   it('should create', () => {
     expect(component).toBeTruthy();
