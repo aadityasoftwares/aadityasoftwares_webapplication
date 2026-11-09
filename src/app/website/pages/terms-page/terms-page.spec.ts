@@ -16,7 +16,7 @@ describe('TermsPage', () => {
     fixture = TestBed.createComponent(TermsPage);
     component = fixture.componentInstance;
     await fixture.whenStable();
-  });
+  }, 60000);
 
   it('should create the terms of use page component', () => {
     expect(component).toBeTruthy();

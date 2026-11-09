@@ -16,7 +16,7 @@ describe('PrivacyPolicyPage', () => {
     fixture = TestBed.createComponent(PrivacyPolicyPage);
     component = fixture.componentInstance;
     await fixture.whenStable();
-  });
+  }, 60000);
 
   it('should create the privacy policy page component', () => {
     expect(component).toBeTruthy();

@@ -166,7 +166,7 @@ export class LegalPage implements OnInit {
     }
     this.activeSection.set(sectionId);
     const element = this.document.getElementById(sectionId);
-    if (element) {
+    if (element && typeof element.scrollIntoView === 'function') {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }

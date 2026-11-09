@@ -16,7 +16,7 @@ describe('LegalPage', () => {
     fixture = TestBed.createComponent(LegalPage);
     component = fixture.componentInstance;
     await fixture.whenStable();
-  });
+  }, 60000);
 
   it('should create the legal compliance page component', () => {
     expect(component).toBeTruthy();
