@@ -1,0 +1,42 @@
+<aside class="quick-contact-dock" aria-label="Quick contact shortcuts">
+  <!-- Email Shortcut -->
+  <a
+    [href]="emailUrl"
+    class="quick-contact-btn email-btn"
+    aria-label="Send email to contact@aadityasoftwares.in"
+  >
+    <span class="btn-badge" aria-hidden="true">Email Us</span>
+    <div class="btn-circle">
+      <app-icon [icon]="LucideMail" size="md" />
+    </div>
+  </a>
+
+  <!-- Phone Shortcut -->
+  <a
+    [href]="phoneUrl"
+    class="quick-contact-btn phone-btn"
+    aria-label="Call +91 88498 63872"
+  >
+    <span class="btn-badge" aria-hidden="true">+91 88498 63872</span>
+    <div class="btn-circle">
+      <app-icon [icon]="LucidePhone" size="md" />
+    </div>
+  </a>
+
+  <!-- WhatsApp Shortcut -->
+  <a
+    [href]="whatsappUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="quick-contact-btn whatsapp-btn"
+    aria-label="Chat with Aaditya Softwares on WhatsApp"
+  >
+    <span class="btn-badge" aria-hidden="true">Chat on WhatsApp</span>
+    <div class="btn-circle">
+      <svg class="whatsapp-svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c4.55 0 8.25 3.7 8.25 8.24 0 2.2-.86 4.28-2.42 5.84a8.194 8.194 0 0 1-5.83 2.41c-1.47 0-2.93-.39-4.21-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.21 8.21 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.26-8.24m-3.56 3.16c-.2 0-.44.07-.66.32-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.01 2.58.13.17 1.72 2.68 4.23 3.65 2.08.81 2.51.65 2.96.61.45-.04 1.45-.59 1.66-1.17.2-.57.2-1.07.14-1.17-.06-.11-.22-.17-.46-.29-.25-.12-1.45-.71-1.68-.79-.22-.09-.39-.13-.55.13-.17.25-.64.79-.78.96-.15.16-.29.18-.54.06-.25-.12-1.05-.39-2-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.32-.02-.44-.06-.13-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42l-.48-.01z"/>
+      </svg>
+    </div>
+  </a>
+</aside>
+

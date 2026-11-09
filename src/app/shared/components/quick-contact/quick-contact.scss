@@ -1,0 +1,174 @@
+@use '../../../styles/variables' as *;
+
+.quick-contact-dock {
+  position: fixed;
+  right: 24px;
+  bottom: 28px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: auto;
+
+  @media (max-width: 640px) {
+    right: 16px;
+    bottom: 20px;
+    gap: 10px;
+  }
+}
+
+.quick-contact-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 9999px;
+
+  &:focus-visible {
+    .btn-circle {
+      box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px $color-primary;
+    }
+  }
+
+  &:hover {
+    .btn-badge {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+  }
+}
+
+.btn-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  user-select: none;
+  flex-shrink: 0;
+
+  @media (max-width: 640px) {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Tooltip Badge */
+.btn-badge {
+  position: absolute;
+  right: 58px;
+  white-space: nowrap;
+  padding: 6px 12px;
+  background: #0f172a;
+  color: #f8fafc;
+  font-family: $font-sans;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(8px);
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    transform: translateY(-50%);
+    border-width: 5px 0 5px 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #0f172a;
+  }
+
+  @media (max-width: 640px) {
+    display: none; // Keep clean on touch screens where tap navigates directly
+  }
+}
+
+/* Email Button */
+.email-btn {
+  .btn-circle {
+    background: #0f172a;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+    &:hover {
+      background: #1e293b;
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.4);
+    }
+  }
+}
+
+/* Phone Button */
+.phone-btn {
+  .btn-circle {
+    background: #2563eb;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+
+    &:hover {
+      background: #1d4ed8;
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.45);
+    }
+  }
+}
+
+/* WhatsApp Button */
+.whatsapp-btn {
+  .btn-circle {
+    background: #25d366;
+    box-shadow: 0 8px 22px rgba(37, 211, 102, 0.4);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 2px solid rgba(37, 211, 102, 0.5);
+      animation: whatsappPulse 2.4s infinite ease-out;
+      pointer-events: none;
+    }
+
+    &:hover {
+      background: #22bf5b;
+      transform: scale(1.12) translateY(-2px);
+      box-shadow: 0 14px 28px rgba(37, 211, 102, 0.5);
+    }
+  }
+
+  .whatsapp-svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@keyframes whatsappPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.9;
+  }
+  60% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+

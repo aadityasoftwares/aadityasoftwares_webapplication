@@ -2,84 +2,132 @@
   <!-- Pinned Top White Rim Running Across Viewport -->
   <div class="header-top-rim" aria-hidden="true"></div>
 
-  <!-- Hanging Notch Container (Matches Reference Layout & Geometry) -->
+  <!-- Hanging Notch Container (Unified Header Component with Top Utility & Main Nav) -->
   <div class="header-notch-wrapper">
     <div class="header-notch-container">
-      <!-- Brand Logo: Official Image Badge + Name as it was -->
-      <a routerLink="/" class="header-brand" (click)="onLogoClick($event)" aria-label="Aaditya Softwares - Return to home">
-        <div class="brand-logo-badge">
-          <img src="/companylogos/AadityaSoftwaresLogo.png" alt="Aaditya Softwares Logo"
-            class="header-brand-logo-img" />
-        </div>
-        <div class="brand-logo-text">
-          <span class="brand-main">Aaditya</span><span class="brand-highlight"> &nbsp;Softwares</span>
-        </div>
-      </a>
-
-      <!-- Desktop Center Navigation Links (Home, About, Service, Project, Contact) -->
-      <nav class="desktop-navigation" aria-label="Main Navigation">
-        <ul class="nav-list">
-          @for (item of navItems; track item.label) {
-          <li class="nav-item">
-            <a [routerLink]="item.route" class="nav-link" [class.is-active]="activePath() === item.label"
-              (click)="onNavClick(item, $event)">
-              {{ item.label }}
+      <!-- 1. Top Utility Row: Contact Details & Socials (Disappears on scroll) -->
+      <div class="header-top-utility-bar">
+        <div class="top-utility-container">
+          <!-- Left side: Contact Address, Email, Phone -->
+          <div class="utility-left">
+            <div class="utility-item address-item" title="Our Location: Vadodara, Gujarat, India">
+              <app-icon [icon]="LucideMapPin" size="xs" class="utility-icon" />
+              <span class="utility-text">{{ addressText }}</span>
+            </div>
+            <span class="utility-divider" aria-hidden="true">|</span>
+            <a [href]="emailUrl" class="utility-item" title="Email Aaditya Softwares">
+              <app-icon [icon]="LucideMail" size="xs" class="utility-icon" />
+              <span class="utility-text">contact&#64;aadityasoftwares.in</span>
             </a>
-          </li>
-          }
-        </ul>
-      </nav>
+            <span class="utility-divider" aria-hidden="true">|</span>
+            <a [href]="phoneUrl" class="utility-item" title="Call Aaditya Softwares">
+              <app-icon [icon]="LucidePhone" size="xs" class="utility-icon" />
+              <span class="utility-text">+91 88498 63872</span>
+            </a>
+          </div>
 
-      <!-- Right Actions: Indian Flag Pill & Dark Pill "Book a call" CTA -->
-      <div class="header-actions">
-        <!-- Circular Indian Flag (Tiranga) Pill -->
-        <div class="country-flag-pill" title="India • HQ in Vadodara, Gujarat"
-          aria-label="Headquarters in India - Vadodara, Gujarat">
-          <span class="flag-circle" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="flag-svg" aria-hidden="true">
-              <clipPath id="headerIndiaFlagClip">
-                <circle cx="12" cy="12" r="10" />
-              </clipPath>
-              <g clip-path="url(#headerIndiaFlagClip)">
-                <!-- Saffron -->
-                <rect x="2" y="2" width="20" height="6.67" fill="#FF9933" />
-                <!-- White -->
-                <rect x="2" y="8.67" width="20" height="6.67" fill="#FFFFFF" />
-                <!-- India Green -->
-                <rect x="2" y="15.34" width="20" height="6.67" fill="#138808" />
-                <!-- Ashoka Chakra (Navy Blue 24-spoke representation) -->
-                <circle cx="12" cy="12" r="2.3" fill="none" stroke="#000080" stroke-width="0.55" />
-                <circle cx="12" cy="12" r="0.6" fill="#000080" />
-                <g stroke="#000080" stroke-width="0.35">
-                  <line x1="12" y1="9.9" x2="12" y2="14.1" />
-                  <line x1="9.9" y1="12" x2="14.1" y2="12" />
-                  <line x1="10.5" y1="10.5" x2="13.5" y2="13.5" />
-                  <line x1="10.5" y1="13.5" x2="13.5" y2="10.5" />
-                </g>
-              </g>
-              <circle cx="12" cy="12" r="10" fill="none" stroke="rgba(15, 23, 42, 0.12)" stroke-width="1" />
-            </svg>
-          </span>
+          <!-- Right side: Social Media Platforms -->
+          <div class="utility-right">
+            <span class="utility-follow-label">Follow Us:</span>
+            <div class="utility-social-list" aria-label="Social media profiles">
+              @for (social of socialLinks; track social.id) {
+                <a
+                  [href]="social.href"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="utility-social-btn"
+                  [attr.aria-label]="social.ariaLabel"
+                  [title]="social.name"
+                  [style.--social-color]="social.hoverColor"
+                >
+                  <svg class="utility-social-svg" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
+                    <path [attr.d]="social.iconPath"></path>
+                  </svg>
+                </a>
+              }
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Primary CTA: "Book a call" Button (Our Common Blue Button) -->
-        <app-button
-          variant="primary"
-          size="sm"
-          [height]="36"
-          [rounded]="true"
-          [iconLeft]="LucidePhone"
-          (buttonClick)="onBookCall($event)"
-          ariaLabel="Book a call with engineering team"
-        >
-          Book a call
-        </app-button>
+      <!-- 2. Main Navigation Bar Row -->
+      <div class="header-main-bar">
+        <!-- Brand Logo: Official Image Badge + Name as it was -->
+        <a routerLink="/" class="header-brand" (click)="onLogoClick($event)" aria-label="Aaditya Softwares - Return to home">
+          <div class="brand-logo-badge">
+            <img src="/companylogos/AadityaSoftwaresLogo.png" alt="Aaditya Softwares Logo"
+              class="header-brand-logo-img" />
+          </div>
+          <div class="brand-logo-text">
+            <span class="brand-main">Aaditya</span><span class="brand-highlight"> &nbsp;Softwares</span>
+          </div>
+        </a>
 
-        <!-- Mobile Drawer Hamburger Toggle -->
-        <button type="button" class="mobile-menu-btn" [attr.aria-expanded]="mobileMenuOpen()"
-          aria-label="Toggle navigation menu" (click)="toggleMobileMenu()">
-          <app-icon [icon]="mobileMenuOpen() ? LucideX : LucideMenu" size="sm" />
-        </button>
+        <!-- Desktop Center Navigation Links (Home, About, Service, Project, Contact) -->
+        <nav class="desktop-navigation" aria-label="Main Navigation">
+          <ul class="nav-list">
+            @for (item of navItems; track item.label) {
+            <li class="nav-item">
+              <a [routerLink]="item.route" class="nav-link" [class.is-active]="activePath() === item.label"
+                (click)="onNavClick(item, $event)">
+                {{ item.label }}
+              </a>
+            </li>
+            }
+          </ul>
+        </nav>
+
+        <!-- Right Actions: Indian Flag Pill & Blue "Book a call" CTA -->
+        <div class="header-actions">
+          <!-- Circular Indian Flag (Tiranga) Pill -->
+          <div class="country-flag-pill" title="India • HQ in Vadodara, Gujarat"
+            aria-label="Headquarters in India - Vadodara, Gujarat">
+            <span class="flag-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="flag-svg" aria-hidden="true">
+                <clipPath id="headerIndiaFlagClip">
+                  <circle cx="12" cy="12" r="10" />
+                </clipPath>
+                <g clip-path="url(#headerIndiaFlagClip)">
+                  <!-- Saffron -->
+                  <rect x="2" y="2" width="20" height="6.67" fill="#FF9933" />
+                  <!-- White -->
+                  <rect x="2" y="8.67" width="20" height="6.67" fill="#FFFFFF" />
+                  <!-- India Green -->
+                  <rect x="2" y="15.34" width="20" height="6.67" fill="#138808" />
+                  <!-- Ashoka Chakra (Navy Blue 24-spoke representation) -->
+                  <circle cx="12" cy="12" r="2.3" fill="none" stroke="#000080" stroke-width="0.55" />
+                  <circle cx="12" cy="12" r="0.6" fill="#000080" />
+                  <g stroke="#000080" stroke-width="0.35">
+                    <line x1="12" y1="9.9" x2="12" y2="14.1" />
+                    <line x1="9.9" y1="12" x2="14.1" y2="12" />
+                    <line x1="10.5" y1="10.5" x2="13.5" y2="13.5" />
+                    <line x1="10.5" y1="13.5" x2="13.5" y2="10.5" />
+                  </g>
+                </g>
+                <circle cx="12" cy="12" r="10" fill="none" stroke="rgba(15, 23, 42, 0.12)" stroke-width="1" />
+              </svg>
+            </span>
+          </div>
+
+          <!-- Primary CTA: "Book a call" Button (Our Common Blue Button) -->
+          <app-button
+            variant="primary"
+            size="sm"
+            [height]="36"
+            [rounded]="true"
+            [iconLeft]="LucidePhone"
+            (buttonClick)="onBookCall($event)"
+            ariaLabel="Book a call with engineering team"
+          >
+            Book a call
+          </app-button>
+
+          <!-- Mobile Drawer Hamburger Toggle -->
+          <button type="button" class="mobile-menu-btn" [attr.aria-expanded]="mobileMenuOpen()"
+            aria-label="Toggle navigation menu" (click)="toggleMobileMenu()">
+            <app-icon [icon]="mobileMenuOpen() ? LucideX : LucideMenu" size="sm" />
+          </button>
+        </div>
       </div>
     </div>
   </div>

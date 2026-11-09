@@ -6,4 +6,5 @@ export * from './divider/divider';
 export * from './icon/icon';
 export * from './tooltip/tooltip';
 export * from './custom-cursor/custom-cursor';
+export * from './quick-contact/quick-contact';
 
