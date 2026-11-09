@@ -49,6 +49,16 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section[id],
+div[id],
+article[id] {
+  scroll-margin-top: 84px;
+}
+
 body {
   margin: 0;
   padding: 0;

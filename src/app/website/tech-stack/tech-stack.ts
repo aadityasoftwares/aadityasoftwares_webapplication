@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, signal } from '@angular/core';
 import { LucideChevronUp, LucidePlus, LucideArrowRight, LucideSparkles } from '@lucide/angular';
+import { gsap } from 'gsap';
 import { AppIcon } from '../../shared/components/icon/icon';
 import { ScrollReveal } from '../scroll-reveal';
 import { TechIcon } from './tech-icon';
+import { GsapAnimationService } from '../../shared/services/gsap-animation.service';
 
 export type TechCategory = 'all' | 'frontend' | 'backend' | 'mobile' | 'cloud' | 'devops';
 
@@ -309,11 +311,32 @@ export class TechStack {
     return Math.max(0, this.filteredTech().length - this.initialVisibleCount);
   });
 
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly gsapService = inject(GsapAnimationService);
+
   setCategory(cat: TechCategory): void {
+    if (this.activeCategory() === cat) return;
     this.activeCategory.set(cat);
+    this.animateTechCards();
   }
 
   toggleShowMore(): void {
     this.showAll.update((v) => !v);
+    this.animateTechCards();
+  }
+
+  private animateTechCards(): void {
+    if (typeof window === 'undefined') return;
+    setTimeout(() => {
+      const cards = this.elementRef.nativeElement.querySelectorAll('.tech-card');
+      if (cards.length) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 15, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.38, stagger: 0.025, ease: 'power2.out' },
+        );
+      }
+      this.gsapService.refresh();
+    }, 15);
   }
 }

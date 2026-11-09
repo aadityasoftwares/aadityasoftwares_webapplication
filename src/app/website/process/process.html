@@ -1,7 +1,8 @@
 <section id="process" class="process-section" appScrollReveal>
-  <!-- Ambient Atmospheric Glows -->
+  <!-- Ambient Atmospheric Lavender/Blue Glows matching reference design -->
   <div class="process-ambient-glow" aria-hidden="true">
     <div class="glow-orb glow-top"></div>
+    <div class="glow-orb glow-center"></div>
     <div class="glow-orb glow-bottom"></div>
   </div>
 
@@ -18,55 +19,164 @@
       </p>
     </div>
 
-    <!-- Stepper Navigation Bar (01 to 05) -->
-    <div class="process-nav-bar" role="tablist" aria-label="Development process stages">
-      @for (step of steps; track step.id; let idx = $index) {
-        <button
-          type="button"
-          role="tab"
-          class="process-step-tab"
-          [class.is-active]="activeStepIndex() === idx"
-          [attr.aria-selected]="activeStepIndex() === idx"
-          (click)="selectStep(idx)"
+    <!-- Centerpiece Orbital Stage (Matching Reference Image & Hero System) -->
+    <div class="process-orbital-stage">
+      <div
+        class="orbital-system"
+        (mouseenter)="pauseAutoPlay()"
+        (mouseleave)="resumeAutoPlay()"
+        role="region"
+        aria-label="Our Development Process 5-Step Orbital Framework"
+      >
+        <!-- Concentric Orbit SVG Rings -->
+        <svg
+          class="orbital-rings-svg"
+          viewBox="0 0 520 520"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
         >
-          <span class="tab-step-id">{{ step.id }}</span>
-          <div class="tab-meta">
-            <span class="tab-step-name">{{ step.name }}</span>
-            <span class="tab-step-duration">{{ step.duration }}</span>
+          <!-- Outermost Subtle Ring -->
+          <circle
+            cx="260"
+            cy="260"
+            r="255"
+            stroke="#e2e8f0"
+            stroke-width="1"
+            opacity="0.65"
+          />
+          <!-- Outer Orbit Path for 5 Nodes -->
+          <circle
+            cx="260"
+            cy="260"
+            r="215"
+            stroke="rgba(203, 213, 225, 0.95)"
+            stroke-width="1.5"
+            stroke-dasharray="6 6"
+            class="orbit-ring-outer"
+          />
+          <!-- Middle Accent Path -->
+          <circle
+            cx="260"
+            cy="260"
+            r="175"
+            stroke="rgba(37, 99, 235, 0.22)"
+            stroke-width="1.2"
+            class="orbit-ring-middle"
+          />
+          <!-- Inner Subtle Orbit -->
+          <circle
+            cx="260"
+            cy="260"
+            r="150"
+            stroke="rgba(14, 165, 233, 0.25)"
+            stroke-width="1"
+            stroke-dasharray="4 4"
+            class="orbit-ring-inner"
+          />
+          <!-- Decorative Accent Dots along the orbital field -->
+          <circle cx="260" cy="45" r="3" fill="#2563eb" opacity="0.6" />
+          <circle cx="475" cy="260" r="3" fill="#0ea5e9" opacity="0.65" />
+          <circle cx="45" cy="260" r="3" fill="#2563eb" opacity="0.6" />
+          <circle cx="260" cy="475" r="3.5" fill="#2563eb" opacity="0.65" />
+        </svg>
+
+        <!-- 5 Circular Orbital Nodes Around the Perimeter -->
+        @for (step of steps; track step.id; let i = $index) {
+          <button
+            type="button"
+            class="orbital-node"
+            [class.node-active]="activeStepIndex() === i"
+            [style.left]="step.posLeft"
+            [style.top]="step.posTop"
+            (click)="selectStep(i)"
+            [attr.aria-label]="'Step ' + step.id + ': ' + step.name"
+            [attr.aria-selected]="activeStepIndex() === i"
+          >
+            <div class="node-icon-wrap">
+              <app-icon [icon]="step.icon" size="sm" />
+            </div>
+            <span class="node-step-badge">{{ step.id }}</span>
+            <span class="node-tooltip">{{ step.name }}</span>
+          </button>
+        }
+
+        <!-- Center Active Step Circle Hub (Pure Circular Shape Matching Reference Image) -->
+        <div class="orbital-core-circle">
+          <div class="core-inner-rim" aria-hidden="true"></div>
+
+          <div class="core-circle-content">
+            <!-- Top Category Title -->
+            <div class="core-header">
+              <span class="core-tagline">OUR DEVELOPMENT APPROACH</span>
+            </div>
+
+            <!-- Animated Step Panes Container (Smooth Crossfade & Slide) -->
+            <div class="core-steps-container">
+              @for (step of steps; track step.id; let i = $index) {
+                <div
+                  class="core-step-pane"
+                  [class.is-active]="activeStepIndex() === i"
+                  [attr.aria-hidden]="activeStepIndex() !== i"
+                >
+                  <div class="core-badge-wrap">
+                    <span class="core-badge-tag">{{ step.tag }}</span>
+                  </div>
+
+                  <div class="core-step-name-row">
+                    <span class="core-step-name">{{ step.id }} &mdash; {{ step.name }}</span>
+                  </div>
+
+                  <h3 class="core-headline">{{ step.headline }}</h3>
+                  <p class="core-desc">{{ step.description }}</p>
+                </div>
+              }
+            </div>
+
+            <!-- Interactive 5-Step Number Bar (01 02 03 04 05) -->
+            <div class="core-nav-bar" role="tablist" aria-label="Development steps">
+              @for (step of steps; track step.id; let i = $index) {
+                <button
+                  type="button"
+                  class="nav-step-btn"
+                  [class.is-active]="activeStepIndex() === i"
+                  (click)="selectStep(i)"
+                  [attr.aria-selected]="activeStepIndex() === i"
+                  [attr.aria-label]="'Go to step ' + step.id"
+                >
+                  <span class="nav-step-text">{{ step.id }}</span>
+                  <span class="nav-step-indicator"></span>
+                </button>
+              }
+            </div>
           </div>
-        </button>
-      }
+        </div>
+      </div>
     </div>
 
-    <!-- Active Step Spotlight Card -->
-    @let activeStep = steps[activeStepIndex()];
-    <article class="process-detail-card" [attr.aria-label]="activeStep.name + ' Details'">
-      <div class="detail-header">
-        <div class="detail-badge-group">
-          <span class="step-num-pill">Stage {{ activeStep.id }}</span>
-          <span class="step-duration-chip">{{ activeStep.duration }}</span>
+    <!-- Active Step Key Production Deliverables Panel -->
+    <div class="process-deliverables-panel">
+      <div class="deliverables-header">
+        <div class="deliverables-stage-badge">
+          <span class="pulse-dot"></span>
+          <span>STAGE {{ activeStep().id }} DELIVERABLES</span>
         </div>
-
-        <div class="detail-icon-circle" aria-hidden="true">
-          <app-icon [icon]="activeStep.icon" size="md" />
+        <div class="deliverables-meta">
+          <span class="deliverables-stage-name">{{ activeStep().name }}</span>
+          <span class="deliverables-duration-pill">{{ activeStep().duration }}</span>
         </div>
       </div>
 
-      <h3 class="detail-headline">{{ activeStep.headline }}</h3>
-      <p class="detail-description">{{ activeStep.description }}</p>
-
-      <div class="detail-deliverables-panel">
-        <h4 class="deliverables-heading">Key Production Deliverables:</h4>
-        <div class="deliverables-grid">
-          @for (item of activeStep.deliverables; track item) {
-            <div class="deliverable-item">
-              <app-icon [icon]="LucideCheckCircle2" size="xs" class="check-ico" />
-              <span>{{ item }}</span>
+      <div class="deliverables-grid">
+        @for (item of activeStep().deliverables; track item) {
+          <div class="deliverable-card">
+            <div class="check-icon-circle">
+              <app-icon [icon]="LucideCheckCircle2" size="xs" class="check-icon" />
             </div>
-          }
-        </div>
+            <span class="deliverable-text">{{ item }}</span>
+          </div>
+        }
       </div>
-    </article>
+    </div>
   </div>
 </section>
-

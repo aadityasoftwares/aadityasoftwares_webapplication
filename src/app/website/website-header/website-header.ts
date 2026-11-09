@@ -8,35 +8,33 @@ import {
   signal,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   LucideMenu,
   LucideX,
-  LucideSparkles,
-  LucideArrowRight,
+  LucidePhone,
   LucideHouse,
   LucideUsers,
   LucideLayers,
   LucideBriefcase,
   LucideMail,
-  LucideUserPlus,
+  LucideArrowRight,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
-import { Button } from '../../shared/components/button/button';
 
 export interface HeaderNavItem {
   label: string;
   href: string;
-  route?: string;
-  icon: AppIconDefinition;
+  route: string;
+  icon?: AppIconDefinition;
   active?: boolean;
 }
 
 @Component({
   selector: 'app-website-header',
   standalone: true,
-  imports: [AppIcon, Button],
+  imports: [AppIcon, RouterLink],
   templateUrl: './website-header.html',
   styleUrl: './website-header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,9 +53,8 @@ export class WebsiteHeader {
 
   readonly LucideMenu = LucideMenu;
   readonly LucideX = LucideX;
-  readonly LucideSparkles = LucideSparkles;
+  readonly LucidePhone = LucidePhone;
   readonly LucideArrowRight = LucideArrowRight;
-  readonly LucideUserPlus = LucideUserPlus;
 
   readonly navItems: HeaderNavItem[] = [
     { label: 'Home', href: '/', route: '/', icon: LucideHouse, active: true },
@@ -71,23 +68,29 @@ export class WebsiteHeader {
   @Output() navSelect = new EventEmitter<HeaderNavItem>();
 
   constructor() {
+    this.updateActivePathFromUrl(this.router.url || '/');
+
     this.router.events.pipe(takeUntilDestroyed()).subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.mobileMenuOpen.set(false);
         const url = event.urlAfterRedirects || event.url;
-        if (url.startsWith('/about')) {
-          this.activePath.set('About');
-        } else if (url.startsWith('/services')) {
-          this.activePath.set('Service');
-        } else if (url.startsWith('/projects')) {
-          this.activePath.set('Project');
-        } else if (url.startsWith('/contact')) {
-          this.activePath.set('Contact');
-        } else {
-          this.activePath.set('Home');
-        }
+        this.updateActivePathFromUrl(url);
       }
     });
+  }
+
+  private updateActivePathFromUrl(url: string): void {
+    if (url.startsWith('/about')) {
+      this.activePath.set('About');
+    } else if (url.startsWith('/services')) {
+      this.activePath.set('Service');
+    } else if (url.startsWith('/projects')) {
+      this.activePath.set('Project');
+    } else if (url.startsWith('/contact')) {
+      this.activePath.set('Contact');
+    } else {
+      this.activePath.set('Home');
+    }
   }
 
   @HostListener('window:scroll')
@@ -104,33 +107,77 @@ export class WebsiteHeader {
     this.mobileMenuOpen.set(false);
   }
 
-  onNavClick(item: HeaderNavItem, event: MouseEvent): void {
-    event.preventDefault();
+  onLogoClick(event?: MouseEvent): void {
+    event?.preventDefault();
+    this.activePath.set('Home');
+    this.closeMobileMenu();
+
+    const currentUrl = (this.router.url || '/').split('?')[0].split('#')[0];
+    if (currentUrl === '' || currentUrl === '/') {
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    this.router
+      .navigate(['/'])
+      .catch(() => {})
+      .then(() => {
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+  }
+
+  onNavClick(item: HeaderNavItem, event?: MouseEvent): void {
+    event?.preventDefault();
     this.activePath.set(item.label);
     this.closeMobileMenu();
     this.navSelect.emit(item);
 
-    if (item.route) {
-      this.router
-        .navigate([item.route])
-        .catch(() => {})
-        .then(() => {
-          if (typeof window !== 'undefined') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        });
-    } else if (item.href.startsWith('#')) {
-      const targetId = item.href.slice(1);
-      const element = this.document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+    const targetRoute = item.route || item.href;
+    const currentUrl = (this.router.url || '/').split('?')[0].split('#')[0];
+
+    // If user is already on the selected route, smoothly scroll to top
+    if (
+      currentUrl === targetRoute ||
+      (targetRoute === '/' && (currentUrl === '' || currentUrl === '/'))
+    ) {
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+      return;
     }
+
+    // Navigate to the target page and scroll to top
+    this.router
+      .navigate([targetRoute])
+      .catch(() => {})
+      .then(() => {
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+  }
+
+  onBookCall(event?: MouseEvent): void {
+    this.onSignup(event);
   }
 
   onSignup(event?: MouseEvent): void {
     event?.preventDefault();
     this.signupClick.emit();
+    this.closeMobileMenu();
+
+    const currentUrl = (this.router.url || '/').split('?')[0].split('#')[0];
+    if (currentUrl === '/contact') {
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
     this.router
       .navigate(['/contact'])
       .catch(() => {})

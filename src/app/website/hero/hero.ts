@@ -1,11 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
+  ElementRef,
   EventEmitter,
   OnDestroy,
   OnInit,
   Output,
+  afterNextRender,
   computed,
+  inject,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -22,6 +26,7 @@ import {
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { Button } from '../../shared/components/button/button';
+import { GsapAnimationService } from '../../shared/services/gsap-animation.service';
 
 export interface DevelopmentStep {
   id: string;
@@ -57,7 +62,20 @@ export class Hero implements OnInit, OnDestroy {
   readonly activeStepIndex = signal(0);
   readonly isPaused = signal(false);
 
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly gsapService = inject(GsapAnimationService);
+
   private autoPlayTimer: ReturnType<typeof setInterval> | null = null;
+
+  constructor() {
+    afterNextRender(() => {
+      const tl = this.gsapService.animateHero(this.elementRef.nativeElement);
+      this.destroyRef.onDestroy(() => {
+        tl?.kill();
+      });
+    });
+  }
 
   readonly steps: DevelopmentStep[] = [
     {

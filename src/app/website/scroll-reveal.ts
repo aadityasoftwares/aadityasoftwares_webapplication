@@ -1,8 +1,10 @@
 import { afterNextRender, DestroyRef, Directive, ElementRef, inject } from '@angular/core';
+import { GsapAnimationService } from '../shared/services/gsap-animation.service';
 
 /**
- * Animate once on entry when scrolling into view.
- * Content stays fully visible without browser animation support or with reduced motion.
+ * High-performance GSAP ScrollTrigger directive.
+ * Automatically coordinates staggered reveals for section text and card boxes.
+ * Degrades gracefully when JavaScript animations or reduced motion is preferred.
  */
 @Directive({
   selector: '[appScrollReveal]',
@@ -11,11 +13,12 @@ import { afterNextRender, DestroyRef, Directive, ElementRef, inject } from '@ang
 export class ScrollReveal {
   private readonly element = inject(ElementRef<HTMLElement>).nativeElement;
   private readonly destroyRef = inject(DestroyRef);
+  private readonly gsapService = inject(GsapAnimationService);
 
   constructor() {
     afterNextRender(() => {
-      const viewport = this.element.ownerDocument.defaultView;
-      if (!viewport || typeof IntersectionObserver === 'undefined' || !this.element.animate) {
+      const viewport = this.element.ownerDocument?.defaultView;
+      if (!viewport) {
         return;
       }
 
@@ -24,43 +27,13 @@ export class ScrollReveal {
         return;
       }
 
-      let animation: Animation | undefined;
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((entry) => entry.isIntersecting)) {
-            return;
-          }
-
-          if (!motion.matches) {
-            animation = this.element.animate(
-              [
-                { opacity: 0, transform: 'translateY(24px)' },
-                { opacity: 1, transform: 'translateY(0)' },
-              ],
-              { duration: 600, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)', fill: 'forwards' },
-            );
-          }
-          observer.disconnect();
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' },
-      );
-
-      const stopMotion = () => {
-        if (motion.matches) {
-          animation?.cancel();
-          observer.disconnect();
-        }
-      };
-
-      observer.observe(this.element);
-      motion.addEventListener('change', stopMotion);
+      const trigger = this.gsapService.animateSection(this.element);
 
       this.destroyRef.onDestroy(() => {
-        observer.disconnect();
-        animation?.cancel();
-        motion.removeEventListener('change', stopMotion);
+        if (trigger) {
+          trigger.kill();
+        }
       });
     });
   }
 }
-

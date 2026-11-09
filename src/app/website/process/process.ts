@@ -1,12 +1,22 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
-  LucideSearch,
-  LucideLayout,
-  LucideCode2,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { gsap } from 'gsap';
+import {
   LucideShieldCheck,
-  LucideRocket,
+  LucideCpu,
+  LucideCode2,
+  LucideCircleCheck,
   LucideCheckCircle2,
-  LucideArrowRight,
+  LucideRocket,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { ScrollReveal } from '../scroll-reveal';
@@ -14,81 +24,187 @@ import { ScrollReveal } from '../scroll-reveal';
 export interface ProcessStep {
   readonly id: string;
   readonly name: string;
+  readonly tag: string;
   readonly duration: string;
   readonly headline: string;
   readonly description: string;
   readonly deliverables: string[];
   readonly icon: AppIconDefinition;
+  readonly posLeft: string;
+  readonly posTop: string;
 }
 
 @Component({
   selector: 'app-process',
   standalone: true,
-  imports: [AppIcon, ScrollReveal],
+  imports: [CommonModule, AppIcon, ScrollReveal],
   templateUrl: './process.html',
   styleUrl: './process.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Process {
+export class Process implements OnInit, OnDestroy {
+  readonly LucideShieldCheck = LucideShieldCheck;
+  readonly LucideCpu = LucideCpu;
+  readonly LucideCode2 = LucideCode2;
+  readonly LucideCircleCheck = LucideCircleCheck;
   readonly LucideCheckCircle2 = LucideCheckCircle2;
-  readonly LucideArrowRight = LucideArrowRight;
+  readonly LucideRocket = LucideRocket;
 
   readonly activeStepIndex = signal<number>(0);
+  readonly isPaused = signal<boolean>(false);
+
+  private autoPlayTimer: ReturnType<typeof setInterval> | null = null;
 
   readonly steps: ProcessStep[] = [
     {
       id: '01',
-      name: 'Discovery & Architecture',
+      name: 'Secure by Design',
+      tag: 'Protected',
       duration: 'Week 1',
-      headline: 'Foundational System Architecture & Scope Definition',
+      headline: 'Your data stays protected',
       description:
-        'We deep-dive into your business objectives, data schemas, compliance constraints, and security requirements to craft an actionable technical roadmap.',
-      deliverables: ['System Architecture Diagram', 'Database Schema Specification', 'API & Integration Contract', 'Sprint Delivery Plan'],
-      icon: LucideSearch,
+        'Secure authentication, access control and data protection built into every application.',
+      deliverables: [
+        'OWASP Top 10 Security Architecture',
+        'Role-Based Access Control (RBAC)',
+        'Data Encryption at Rest & In-Transit',
+        'Zero-Trust Secrets & Credential Management',
+      ],
+      icon: LucideShieldCheck,
+      posLeft: '50%',
+      posTop: '8.7%',
     },
     {
       id: '02',
-      name: 'UI/UX & Design Systems',
+      name: 'AI-Powered Development',
+      tag: 'AI Assisted',
       duration: 'Week 1 - 2',
-      headline: 'Component Architecture & Accessible User Experience',
+      headline: 'Smarter development with AI',
       description:
-        'We create intuitive, high-fidelity interfaces and design tokens in Figma. Every user journey is wireframed and validated before writing code.',
-      deliverables: ['Interactive Clickable Prototype', 'Design Token Guidelines', 'Component States & Responsive Layouts', 'User Journey Maps'],
-      icon: LucideLayout,
+        'AI-assisted coding, faster workflows and smarter problem-solving with developer oversight.',
+      deliverables: [
+        'AI-Accelerated Code Scaffolding',
+        'Automated PR Review Heuristics',
+        'Intelligent Refactoring & Code Linting',
+        'Senior Engineer Manual Verification',
+      ],
+      icon: LucideCpu,
+      posLeft: '89.3%',
+      posTop: '37.2%',
     },
     {
       id: '03',
-      name: 'Agile Engineering Sprints',
+      name: 'Clean Code Quality',
+      tag: 'Maintainable',
       duration: '2-Week Cycles',
-      headline: 'Modular, High-Velocity Full-Stack Development',
+      headline: 'Better code. Better products.',
       description:
-        'Our engineers work in predictable 2-week agile sprints. You receive weekly demo builds and real-time Git progress without opaque agency barriers.',
-      deliverables: ['Clean, Well-Documented Code', 'Modular Frontend & Backend APIs', '2-Week Sprint Releases', 'Direct Engineer Collaboration'],
+        'Structured architecture, reusable components and maintainable code.',
+      deliverables: [
+        'Modular Component Architecture',
+        'Strict TypeScript & Type-Safe APIs',
+        'Reusable Design System Tokens',
+        'Maintainable Clean Architecture Standards',
+      ],
       icon: LucideCode2,
+      posLeft: '74.3%',
+      posTop: '83.4%',
     },
     {
       id: '04',
-      name: 'Rigorous Quality & Security',
+      name: 'Tested Before Release',
+      tag: 'Quality Checked',
       duration: 'Continuous',
-      headline: 'Automated Testing, Vulnerability Audits & Benchmarks',
+      headline: 'Catch issues before users do',
       description:
-        'Zero compromise on stability. We execute automated unit tests, cross-browser validation, OWASP security checks, and Lighthouse performance audits.',
-      deliverables: ['Vitest / E2E Automated Suites', 'Security & OWASP Compliance Audit', 'Core Web Vitals Optimization', 'Zero-Defect Signoff'],
-      icon: LucideShieldCheck,
+        'Testing, code reviews and validation to reduce bugs and production risks.',
+      deliverables: [
+        'Automated Unit & Integration Test Suites',
+        'End-to-End User Flow Validation',
+        'Cross-Browser & Responsive Stress Tests',
+        'Lighthouse Performance 95+ Score Checks',
+      ],
+      icon: LucideCircleCheck,
+      posLeft: '25.7%',
+      posTop: '83.4%',
     },
     {
       id: '05',
-      name: 'Zero-Downtime Deployment',
+      name: 'Reliable Deployment',
+      tag: 'Production Ready',
       duration: 'Launch & Scale',
-      headline: 'Cloud Infrastructure, Telemetry & 100% IP Handover',
+      headline: 'Deploy with confidence',
       description:
-        'We deploy your platform to production via automated CI/CD pipelines, configure telemetry alarms, and provide complete Git repository handover.',
-      deliverables: ['Automated CI/CD Pipelines', 'Cloud Telemetry & Uptime Alarms', '100% Code & IP Ownership Handover', 'Post-Launch SLA Support'],
+        'Careful releases, environment configuration and deployment checks to minimize downtime.',
+      deliverables: [
+        'Automated CI/CD Pipeline Automation',
+        'Zero-Downtime Blue/Green Deployments',
+        'Cloud Health Alarms & Uptime Telemetry',
+        '100% Repository & IP Ownership Handover',
+      ],
       icon: LucideRocket,
+      posLeft: '10.7%',
+      posTop: '37.2%',
     },
   ];
 
+  readonly activeStep = computed(() => this.steps[this.activeStepIndex()]);
+
+  ngOnInit(): void {
+    this.startAutoPlay();
+  }
+
+  ngOnDestroy(): void {
+    this.stopAutoPlay();
+  }
+
+  private startAutoPlay(): void {
+    this.stopAutoPlay();
+    this.autoPlayTimer = setInterval(() => {
+      if (!this.isPaused()) {
+        this.nextStep();
+      }
+    }, 4500);
+  }
+
+  private stopAutoPlay(): void {
+    if (this.autoPlayTimer) {
+      clearInterval(this.autoPlayTimer);
+      this.autoPlayTimer = null;
+    }
+  }
+
+  pauseAutoPlay(): void {
+    this.isPaused.set(true);
+  }
+
+  resumeAutoPlay(): void {
+    this.isPaused.set(false);
+  }
+
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+
   selectStep(index: number): void {
+    if (this.activeStepIndex() === index) return;
     this.activeStepIndex.set(index);
+    this.startAutoPlay();
+    this.animateStepChange();
+  }
+
+  nextStep(): void {
+    this.activeStepIndex.update((current) => (current + 1) % this.steps.length);
+    this.animateStepChange();
+  }
+
+  private animateStepChange(): void {
+    if (typeof window === 'undefined') return;
+    const cards = this.elementRef.nativeElement.querySelectorAll('.deliverable-card');
+    if (cards.length) {
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.35, stagger: 0.05, ease: 'power2.out' },
+      );
+    }
   }
 }

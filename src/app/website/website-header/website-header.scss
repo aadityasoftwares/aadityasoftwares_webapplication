@@ -6,50 +6,115 @@
   top: 0;
   z-index: 1000;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.65);
-  transition: box-shadow 200ms ease, background-color 200ms ease;
-}
-
-:host.header-scrolled {
-  background-color: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  pointer-events: none;
 }
 
 .app-site-header {
   width: 100%;
+  position: relative;
 }
 
-.header-container {
+/* ----------------------------------------------------------
+   1. Pinned Top White Rim Running Across the Viewport
+   ---------------------------------------------------------- */
+.header-top-rim {
+  width: 100%;
+  height: 12px;
+  background: #ffffff;
+  pointer-events: auto;
+}
+
+/* ----------------------------------------------------------
+   2. Main Hanging Notch Tab Navbar (Reference Geometry)
+   ---------------------------------------------------------- */
+.header-notch-wrapper {
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+}
+
+.header-notch-container {
+  pointer-events: auto;
+  position: relative;
+  max-width: 1140px;
+  width: calc(100% - 48px);
+  margin: 0 auto;
+  height: 60px;
+  background: #ffffff;
+  border-bottom-left-radius: 26px;
+  border-bottom-right-radius: 26px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: $container-max-width;
-  height: 76px;
-  margin: 0 auto;
-  padding: 0 $container-padding-x;
+  padding: 0 clamp(16px, 2.8vw, 30px);
+  transition: box-shadow 0.25s ease;
 
-  @media (max-width: 768px) {
-    height: 68px;
-    padding: 0 $container-padding-x-mobile;
+  /* Seamless Concave Inverted Corner on the Left */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -26px;
+    width: 26px;
+    height: 26px;
+    pointer-events: none;
+    background: radial-gradient(circle at 0% 100%, transparent 26px, #ffffff 26.5px);
+  }
+
+  /* Seamless Concave Inverted Corner on the Right */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -26px;
+    width: 26px;
+    height: 26px;
+    pointer-events: none;
+    background: radial-gradient(circle at 100% 100%, transparent 26px, #ffffff 26.5px);
+  }
+
+  @media (max-width: 640px) {
+    width: calc(100% - 20px);
+    height: 56px;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    padding: 0 16px;
+
+    &::before {
+      left: -18px;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 0% 100%, transparent 18px, #ffffff 18.5px);
+    }
+
+    &::after {
+      right: -18px;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 100% 100%, transparent 18px, #ffffff 18.5px);
+    }
   }
 }
 
-/* Brand Logo */
+:host.header-scrolled .header-notch-container {
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+}
+
+/* ----------------------------------------------------------
+   3. Brand Logo (Official Logo Image + Brand Name as it was)
+   ---------------------------------------------------------- */
 .header-brand {
-  text-decoration: none;
-  color: $color-heading;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  cursor: pointer;
+  gap: 10px;
+  text-decoration: none;
   user-select: none;
-  transition: opacity 160ms ease;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 
   &:hover {
-    opacity: 0.92;
+    opacity: 0.9;
   }
 }
 
@@ -57,13 +122,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
   background-color: #0f172a;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   flex-shrink: 0;
 }
 
@@ -82,26 +147,30 @@
 
 .brand-main {
   font-family: $font-sans;
-  font-size: 21px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 850;
   color: $color-heading;
   letter-spacing: -0.025em;
+  line-height: 1;
 }
 
 .brand-highlight {
   font-family: $font-sans;
-  font-size: 21px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 850;
   color: $color-primary;
   letter-spacing: -0.025em;
+  line-height: 1;
 }
 
-/* Desktop Navigation */
+/* ----------------------------------------------------------
+   4. Desktop Center Navigation (About, Solution, Works, Process, Automation, Clients)
+   ---------------------------------------------------------- */
 .desktop-navigation {
   display: flex;
   align-items: center;
 
-  @media (max-width: 868px) {
+  @media (max-width: 900px) {
     display: none;
   }
 }
@@ -109,151 +178,252 @@
 .nav-list {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: clamp(14px, 2.2vw, 30px);
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
 }
 
 .nav-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
   font-family: $font-sans;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 500;
-  color: $color-text-body;
+  color: #334155;
   text-decoration: none;
-  border-radius: $radius-md;
-  transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 6px 0;
   position: relative;
-
-  .nav-item-icon {
-    color: $color-text-muted;
-    transition: color 180ms ease, transform 180ms ease;
-  }
+  transition: color 0.18s ease;
 
   &:hover {
-    color: $color-heading;
-    background-color: rgba(15, 23, 42, 0.05);
-
-    .nav-item-icon {
-      color: $color-primary;
-      transform: translateY(-1px);
-    }
+    color: #0f172a;
   }
 
   &.is-active {
-    color: $color-primary;
-    font-weight: 600;
-    background-color: rgba(30, 64, 175, 0.08);
+    color: #0f172a;
+    font-weight: 650;
 
-    .nav-item-icon {
-      color: $color-primary;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: $color-primary;
+      border-radius: 9999px;
     }
   }
 }
 
-/* Actions */
+/* ----------------------------------------------------------
+   5. Right Actions (Flag Pill + Dark "Book a call" CTA)
+   ---------------------------------------------------------- */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
+}
 
-  app-button {
-    @media (max-width: 868px) {
-      display: none;
+/* Country Flag Badge matching Reference */
+.country-flag-pill {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  cursor: default;
+  transition: all 0.2s ease;
+
+  .flag-circle {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .flag-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
+  }
+
+  &:hover {
+    background: #e2e8f0;
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 540px) {
+    display: none;
   }
 }
 
-/* Mobile Toggle */
+/* "Book a call" Button matching Reference */
+.book-call-btn {
+  appearance: none;
+  border: none;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0f172a;
+  color: #ffffff;
+  font-family: $font-sans;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 8.5px 18px 8.5px 15px;
+  border-radius: $radius-full;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  .phone-icon {
+    color: #ffffff;
+    transform: rotate(-10deg);
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+
+    .phone-icon {
+      transform: rotate(0deg) scale(1.1);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.full-width {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 14.5px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 7.5px 13px 7.5px 11px;
+    font-size: 12.5px;
+  }
+}
+
+/* Mobile Hamburger Button */
 .mobile-menu-btn {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   padding: 0;
-  background: transparent;
-  border: 1px solid $color-border;
-  border-radius: 8px;
-  color: $color-heading;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 10px;
+  color: #0f172a;
   cursor: pointer;
-  transition: background-color 150ms ease;
+  transition: all 0.15s ease;
 
   &:hover {
-    background-color: $color-surface-muted;
+    background: #e2e8f0;
   }
 
-  @media (max-width: 868px) {
+  @media (max-width: 900px) {
     display: inline-flex;
   }
 }
 
-/* Mobile Drawer */
+/* ----------------------------------------------------------
+   6. Mobile Drawer Dropdown
+   ---------------------------------------------------------- */
 .mobile-drawer {
-  display: none;
+  pointer-events: auto;
   position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
+  top: calc(100% + 8px);
+  left: 16px;
+  right: 16px;
   background: #ffffff;
-  border-bottom: 1px solid $color-border;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.16);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  animation: drawerSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1001;
 
-  @media (max-width: 868px) {
-    display: block;
+  @media (min-width: 901px) {
+    display: none;
   }
 }
 
 .mobile-nav {
   display: flex;
   flex-direction: column;
-  padding: 20px 24px;
-  gap: 10px;
+  padding: 18px 20px;
+  gap: 4px;
 }
 
 .mobile-nav-link {
   display: flex;
   align-items: center;
-  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
   font-family: $font-sans;
   font-size: 15px;
-  font-weight: 500;
-  color: $color-text-body;
+  font-weight: 550;
+  color: #334155;
   text-decoration: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  transition: all 150ms ease;
-
-  .mobile-nav-icon {
-    color: $color-text-muted;
-  }
+  transition: all 0.15s ease;
 
   &:hover {
-    background-color: rgba(15, 23, 42, 0.04);
-    color: $color-heading;
-
-    .mobile-nav-icon {
-      color: $color-primary;
-    }
+    background: #f8fafc;
+    color: #0f172a;
   }
 
   &.is-active {
+    background: rgba($color-primary, 0.08);
     color: $color-primary;
-    font-weight: 600;
-    background-color: rgba($color-primary, 0.08);
+    font-weight: 650;
+  }
+}
 
-    .mobile-nav-icon {
-      color: $color-primary;
+.mobile-actions-row {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .mobile-flag {
+    display: inline-flex;
+    width: auto;
+    height: auto;
+    padding: 7px 12px;
+    border-radius: 10px;
+    gap: 8px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+
+    .mobile-flag-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #475569;
     }
   }
 }
 
-.mobile-action {
-  padding-top: 14px;
-  margin-top: 6px;
-  border-top: 1px solid $color-border;
+@keyframes drawerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
