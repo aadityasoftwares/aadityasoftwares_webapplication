@@ -69,3 +69,26 @@ body {
   line-height: 1.5;
 }
 
+/* Custom Blue Dot Cursor - Hide default system pointer on desktop fine pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  [role="button"],
+  select,
+  summary,
+  .clickable,
+  .app-button,
+  .client-card,
+  .filter-tab-pill {
+    cursor: none !important;
+  }
+
+  input,
+  textarea,
+  [contenteditable="true"] {
+    cursor: text !important;
+  }
+}
+
+

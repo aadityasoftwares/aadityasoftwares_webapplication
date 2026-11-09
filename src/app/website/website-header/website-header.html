@@ -62,12 +62,18 @@
           </span>
         </div>
 
-        <!-- Primary CTA: "Book a call" Pill Button -->
-        <button type="button" class="book-call-btn" (click)="onBookCall($event)"
-          aria-label="Book a call with engineering team">
-          <app-icon [icon]="LucidePhone" size="xs" class="phone-icon" />
-          <span>Book a call</span>
-        </button>
+        <!-- Primary CTA: "Book a call" Button (Our Common Blue Button) -->
+        <app-button
+          variant="primary"
+          size="sm"
+          [height]="36"
+          [rounded]="true"
+          [iconLeft]="LucidePhone"
+          (buttonClick)="onBookCall($event)"
+          ariaLabel="Book a call with engineering team"
+        >
+          Book a call
+        </app-button>
 
         <!-- Mobile Drawer Hamburger Toggle -->
         <button type="button" class="mobile-menu-btn" [attr.aria-expanded]="mobileMenuOpen()"
@@ -115,10 +121,17 @@
           <span class="mobile-flag-label">India &bull; HQ in Vadodara, Gujarat</span>
         </div>
 
-        <button type="button" class="book-call-btn full-width" (click)="onBookCall($event)">
-          <app-icon [icon]="LucidePhone" size="xs" class="phone-icon" />
-          <span>Book a call</span>
-        </button>
+        <app-button
+          variant="primary"
+          size="md"
+          [fullWidth]="true"
+          [rounded]="true"
+          [iconLeft]="LucidePhone"
+          (buttonClick)="onBookCall($event)"
+          ariaLabel="Book a call with engineering team"
+        >
+          Book a call
+        </app-button>
       </div>
     </nav>
   </div>

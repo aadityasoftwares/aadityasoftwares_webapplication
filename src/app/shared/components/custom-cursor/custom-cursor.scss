@@ -1,0 +1,63 @@
+@use '../../../styles/variables' as *;
+
+:host {
+  display: block;
+  pointer-events: none;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  // Solid blue dot matching user image (#485abd / #3b82f6)
+  background-color: #3b82f6;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  pointer-events: none;
+  z-index: 999999;
+  opacity: 1;
+  will-change: transform, width, height, opacity;
+  box-sizing: border-box;
+  transition:
+    width 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    height 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms ease,
+    border 180ms ease,
+    opacity 160ms ease,
+    box-shadow 180ms ease;
+
+  &.cursor-hidden {
+    opacity: 0;
+  }
+
+  // Interactive Hover State (expanding smoothly when hovering clickable elements)
+  &.cursor-hover {
+    width: 28px;
+    height: 28px;
+    background-color: rgba(59, 130, 246, 0.22);
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 16px rgba(59, 130, 246, 0.6);
+  }
+
+  // Mouse Down Click State
+  &.cursor-pressed {
+    width: 10px;
+    height: 10px;
+    background-color: #1d4ed8;
+  }
+
+  // Over text inputs, hide dot so native text insertion caret is clearly visible
+  &.cursor-text {
+    opacity: 0;
+  }
+}
+
+// Hide custom cursor completely on touch devices (phones, tablets)
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor-dot {
+    display: none !important;
+  }
+}
+

@@ -22,6 +22,7 @@ import {
   LucideArrowRight,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
+import { Button } from '../../shared/components/button/button';
 
 export interface HeaderNavItem {
   label: string;
@@ -34,7 +35,7 @@ export interface HeaderNavItem {
 @Component({
   selector: 'app-website-header',
   standalone: true,
-  imports: [AppIcon, RouterLink],
+  imports: [AppIcon, RouterLink, Button],
   templateUrl: './website-header.html',
   styleUrl: './website-header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

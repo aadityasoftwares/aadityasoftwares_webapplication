@@ -147,17 +147,6 @@ export class WebsiteFooter {
         { label: 'Maintenance & 24/7 Telemetry', href: '/services' },
       ],
     },
-    {
-      title: 'Engineering Stack',
-      links: [
-        { label: 'Angular 19+ & Modern TypeScript', href: '/services' },
-        { label: 'Node.js & Python Microservices', href: '/services' },
-        { label: 'Cloud Platforms (AWS & GCP)', href: '/services' },
-        { label: 'Kubernetes & Docker Mesh', href: '/services' },
-        { label: 'Clean Architecture & Security', href: '/about' },
-        { label: 'High-Performance REST APIs', href: '/services' },
-      ],
-    },
   ];
 
   onSubscribe(event: Event): void {

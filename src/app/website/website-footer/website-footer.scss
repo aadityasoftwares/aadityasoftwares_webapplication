@@ -12,11 +12,10 @@
 .app-site-footer {
   position: relative;
   width: 100%;
-  padding-top: clamp(36px, 4.2vw, 52px);
+  padding-top: 0;
   padding-bottom: 28px;
   background: #ffffff;
-  border-top: 1px solid $color-border;
-  overflow: hidden;
+  overflow: visible;
   box-sizing: border-box;
 }
 
@@ -52,41 +51,96 @@
   background: radial-gradient(circle, rgba($color-primary-hover, 0.3) 0%, transparent 70%);
 }
 
+/* =========================================================
+   Part 1: Upward Notch Architecture (Opposite of Header Notch)
+   ========================================================= */
+.footer-notch-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: clamp(-52px, -5.5vw, -36px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.footer-notch-container {
+  pointer-events: auto;
+  position: relative;
+  max-width: 1140px;
+  width: calc(100% - 48px);
+  margin: 0 auto;
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: none;
+  padding: clamp(32px, 4.5vw, 44px) clamp(24px, 4.2vw, 52px);
+  box-shadow: 0 -14px 40px -10px rgba(37, 99, 235, 0.35);
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+  overflow: visible;
+
+  /* Seamless Concave Inverted Corner on the Left (Opposite of Header) */
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -26px;
+    width: 26px;
+    height: 26px;
+    pointer-events: none;
+    background: radial-gradient(circle at 0% 0%, transparent 26px, #1d4ed8 26.5px);
+  }
+
+  /* Seamless Concave Inverted Corner on the Right (Opposite of Header) */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: -26px;
+    width: 26px;
+    height: 26px;
+    pointer-events: none;
+    background: radial-gradient(circle at 100% 0%, transparent 26px, #3b82f6 26.5px);
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  @media (max-width: 640px) {
+    width: calc(100% - 20px);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.footer-notch-base-rim {
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+  position: relative;
+  z-index: 1;
+}
+
 .footer-container {
   position: relative;
   z-index: 1;
   max-width: $container-max-width;
   margin: 0 auto;
-  padding: 0 $container-padding-x;
+  padding: clamp(36px, 4.5vw, 52px) $container-padding-x 0;
 
   @media (max-width: 768px) {
-    padding: 0 $container-padding-x-mobile;
-  }
-}
-
-/* =========================================================
-   Part 1: Floating Newsletter Card (Reference Top Overlapping Card)
-   ========================================================= */
-.footer-floating-newsletter-wrapper {
-  margin-bottom: clamp(48px, 6vw, 72px);
-}
-
-.floating-newsletter-card {
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 28px;
-  padding: clamp(32px, 5vw, 48px) clamp(24px, 4.5vw, 56px);
-  box-shadow: 0 24px 60px -15px rgba(37, 99, 235, 0.38), 0 0 0 1px rgba(6, 182, 212, 0.25);
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  align-items: center;
-  gap: clamp(24px, 4vw, 56px);
-  position: relative;
-  overflow: hidden;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    padding: clamp(28px, 4vw, 40px) $container-padding-x-mobile 0;
   }
 }
 
@@ -306,12 +360,12 @@
    ========================================================= */
 .footer-columns-row {
   display: grid;
-  grid-template-columns: 1.35fr 1fr 1.15fr 1.1fr 1.25fr;
+  grid-template-columns: 1.35fr 1fr 1.25fr 1.2fr;
   gap: clamp(24px, 3.5vw, 44px);
   margin-bottom: clamp(40px, 5.5vw, 64px);
 
   @media (max-width: 1040px) {
-    grid-template-columns: 1.2fr 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
   }
 
   @media (max-width: 720px) {

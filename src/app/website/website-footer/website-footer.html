@@ -1,4 +1,77 @@
 <footer class="app-site-footer" role="contentinfo">
+  <!-- =======================================================
+       Part 1: Upward Notch Architecture (Opposite of Header Notch)
+       Rising upwards into the section above with inverted corners
+       ======================================================= -->
+  <div class="footer-notch-wrapper">
+    <div class="footer-notch-container">
+      <!-- Left Side: 3D Illustration / Brand Centerpiece -->
+      <div class="newsletter-visual-col" aria-hidden="true">
+        <div class="pedestal-glow-aura"></div>
+        <div class="pedestal-floating-stars">
+          <span class="star-sparkle s1"><app-icon [icon]="LucideSparkles" size="sm" /></span>
+          <span class="star-sparkle s2"><app-icon [icon]="LucideSparkles" size="xs" /></span>
+          <span class="star-sparkle s3"><app-icon [icon]="LucideSparkles" size="xs" /></span>
+        </div>
+
+        <div class="newsletter-3d-pedestal">
+          <div class="brand-pedestal-box">
+            <img
+              src="/companylogos/AadityaSoftwaresLogo.png"
+              alt="Aaditya Softwares Brand Mark"
+              class="brand-pedestal-img"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Heading, Subtitle & Embedded Pill Form -->
+      <div class="newsletter-content-col">
+        <h3 class="floating-newsletter-title">
+          Subscribe to our newsletter for software engineering &amp; product insights
+        </h3>
+        <p class="floating-newsletter-sub">
+          Get regular architectural insights, framework benchmarks, and cloud engineering guides delivered directly to your inbox.
+        </p>
+
+        @if (!isSubscribed()) {
+          <form class="floating-newsletter-form" (submit)="onSubscribe($event)">
+            <div class="floating-input-pill">
+              <span class="pill-mail-icon" aria-hidden="true">
+                <app-icon [icon]="LucideMail" size="sm" />
+              </span>
+              <input
+                type="email"
+                class="pill-input-field"
+                placeholder="Enter your email"
+                [value]="newsletterEmail()"
+                (input)="newsletterEmail.set($any($event.target).value)"
+                required
+                aria-label="Email address for newsletter subscription"
+              />
+              <button type="submit" class="pill-submit-btn" aria-label="Subscribe to newsletter">
+                <span>Subscribe</span>
+              </button>
+            </div>
+          </form>
+        } @else {
+          <div class="floating-newsletter-success">
+            <app-icon [icon]="LucideCheck" size="sm" class="success-icon" />
+            <span>Thank you! You are now subscribed to our engineering dispatch.</span>
+          </div>
+        }
+
+        <p class="floating-newsletter-disclaimer">
+          You will be able to unsubscribe at any time.
+          <a href="/about" class="disclaimer-link" (click)="scrollToSection('/about', $event)">Read our privacy policy here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connected Base Rim (Matching Header Top Rim, Running Across Viewport) -->
+  <div class="footer-notch-base-rim" aria-hidden="true"></div>
+
   <!-- Subtle Ambient Glow -->
   <div class="footer-ambient-glow" aria-hidden="true">
     <div class="glow-orb footer-glow-top"></div>
@@ -6,75 +79,6 @@
   </div>
 
   <div class="footer-container">
-    <!-- =======================================================
-         Part 1: Floating Newsletter Card (Overlapping Top Banner)
-         (Reference: Blue Rounded Card with 3D Centerpiece & Embedded Pill)
-         ======================================================= -->
-    <div class="footer-floating-newsletter-wrapper">
-      <div class="floating-newsletter-card">
-        <!-- Left Side: 3D Illustration / Brand Centerpiece -->
-        <div class="newsletter-visual-col" aria-hidden="true">
-          <div class="pedestal-glow-aura"></div>
-          <div class="pedestal-floating-stars">
-            <span class="star-sparkle s1"><app-icon [icon]="LucideSparkles" size="sm" /></span>
-            <span class="star-sparkle s2"><app-icon [icon]="LucideSparkles" size="xs" /></span>
-            <span class="star-sparkle s3"><app-icon [icon]="LucideSparkles" size="xs" /></span>
-          </div>
-
-          <div class="newsletter-3d-pedestal">
-            <div class="brand-pedestal-box">
-              <img
-                src="/companylogos/AadityaSoftwaresLogo.png"
-                alt="Aaditya Softwares Brand Mark"
-                class="brand-pedestal-img"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Side: Heading, Subtitle & Embedded Pill Form -->
-        <div class="newsletter-content-col">
-          <h3 class="floating-newsletter-title">
-            Subscribe to our newsletter for software engineering &amp; product insights
-          </h3>
-          <p class="floating-newsletter-sub">
-            Get regular architectural insights, framework benchmarks, and cloud engineering guides delivered directly to your inbox.
-          </p>
-
-          @if (!isSubscribed()) {
-            <form class="floating-newsletter-form" (submit)="onSubscribe($event)">
-              <div class="floating-input-pill">
-                <span class="pill-mail-icon" aria-hidden="true">
-                  <app-icon [icon]="LucideMail" size="sm" />
-                </span>
-                <input
-                  type="email"
-                  class="pill-input-field"
-                  placeholder="Enter your email"
-                  [value]="newsletterEmail()"
-                  (input)="newsletterEmail.set($any($event.target).value)"
-                  required
-                  aria-label="Email address for newsletter subscription"
-                />
-                <button type="submit" class="pill-submit-btn" aria-label="Subscribe to newsletter">
-                  <span>Subscribe</span>
-                </button>
-              </div>
-            </form>
-          } @else {
-            <div class="floating-newsletter-success">
-              <app-icon [icon]="LucideCheck" size="sm" class="success-icon" />
-              <span>Thank you! You are now subscribed to our engineering dispatch.</span>
-            </div>
-          }
-
-          <p class="floating-newsletter-disclaimer">
-            You will be able to unsubscribe at any time.
-            <a href="/about" class="disclaimer-link" (click)="scrollToSection('/about', $event)">Read our privacy policy here</a>
-          </p>
-        </div>
-      </div>
-    </div>
 
     <!-- =======================================================
          Part 2: Main Multi-Column Clean Navigation Row
