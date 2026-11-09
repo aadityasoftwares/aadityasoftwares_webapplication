@@ -114,7 +114,7 @@
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: clamp(32px, 4.5vw, 44px);
+  margin-bottom: clamp(20px, 2.8vw, 32px);
 
   .filter-tab-pill {
     appearance: none;
@@ -299,7 +299,7 @@
    Footer Capabilities Ribbon
    ---------------------------------------------------------- */
 .tech-stack-footer-ribbon {
-  margin-top: 40px;
+  margin-top: clamp(24px, 3vw, 32px);
   padding: 16px 24px;
   background: rgba($color-primary, 0.04);
   border: 1px dashed rgba($color-primary, 0.24);

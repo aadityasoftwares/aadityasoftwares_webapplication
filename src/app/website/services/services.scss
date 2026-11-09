@@ -13,7 +13,7 @@
 .services-section {
   width: 100%;
   padding-top: $section-padding-top;
-  padding-bottom: clamp(24px, 3vw, 40px);
+  padding-bottom: $section-padding-bottom;
   position: relative;
   box-sizing: border-box;
   background-color: $color-surface-white;
@@ -177,7 +177,7 @@
    ========================================================= */
 .services-showcase-wrapper {
   width: 100%;
-  margin-bottom: clamp(36px, 4.5vw, 56px);
+  margin-bottom: clamp(24px, 3.2vw, 40px);
 }
 
 .services-cards-track {
@@ -415,7 +415,7 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 40px;
-  margin-bottom: clamp(36px, 4.5vw, 56px);
+  margin-bottom: clamp(24px, 3.2vw, 40px);
 
   @media (max-width: 860px) {
     flex-direction: column;

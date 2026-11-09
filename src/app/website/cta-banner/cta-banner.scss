@@ -10,8 +10,8 @@
 .cta-banner-section {
   position: relative;
   width: 100%;
-  padding-top: clamp(48px, 6vw, 72px);
-  padding-bottom: clamp(60px, 7vw, 96px);
+  padding-top: $section-padding-top;
+  padding-bottom: $section-padding-bottom;
   overflow: hidden;
   font-family: $font-sans;
 }

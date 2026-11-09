@@ -30,7 +30,7 @@
 .section-header-center {
   text-align: center;
   max-width: 760px;
-  margin: 0 auto clamp(28px, 4vw, 48px);
+  margin: 0 auto $section-header-margin-bottom;
 }
 
 .section-sub-eyebrow {
@@ -493,7 +493,7 @@
    Section 2: Top Split Feature Showcase (Reference Top Split)
    ========================================================= */
 .projects-feature-split-section {
-  padding: clamp(50px, 7vw, 84px) 0;
+  padding: $section-padding-top 0 $section-padding-bottom;
   background: #ffffff;
 }
 
@@ -664,7 +664,7 @@
    Section 3: Project Showcase Section (Reference: 2-Column Cards Grid)
    ========================================================= */
 .project-showcase-section {
-  padding: clamp(60px, 8vw, 100px) 0;
+  padding: $section-padding-top 0 $section-padding-bottom;
   background: $color-surface;
   border-top: 1px solid $color-border;
   border-bottom: 1px solid $color-border;
@@ -1105,7 +1105,7 @@
    (Reference: Middle Section with Mobile Hand Mockup & 3 Stacked Steps)
    ========================================================= */
 .projects-strategy-section {
-  padding: clamp(60px, 8vw, 100px) 0;
+  padding: $section-padding-top 0 $section-padding-bottom;
   background: #ffffff;
 }
 
@@ -1306,7 +1306,7 @@
    Section 5: What Our Clients Say (Reference Testimonials)
    ========================================================= */
 .projects-testimonial-section {
-  padding: clamp(60px, 8vw, 100px) 0;
+  padding: $section-padding-top 0 $section-padding-bottom;
   background: $color-surface;
   border-top: 1px solid $color-border;
   border-bottom: 1px solid $color-border;
@@ -1467,7 +1467,7 @@
    (Clean card with NO top border)
    ========================================================= */
 .projects-cta-section {
-  padding: clamp(60px, 8vw, 100px) 0;
+  padding: $section-padding-top 0 $section-padding-bottom;
   background: #ffffff;
 }
 
