@@ -1,338 +1,265 @@
 <section id="projects" class="projects-section" appScrollReveal>
   <!-- Ambient Subtle Background Glows -->
   <div class="projects-ambient-glow" aria-hidden="true">
-    <div class="projects-glow-orb glow-orb-1"></div>
-    <div class="projects-glow-orb glow-orb-2"></div>
+    <div class="ambient-glow-orb glow-top-left"></div>
+    <div class="ambient-glow-orb glow-top-right"></div>
+    <div class="ambient-glow-orb glow-center"></div>
   </div>
 
   <div class="projects-container">
     <!-- =======================================================
-         Section Header
+         1. Social Proof Pill & Hero Header (Matching reference image)
          ======================================================= -->
-    <div class="projects-header-row">
-      <div class="projects-header-text">
-        <span class="section-sub-eyebrow">FEATURED PORTFOLIO</span>
-        <h2 class="projects-main-heading">Projects That Bring Ideas to Life</h2>
-        <p class="projects-main-desc">
-          From business websites to multi-platform applications and SaaS products,
-          we turn ideas into reliable, scalable digital solutions.
-        </p>
+    <div class="portfolio-hero-header">
+      <!-- Trust Capsule Pill -->
+      <div class="portfolio-trust-pill">
+        <div class="avatar-stack" aria-hidden="true">
+          <img src="/images/engineer-1.jpg" alt="Client Avatar 1" class="avatar-img" />
+          <img src="/images/engineer-2.jpg" alt="Client Avatar 2" class="avatar-img" />
+          <img src="/images/hero-team.jpg" alt="Client Avatar 3" class="avatar-img" />
+          <span class="avatar-more">+45</span>
+        </div>
+        <span class="trust-pill-text">Trusted by 45+ global clients and growing.</span>
       </div>
 
-      <div class="projects-header-action">
-        <app-button
-          variant="primary"
-          size="sm"
-          [iconRight]="LucideArrowRight"
-          (buttonClick)="onDiscussProject()"
+      <!-- Main Headline with Accent Gradient -->
+      <h2 class="portfolio-hero-title">
+        Crafting Digital Experiences<br />
+        <span class="title-highlight">Your Users Will Love</span>
+      </h2>
+
+      <!-- Subtitle Value Proposition -->
+      <p class="portfolio-hero-desc">
+        From high-performance business websites to multi-platform applications and SaaS products,
+        we turn ideas into reliable, scalable digital solutions.
+      </p>
+
+      <!-- Primary CTA Button with Guarantee -->
+      <div class="portfolio-hero-cta">
+        <button
+          type="button"
+          class="strategy-call-btn"
+          (click)="onDiscussProject()"
+          aria-label="Get a free strategy call"
         >
-          Discuss Your Project
-        </app-button>
+          <span>Get A Free Strategy Call</span>
+          <app-icon [icon]="LucidePhoneCall" size="sm" class="btn-icon" />
+        </button>
+        <span class="cta-micro-guarantee">
+          Complimentary architecture review &bull; Direct engineer response within 24 hours
+        </span>
       </div>
     </div>
 
     <!-- =======================================================
-         Modular Bento Studio Dashboard Showcase
-         (Simple, Understandable & Professional Software Provider)
+         2. 3D Coverflow Device Showcase (Tablet Frame & Flanking Cards)
          ======================================================= -->
-    <div class="portfolio-bento-canvas">
-      <!-- =====================================================
-           Left Column: Signature Studio Card with Vertical Rail
-           ===================================================== -->
-      <div class="bento-left-studio-card">
-        <!-- Far-Left Vertical Navigation Rail -->
-        <div class="vertical-nav-rail" aria-label="Portfolio Category Navigation">
-          <button
-            type="button"
-            class="nav-rail-item"
-            [class.active]="activeCategory() === 'all'"
-            (click)="selectCategory('all')"
+    <div class="portfolio-showcase-stage">
+      <!-- Navigation Arrow: Previous -->
+      <button
+        type="button"
+        class="stage-arrow-btn arrow-prev"
+        (click)="prevProject()"
+        aria-label="Previous project"
+      >
+        <app-icon [icon]="LucideChevronLeft" size="sm" />
+      </button>
+
+      <!-- Stage Viewport (3D Depth Perspective) -->
+      <div class="coverflow-viewport">
+        @for (project of projects; track project.id; let idx = $index) {
+          @let position = getProjectPosition(idx);
+          <article
+            class="coverflow-device-card"
+            [class.is-center]="position === 'center'"
+            [class.is-left]="position === 'left'"
+            [class.is-right]="position === 'right'"
+            [class.is-saas]="project.isProprietarySaaS"
+            (click)="position === 'left' ? prevProject() : (position === 'right' ? nextProject() : openProjectModal(project))"
+            [attr.aria-label]="project.title + ' showcase'"
           >
-            All Work
-          </button>
-          <button
-            type="button"
-            class="nav-rail-item"
-            [class.active]="activeCategory() === 'saas'"
-            (click)="selectCategory('saas')"
-          >
-            SaaS Product
-          </button>
-          <button
-            type="button"
-            class="nav-rail-item"
-            [class.active]="activeCategory() === 'marketplace'"
-            (click)="selectCategory('marketplace')"
-          >
-            Ecosystems
-          </button>
-          <button
-            type="button"
-            class="nav-rail-item"
-            [class.active]="activeCategory() === 'website'"
-            (click)="selectCategory('website')"
-          >
-            Web Apps
-          </button>
-        </div>
+            <!-- Tablet Bezel Chassis -->
+            <div class="device-tablet-frame">
+              <!-- Top Bezel with Camera Pin -->
+              <div class="device-bezel-top" aria-hidden="true">
+                <span class="camera-lens-dot"></span>
+              </div>
 
-        <!-- Studio Card Inner Content -->
-        <div class="studio-card-inner">
-          <!-- Top Tab Cutout Pill -->
-          <div class="studio-tab-pill">
-            <app-icon [icon]="LucideSparkles" size="xs" />
-            <span>Software Studio</span>
-          </div>
+              <!-- Inner Device Screen Canvas -->
+              <div class="device-screen-canvas">
+                <!-- Browser Status Bar -->
+                <div class="screen-browser-bar">
+                  <div class="browser-dots" aria-hidden="true">
+                    <span class="dot dot-r"></span>
+                    <span class="dot dot-y"></span>
+                    <span class="dot dot-g"></span>
+                  </div>
+                  <div class="browser-address">
+                    <app-icon [icon]="LucideGlobe" size="xs" />
+                    <span class="address-text">https://{{ project.domainUrl }}</span>
+                  </div>
+                  <div class="browser-status">
+                    <span class="pulse-beacon" aria-hidden="true"></span>
+                    <span class="status-label">Live</span>
+                  </div>
+                </div>
 
-          <!-- Concentric Ring Emblem (Aaditya Softwares Brand Mark) -->
-          <div class="concentric-emblem-wrap">
-            <div class="ring outer-ring" aria-hidden="true"></div>
-            <div class="ring inner-ring" aria-hidden="true"></div>
-            <div class="emblem-core-box">
-              <img
-                src="/companylogos/AadityaSoftwaresLogo.png"
-                alt="Aaditya Softwares Brand Emblem"
-                class="emblem-img"
-              />
-            </div>
-          </div>
+                <!-- Showcase Media / UI Preview -->
+                <div class="screen-media-container">
+                  <img
+                    [src]="project.previewImage || '/images/services/service-software.jpg'"
+                    [alt]="project.title + ' interface showcase'"
+                    class="screen-media-image"
+                    loading="lazy"
+                  />
+                  <div class="screen-lighting-gradient"></div>
 
-          <!-- Bottom Studio Name & Subtitle -->
-          <div class="studio-bottom-meta">
-            <span class="studio-greeting">We Are,</span>
-            <h3 class="studio-brand-title">Aaditya<br />Softwares</h3>
-            <a
-              href="mailto:contact@aadityasoftwares.com"
-              class="studio-email-pill"
-              aria-label="Email Aaditya Softwares"
-            >
-              <span>contact&#64;aadityasoftwares.com</span>
-              <app-icon [icon]="LucideExternalLink" size="xs" />
-            </a>
-          </div>
+                  <!-- Floating Tech Badge Overlay -->
+                  <div class="screen-floating-badge">
+                    <span class="badge-accent-dot"></span>
+                    <span class="badge-text">{{ project.badgeLabel }}</span>
+                  </div>
 
-          <!-- Rotating Circular Technical Stamp (Bottom-Right) -->
-          <div class="rotating-badge-stamp" aria-hidden="true">
-            <div class="stamp-inner-disc"><span>PRO</span></div>
-            <svg class="stamp-svg" viewBox="0 0 100 100">
-              <path id="stampPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
-              <text class="stamp-text">
-                <textPath href="#stampPath" startOffset="0%">AADITYA SOFTWARES &bull; DEV STUDIO &bull;</textPath>
-              </text>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- =====================================================
-           Right Column: Bento Modular Showcase Grid
-           ===================================================== -->
-      <div class="bento-right-content">
-        <!-- Top Row: Mega Display Title & Project Switcher Pills -->
-        <div class="bento-header-bar">
-          <div class="bento-title-group">
-            <h2 class="bento-mega-title">
-              Portfolio<span class="mega-title-accent" aria-hidden="true">↗</span>
-            </h2>
-          </div>
-
-          <!-- Project Quick Switcher Pills -->
-          <div class="project-switcher-pills" role="tablist" aria-label="Select featured project">
-            @for (proj of projects; track proj.id; let idx = $index) {
-              <button
-                type="button"
-                class="switcher-pill-btn"
-                [class.active]="activeProjectIndex() === idx"
-                (click)="selectProjectByIndex(idx)"
-                role="tab"
-                [attr.aria-selected]="activeProjectIndex() === idx"
-              >
-                <span class="pill-num">0{{ idx + 1 }}</span>
-                <span class="pill-name">{{ proj.title }}</span>
-              </button>
-            }
-          </div>
-        </div>
-
-        <!-- Bento Row 1: Main Project Showcase Theater + Two Stacked Stat Cards -->
-        <div class="bento-top-row">
-          <!-- Main Project Showcase Theater Card -->
-          <div
-            class="bento-theater-card"
-            [class.theater-saas]="activeProject.isProprietarySaaS"
-            (click)="openProjectModal(activeProject)"
-          >
-            <!-- Card Top Bar: Status Badge + Live Domain -->
-            <div class="theater-top-bar">
-              <span class="theater-badge" [class.badge-saas]="activeProject.isProprietarySaaS">
-                <span class="badge-pulse-dot" aria-hidden="true"></span>
-                {{ activeProject.badgeLabel }}
-              </span>
-
-              <span class="theater-domain">
-                <app-icon [icon]="LucideGlobe" size="xs" />
-                <span>{{ activeProject.domainUrl }}</span>
-              </span>
-            </div>
-
-            <!-- Theater Visual Frame with Play / Explore Button -->
-            <div class="theater-visual-box">
-              <img
-                [src]="activeProject.previewImage || '/images/services/service-software.jpg'"
-                [alt]="activeProject.title + ' preview'"
-                class="theater-preview-img"
-              />
-              <div class="theater-visual-overlay"></div>
-
-              <!-- Center Interactive Play / Explore Trigger -->
-              <button
-                type="button"
-                class="theater-play-btn"
-                aria-label="Explore interactive case study"
-              >
-                <app-icon [icon]="LucidePlay" size="sm" class="play-ico" />
-              </button>
-
-              <span class="theater-corner-mark mark-tl" aria-hidden="true"></span>
-              <span class="theater-corner-mark mark-tr" aria-hidden="true"></span>
-            </div>
-
-            <!-- Theater Bottom Information -->
-            <div class="theater-info-row">
-              <div class="theater-text-group">
-                <h4 class="theater-project-title">{{ activeProject.title }}</h4>
-                <p class="theater-project-desc">{{ activeProject.shortDesc }}</p>
-                <div class="theater-tech-pills">
-                  @for (tech of activeProject.techStack; track tech) {
-                    <span class="tech-tag-pill">{{ tech }}</span>
-                  }
+                  <!-- Interactive Action Prompt -->
+                  <div class="screen-hover-prompt">
+                    <span class="prompt-chip">
+                      <span>Explore Case Study</span>
+                      <app-icon [icon]="LucideArrowUpRight" size="xs" />
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <button
-                type="button"
-                class="theater-action-btn"
-                (click)="openProjectModal(activeProject); $event.stopPropagation()"
-              >
-                <span>View Case Study</span>
-                <app-icon [icon]="LucideArrowRight" size="xs" />
-              </button>
-            </div>
-          </div>
-
-          <!-- Far-Right: Two Stacked Stat Cards -->
-          <div class="bento-stats-stack">
-            <!-- Top Stat Card: Projects Delivered -->
-            <div class="bento-stat-card stat-card-light">
-              <span class="stat-corner-arrow" aria-hidden="true">
-                <app-icon [icon]="LucideArrowUpRight" size="xs" />
-              </span>
-              <div class="stat-content">
-                <span class="stat-number">100+</span>
-                <span class="stat-label">Projects Delivered</span>
-                <span class="stat-sub">Enterprise &amp; SaaS Systems</span>
-              </div>
+              <!-- Bottom Bezel Finish -->
+              <div class="device-bezel-bottom" aria-hidden="true"></div>
             </div>
 
-            <!-- Bottom Stat Card: Client Satisfaction -->
-            <div class="bento-stat-card stat-card-accent">
-              <span class="stat-corner-arrow" aria-hidden="true">
-                <app-icon [icon]="LucideArrowUpRight" size="xs" />
-              </span>
-              <div class="stat-content">
-                <span class="stat-number">99%</span>
-                <span class="stat-label">Client Retention</span>
-                <span class="stat-sub">Quality &amp; Scalability</span>
-              </div>
-            </div>
-          </div>
+            <!-- Card Ambient Shadow / Glow -->
+            <div class="device-ambient-glow" aria-hidden="true"></div>
+          </article>
+        }
+      </div>
+
+      <!-- Navigation Arrow: Next -->
+      <button
+        type="button"
+        class="stage-arrow-btn arrow-next"
+        (click)="nextProject()"
+        aria-label="Next project"
+      >
+        <app-icon [icon]="LucideChevronRight" size="sm" />
+      </button>
+    </div>
+
+    <!-- =======================================================
+         3. Project Selector Tabs (SGTC India, OonLoop, StickyJi)
+         ======================================================= -->
+    <div class="showcase-selector-tabs" role="tablist" aria-label="Featured projects">
+      @for (project of projects; track project.id; let idx = $index) {
+        <button
+          type="button"
+          role="tab"
+          class="project-tab-pill"
+          [class.tab-active]="activeProjectIndex() === idx"
+          [attr.aria-selected]="activeProjectIndex() === idx"
+          (click)="selectProjectByIndex(idx)"
+        >
+          <span class="tab-index">0{{ idx + 1 }}</span>
+          <span class="tab-name">{{ project.title }}</span>
+          <span class="tab-cat-tag">{{ project.category }}</span>
+        </button>
+      }
+    </div>
+
+    <!-- =======================================================
+         4. Active Project Details Spotlight Bar
+         ======================================================= -->
+    <div class="active-project-spotlight">
+      <div class="spotlight-header">
+        <div class="spotlight-title-group">
+          <span class="spotlight-category-chip">
+            <span class="chip-dot"></span>
+            {{ activeProject.category }}
+          </span>
+          <h3 class="spotlight-project-title">{{ activeProject.title }}</h3>
         </div>
 
-        <!-- Bento Row 2: Three Distinct Bottom Tiles -->
-        <div class="bento-bottom-row">
-          <!-- Card 1: Enterprise Clients (Dark Slate) -->
-          <div class="bento-sub-card card-clients-dark">
-            <span class="sub-corner-arrow" aria-hidden="true">
-              <app-icon [icon]="LucideArrowUpRight" size="xs" />
-            </span>
-            <div class="card-icon-box">
-              <app-icon [icon]="LucideShieldCheck" size="md" />
-            </div>
-            <div class="card-meta">
-              <span class="sub-card-title">Enterprise Clients</span>
-              <span class="sub-card-desc">B2B scientific, e-commerce &amp; logistics enterprises.</span>
-            </div>
-          </div>
+        <div class="spotlight-actions">
+          <app-button
+            variant="primary"
+            size="sm"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="openProjectModal(activeProject)"
+          >
+            View Case Study
+          </app-button>
 
-          <!-- Card 2: Clean Architecture Core (3D Geometric SLA) -->
-          <div class="bento-sub-card card-mesh-dark">
-            <div class="mesh-orb-visual" aria-hidden="true">
-              <div class="orb-ring orb-ring-1"></div>
-              <div class="orb-ring orb-ring-2"></div>
-              <div class="orb-center-glow"></div>
-            </div>
-            <div class="card-meta">
-              <span class="sub-card-title">Clean Architecture SLA</span>
-              <span class="sub-card-desc">Modular boundaries &bull; Zero technical debt.</span>
-            </div>
-          </div>
+          <a
+            [href]="'https://' + activeProject.domainUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="spotlight-live-link"
+          >
+            <app-icon [icon]="LucideGlobe" size="xs" />
+            <span>{{ activeProject.domainUrl }}</span>
+            <app-icon [icon]="LucideArrowUpRight" size="xs" class="arrow-up" />
+          </a>
+        </div>
+      </div>
 
-          <!-- Card 3: 100% Code Ownership (Warm Amber Card) -->
-          <div class="bento-sub-card card-amber-highlight">
-            <span class="sub-corner-arrow" aria-hidden="true">
-              <app-icon [icon]="LucideArrowUpRight" size="xs" />
+      <p class="spotlight-desc">{{ activeProject.shortDesc }}</p>
+
+      <!-- Highlights & Tech Stack -->
+      <div class="spotlight-footer-meta">
+        <div class="spotlight-highlights-row">
+          @for (hl of activeProject.highlights; track hl) {
+            <span class="meta-pill">
+              <app-icon [icon]="LucideCheckCircle2" size="xs" class="pill-ico" />
+              <span>{{ hl }}</span>
             </span>
-            <div class="amber-content">
-              <span class="amber-big-num">100%</span>
-              <span class="sub-card-title text-dark">Code Ownership</span>
-              <span class="sub-card-desc text-dark-muted">Full repository &amp; IP transfer with zero vendor lock-in.</span>
-            </div>
-          </div>
+          }
+        </div>
+
+        <div class="spotlight-tech-stack">
+          @for (tech of activeProject.techStack; track tech) {
+            <span class="tech-tag">{{ tech }}</span>
+          }
         </div>
       </div>
     </div>
 
     <!-- =======================================================
-         Interactive 3-Project Selection Shelf
+         5. Social Proof Trust Strip ("Join 4,000+ / 50+ Companies")
          ======================================================= -->
-    <div class="portfolio-projects-shelf">
-      <div class="shelf-header">
-        <span class="shelf-eyebrow">EXPLORE ALL PRODUCTION CASE STUDIES</span>
-      </div>
-
-      <div class="shelf-grid">
-        @for (project of projects; track project.id; let idx = $index) {
-          <div
-            class="shelf-card"
-            [class.active-shelf]="activeProjectIndex() === idx"
-            (click)="selectProjectByIndex(idx)"
-          >
-            <div class="shelf-card-top">
-              <span class="shelf-num">0{{ idx + 1 }}</span>
-              <span class="shelf-category-tag">{{ project.category }}</span>
-            </div>
-
-            <h4 class="shelf-title">{{ project.title }}</h4>
-            <p class="shelf-desc">{{ project.shortDesc }}</p>
-
-            <div class="shelf-footer">
-              <button
-                type="button"
-                class="shelf-modal-btn"
-                (click)="openProjectModal(project); $event.stopPropagation()"
-              >
-                <span>Read Case Study</span>
-                <app-icon [icon]="LucideArrowRight" size="xs" />
-              </button>
-            </div>
-          </div>
-        }
+    <div class="portfolio-trust-footer">
+      <h3 class="trust-footer-heading">Join 50+ High-Growth Companies Powered by Aaditya Softwares</h3>
+      <div class="trust-metrics-grid">
+        <div class="trust-metric-card">
+          <span class="metric-val">100+</span>
+          <span class="metric-title">Solutions Delivered</span>
+          <span class="metric-sub">Web, Mobile &amp; SaaS Systems</span>
+        </div>
+        <div class="trust-metric-card">
+          <span class="metric-val">99%</span>
+          <span class="metric-title">Client Retention</span>
+          <span class="metric-sub">Long-term Engineering Trust</span>
+        </div>
+        <div class="trust-metric-card">
+          <span class="metric-val">100%</span>
+          <span class="metric-title">Code Ownership</span>
+          <span class="metric-sub">Zero Vendor Lock-in</span>
+        </div>
+        <div class="trust-metric-card">
+          <span class="metric-val">2-Week</span>
+          <span class="metric-title">Sprint Cycles</span>
+          <span class="metric-sub">Predictable Rapid Delivery</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- =======================================================
-       Interactive Case Study Overview Modal (Triggered by "Read Case Study")
+       Case Study Detail Modal Drawer (Interactive Deep Dive)
        ======================================================= -->
   @if (activeModalProject(); as activeProject) {
     <div

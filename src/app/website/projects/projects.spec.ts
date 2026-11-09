@@ -72,5 +72,22 @@ describe('Projects', () => {
     component.onDiscussProject();
     expect(emitted).toBe(true);
   });
+
+  it('should navigate through 3D coverflow projects with nextProject and prevProject', () => {
+    component.selectProjectByIndex(1);
+    expect(component.activeProjectIndex()).toBe(1);
+    expect(component.getProjectPosition(1)).toBe('center');
+    expect(component.getProjectPosition(0)).toBe('left');
+    expect(component.getProjectPosition(2)).toBe('right');
+
+    component.nextProject();
+    expect(component.activeProjectIndex()).toBe(2);
+    expect(component.getProjectPosition(2)).toBe('center');
+    expect(component.getProjectPosition(1)).toBe('left');
+    expect(component.getProjectPosition(0)).toBe('right');
+
+    component.prevProject();
+    expect(component.activeProjectIndex()).toBe(1);
+  });
 });
 

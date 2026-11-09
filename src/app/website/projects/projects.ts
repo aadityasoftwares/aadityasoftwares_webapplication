@@ -38,6 +38,9 @@ import {
   LucidePlay,
   LucideAward,
   LucideArrowUpRight,
+  LucideChevronLeft,
+  LucideChevronRight,
+  LucidePhoneCall,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { Button } from '../../shared/components/button/button';
@@ -120,12 +123,15 @@ export class Projects {
   readonly LucidePlay = LucidePlay;
   readonly LucideAward = LucideAward;
   readonly LucideArrowUpRight = LucideArrowUpRight;
+  readonly LucideChevronLeft = LucideChevronLeft;
+  readonly LucideChevronRight = LucideChevronRight;
+  readonly LucidePhoneCall = LucidePhoneCall;
 
   // Selected project for the interactive case-study drawer/modal
   readonly activeModalProject = signal<ProjectItem | null>(null);
 
-  // Active highlighted project inside the Bento theater
-  readonly activeProjectIndex = signal<number>(2); // StickyJi by default
+  // Active highlighted project inside the 3D device showcase (defaults to center = index 1)
+  readonly activeProjectIndex = signal<number>(1);
   readonly activeCategory = signal<string>('all');
 
   get activeProject(): ProjectItem {
@@ -136,6 +142,25 @@ export class Projects {
     if (index >= 0 && index < this.projects.length) {
       this.activeProjectIndex.set(index);
     }
+  }
+
+  nextProject(): void {
+    this.activeProjectIndex.update((idx) => (idx + 1) % this.projects.length);
+  }
+
+  prevProject(): void {
+    this.activeProjectIndex.update(
+      (idx) => (idx - 1 + this.projects.length) % this.projects.length
+    );
+  }
+
+  getProjectPosition(index: number): 'center' | 'left' | 'right' {
+    const current = this.activeProjectIndex();
+    const total = this.projects.length;
+    const diff = (index - current + total) % total;
+    if (diff === 0) return 'center';
+    if (diff === 1) return 'right';
+    return 'left';
   }
 
   selectCategory(cat: string): void {
