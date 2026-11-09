@@ -14,6 +14,7 @@ import {
   LucideTarget,
   LucideZap,
   LucideStar,
+  LucideExternalLink,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { ScrollReveal } from '../scroll-reveal';
@@ -70,6 +71,7 @@ export class About {
   readonly LucideTarget = LucideTarget;
   readonly LucideZap = LucideZap;
   readonly LucideStar = LucideStar;
+  readonly LucideExternalLink = LucideExternalLink;
 
   /**
    * Methodology bullet points matching reference layout.
@@ -104,7 +106,10 @@ export class About {
     brands: {
       label: 'Own SaaS Product',
       value: '1 (StickyJi)',
-      note: 'Our in-house sticky notes & productivity SaaS platform.',
+      displayValue: '1',
+      productName: 'StickyJi',
+      productUrl: 'https://stickyji.com/',
+      note: 'In-house sticky notes & productivity SaaS platform.',
     },
   };
 

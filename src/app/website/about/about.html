@@ -75,7 +75,12 @@
     <div class="about-metrics-grid">
       <!-- Card 1: Years of experience -->
       <div class="metric-card">
-        <div class="metric-top-label">{{ metrics.experience.label }}</div>
+        <div class="metric-top-row">
+          <span class="metric-top-label">{{ metrics.experience.label }}</span>
+          <span class="metric-icon-badge" aria-hidden="true">
+            <app-icon [icon]="LucideCode2" size="xs" />
+          </span>
+        </div>
         <div class="metric-bottom-row">
           <span class="metric-value">{{ metrics.experience.value }}</span>
           <span class="metric-note">{{ metrics.experience.note }}</span>
@@ -109,18 +114,35 @@
 
       <!-- Card 3: Projects delivered -->
       <div class="metric-card">
-        <div class="metric-top-label">{{ metrics.projects.label }}</div>
+        <div class="metric-top-row">
+          <span class="metric-top-label">{{ metrics.projects.label }}</span>
+          <span class="metric-icon-badge" aria-hidden="true">
+            <app-icon [icon]="LucideLayers" size="xs" />
+          </span>
+        </div>
         <div class="metric-bottom-row">
           <span class="metric-value">{{ metrics.projects.value }}</span>
           <span class="metric-note">{{ metrics.projects.note }}</span>
         </div>
       </div>
 
-      <!-- Card 4: Brands transformed -->
+      <!-- Card 4: Own SaaS Product -->
       <div class="metric-card">
-        <div class="metric-top-label">{{ metrics.brands.label }}</div>
+        <div class="metric-top-row">
+          <span class="metric-top-label">{{ metrics.brands.label }}</span>
+          <a
+            [href]="metrics.brands.productUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="metric-product-pill"
+            title="Visit StickyJi in new tab"
+          >
+            <span>{{ metrics.brands.productName }}</span>
+            <app-icon [icon]="LucideExternalLink" size="xs" />
+          </a>
+        </div>
         <div class="metric-bottom-row">
-          <span class="metric-value">{{ metrics.brands.value }}</span>
+          <span class="metric-value">{{ metrics.brands.displayValue || metrics.brands.value }}</span>
           <span class="metric-note">{{ metrics.brands.note }}</span>
         </div>
       </div>

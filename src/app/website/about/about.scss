@@ -317,11 +317,11 @@
   background: $color-surface-white;
   border: 1px solid $color-border;
   border-radius: 20px;
-  padding: 24px 22px 26px 22px;
+  padding: 22px 22px 24px 22px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 136px;
+  min-height: 148px;
   box-shadow: $shadow-xs;
   box-sizing: border-box;
   transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
@@ -333,12 +333,58 @@
   }
 }
 
+.metric-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
 .metric-top-label {
   font-family: $font-sans;
   font-size: 13.5px;
-  font-weight: 700;
+  font-weight: 750;
   color: $color-heading;
-  margin-bottom: 24px;
+  letter-spacing: -0.015em;
+  margin-bottom: 0;
+}
+
+.metric-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: $color-primary;
+  flex-shrink: 0;
+}
+
+.metric-product-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #2563eb;
+  font-family: $font-sans;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 180ms ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+  }
 }
 
 .metric-bottom-row {
@@ -350,7 +396,7 @@
 
 .metric-value {
   font-family: $font-sans;
-  font-size: 42px;
+  font-size: clamp(34px, 3.2vw, 42px);
   font-weight: 850;
   color: $color-heading;
   line-height: 0.95;
@@ -361,11 +407,15 @@
 .metric-note {
   font-family: $font-sans;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 450;
   color: $color-text-muted;
   line-height: 1.45;
-  max-width: 140px;
+  max-width: 155px;
   text-align: right;
+  margin: 0;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
 }
 
 /* Contrasting Dark Card (Hero Metric) */
@@ -385,7 +435,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
   }
 
   .avatar-stack {
