@@ -275,7 +275,7 @@ export class Projects {
       previewType: 'saas',
       accentColor: '#f59e0b',
       domainUrl: 'stickyji.com',
-      previewImage: '/images/services/service-uiux.jpg',
+      previewImage: '/images/software-dev-workspace.jpg',
     },
   ];
 

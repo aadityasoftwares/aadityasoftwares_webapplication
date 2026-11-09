@@ -76,9 +76,9 @@ export class About {
    */
   readonly methodologyPoints: string[] = [
     'Clear and focused strategy',
-    'Design that drives impact',
-    'Collaboration without the chaos',
-    'Outcomes that build momentum',
+    'Clean architecture designed for scale',
+    'Direct developer collaboration without chaos',
+    'Predictable sprint releases that build momentum',
     'Smart solutions, tailored for you',
   ];
 
@@ -89,22 +89,22 @@ export class About {
     experience: {
       label: 'Years of experience',
       value: '9+',
-      note: 'Expertise that drives meaningful results.',
+      note: 'Full-stack engineering expertise across modern stacks.',
     },
     satisfaction: {
       ratingLabel: 'Happy clients worldwide',
       value: '99%',
-      note: 'Clients stay for our quality and results.',
+      note: 'Clients stay for code quality and reliable delivery.',
     },
     projects: {
-      label: 'Projects delivered',
+      label: 'Software Projects delivered',
       value: '100+',
-      note: 'Creative solutions built with purpose.',
+      note: 'Enterprise web apps, APIs & cloud platforms.',
     },
     brands: {
-      label: 'Brands transformed',
+      label: 'Production Systems Shipped',
       value: '86+',
-      note: 'From strategy to standout visuals.',
+      note: 'High-availability software in active commercial use.',
     },
   };
 
