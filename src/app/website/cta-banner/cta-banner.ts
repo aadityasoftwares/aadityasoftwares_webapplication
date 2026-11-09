@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   LucideArrowRight,
   LucideExternalLink,
@@ -21,6 +22,7 @@ import { ScrollReveal } from '../scroll-reveal';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CtaBanner {
+  private readonly router = inject(Router);
   readonly contactClick = output<void>();
 
   readonly LucideArrowRight = LucideArrowRight;
@@ -40,9 +42,8 @@ export class CtaBanner {
 
   onDiscuss(): void {
     this.contactClick.emit();
-    const el = document.getElementById('contact');
-    if (el && typeof el.scrollIntoView === 'function') {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    this.router.navigate(['/contact'], { fragment: 'contact-form' }).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 }

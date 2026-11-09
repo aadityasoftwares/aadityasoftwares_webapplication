@@ -13,6 +13,7 @@ import {
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   LucidePlay,
   LucideArrowRight,
@@ -48,6 +49,7 @@ export interface DevelopmentStep {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Hero implements OnInit, OnDestroy {
+  private readonly router = inject(Router);
   readonly LucidePlay = LucidePlay;
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucideX = LucideX;
@@ -182,10 +184,9 @@ export class Hero implements OnInit, OnDestroy {
 
   onExplore(): void {
     this.exploreClick.emit();
-    const services = document.getElementById('services');
-    if (services) {
-      services.scrollIntoView({ behavior: 'smooth' });
-    }
+    this.router.navigate(['/projects']).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   onPlay(): void {

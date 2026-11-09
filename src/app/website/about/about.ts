@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   LucideArrowRight,
   LucideShieldCheck,
@@ -58,6 +59,7 @@ export interface PillarDetail {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class About {
+  private readonly router = inject(Router);
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucideShieldCheck = LucideShieldCheck;
   readonly LucideCode2 = LucideCode2;
@@ -265,11 +267,8 @@ export class About {
   onWorkTogether(event?: MouseEvent): void {
     event?.preventDefault();
     this.contactClick.emit();
-    const contactElem = document.getElementById('contact');
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.hash = 'contact';
-    }
+    this.router.navigate(['/contact'], { fragment: 'contact-form' }).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 }

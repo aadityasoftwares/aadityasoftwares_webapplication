@@ -3,9 +3,11 @@ import {
   Component,
   EventEmitter,
   Output,
+  inject,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   LucideArrowRight,
   LucideExternalLink,
@@ -93,6 +95,7 @@ export interface ProjectItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Projects {
+  private readonly router = inject(Router);
   readonly getTechIconKey = getTechIconKey;
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucideExternalLink = LucideExternalLink;
@@ -321,12 +324,9 @@ export class Projects {
   onDiscussProject(): void {
     this.closeProjectModal();
     this.contactClick.emit();
-    const contactElem = document.getElementById('contact');
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.hash = 'contact';
-    }
+    this.router.navigate(['/contact'], { fragment: 'contact-form' }).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 }
 
