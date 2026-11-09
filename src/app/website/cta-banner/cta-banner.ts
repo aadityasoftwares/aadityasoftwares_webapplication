@@ -41,7 +41,7 @@ export class CtaBanner {
   onDiscuss(): void {
     this.contactClick.emit();
     const el = document.getElementById('contact');
-    if (el) {
+    if (el && typeof el.scrollIntoView === 'function') {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   }

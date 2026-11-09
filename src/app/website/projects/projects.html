@@ -225,7 +225,12 @@
 
         <div class="spotlight-tech-stack">
           @for (tech of activeProject.techStack; track tech) {
-            <span class="tech-tag">{{ tech }}</span>
+            <span class="tech-tag">
+              <span class="tech-tag-icon" aria-hidden="true">
+                <app-tech-icon [icon]="getTechIconKey(tech)" />
+              </span>
+              <span>{{ tech }}</span>
+            </span>
           }
         </div>
       </div>
@@ -359,7 +364,12 @@
             <h4 class="modal-subheading">Technologies Used</h4>
             <div class="modal-tech-pills">
               @for (tech of activeProject.techStack; track tech) {
-                <span class="m-tech-tag">{{ tech }}</span>
+                <span class="m-tech-tag">
+                  <span class="m-tech-icon" aria-hidden="true">
+                    <app-tech-icon [icon]="getTechIconKey(tech)" />
+                  </span>
+                  <span>{{ tech }}</span>
+                </span>
               }
             </div>
           </div>

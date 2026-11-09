@@ -338,7 +338,12 @@
               <!-- Tech Stack Tags -->
               <div class="card-tech-tags">
                 @for (tech of project.techStack; track tech) {
-                  <span class="tech-pill">{{ tech }}</span>
+                  <span class="tech-pill">
+                    <span class="pill-tech-icon" aria-hidden="true">
+                      <app-tech-icon [icon]="getTechIconKey(tech)" />
+                    </span>
+                    <span>{{ tech }}</span>
+                  </span>
                 }
               </div>
 

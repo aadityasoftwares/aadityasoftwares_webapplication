@@ -1,38 +1,37 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import {
-  LucideCode2,
-  LucideServer,
-  LucideSmartphone,
-  LucideDatabase,
-  LucideCloud,
-  LucideShieldCheck,
-  LucideCpu,
-  LucideLayers,
-} from '@lucide/angular';
-import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
+import { LucideChevronUp, LucidePlus, LucideArrowRight, LucideSparkles } from '@lucide/angular';
+import { AppIcon } from '../../shared/components/icon/icon';
 import { ScrollReveal } from '../scroll-reveal';
+import { TechIcon } from './tech-icon';
 
 export type TechCategory = 'all' | 'frontend' | 'backend' | 'mobile' | 'cloud' | 'devops';
 
 export interface TechItem {
   readonly name: string;
+  readonly iconKey: string;
   readonly category: TechCategory;
   readonly categoryLabel: string;
   readonly role: string;
   readonly badge: string;
-  readonly icon: AppIconDefinition;
 }
 
 @Component({
   selector: 'app-tech-stack',
   standalone: true,
-  imports: [AppIcon, ScrollReveal],
+  imports: [TechIcon, AppIcon, ScrollReveal],
   templateUrl: './tech-stack.html',
   styleUrl: './tech-stack.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TechStack {
+  readonly LucideChevronUp = LucideChevronUp;
+  readonly LucidePlus = LucidePlus;
+  readonly LucideArrowRight = LucideArrowRight;
+  readonly LucideSparkles = LucideSparkles;
+
   readonly activeCategory = signal<TechCategory>('all');
+  readonly showAll = signal<boolean>(false);
+  readonly initialVisibleCount = 12;
 
   readonly categories: { id: TechCategory; label: string }[] = [
     { id: 'all', label: 'All Technologies' },
@@ -40,121 +39,249 @@ export class TechStack {
     { id: 'backend', label: 'Backend & APIs' },
     { id: 'mobile', label: 'Mobile Cross-Platform' },
     { id: 'cloud', label: 'Database & Cloud' },
-    { id: 'devops', label: 'DevOps & QA' },
+    { id: 'devops', label: 'DevOps & Testing' },
   ];
 
   readonly technologies: TechItem[] = [
     {
       name: 'Angular 22',
+      iconKey: 'angular',
       category: 'frontend',
-      categoryLabel: 'Frontend',
-      role: 'Enterprise SPA Framework with Signals & Standalone Components',
+      categoryLabel: 'Frontend Framework',
+      role: 'Enterprise Single-Page Applications with Signals & Standalone Architecture',
       badge: 'Core Framework',
-      icon: LucideCode2,
-    },
-    {
-      name: 'React & Next.js',
-      category: 'frontend',
-      categoryLabel: 'Frontend',
-      role: 'Component Architecture & Server-Side Rendering',
-      badge: 'Modern Web',
-      icon: LucideLayers,
     },
     {
       name: 'TypeScript',
+      iconKey: 'typescript',
       category: 'frontend',
-      categoryLabel: 'Frontend',
-      role: 'Strict Typing, Robust Refactoring & Developer Ergonomics',
-      badge: 'Strict Typings',
-      icon: LucideCode2,
+      categoryLabel: 'Programming Language',
+      role: 'Strict Typing, Robust Refactoring, and Modern JavaScript Features',
+      badge: 'Primary Language',
     },
     {
-      name: 'SCSS & Design Tokens',
+      name: 'JavaScript (ES6+)',
+      iconKey: 'javascript',
       category: 'frontend',
-      categoryLabel: 'Frontend',
-      role: 'Scalable Design Systems & Responsive Layouts',
-      badge: 'Pixel Precision',
-      icon: LucideLayers,
+      categoryLabel: 'Programming Language',
+      role: 'High-Performance Client-Side Scripting & Dynamic Web Interactions',
+      badge: 'Web Standard',
     },
     {
-      name: 'Node.js & Express.js',
-      category: 'backend',
-      categoryLabel: 'Backend & APIs',
-      role: 'High-Throughput Asynchronous REST & GraphQL APIs',
-      badge: 'Production Backend',
-      icon: LucideServer,
+      name: 'React',
+      iconKey: 'react',
+      category: 'frontend',
+      categoryLabel: 'UI Library',
+      role: 'Declarative Component-Driven Interfaces & Interactive Dashboards',
+      badge: 'Modern UI',
     },
     {
-      name: 'Python & FastAPI',
+      name: 'Next.js',
+      iconKey: 'nextjs',
+      category: 'frontend',
+      categoryLabel: 'Full-Stack Framework',
+      role: 'Server-Side Rendering, Static Site Generation & Hybrid Web Apps',
+      badge: 'Production SSR',
+    },
+    {
+      name: 'Python',
+      iconKey: 'python',
       category: 'backend',
-      categoryLabel: 'Backend & APIs',
-      role: 'Data Pipelines, High-Speed APIs & Microservices',
-      badge: 'High Performance',
-      icon: LucideCpu,
+      categoryLabel: 'Programming Language',
+      role: 'Backend Microservices, Intelligent Automation & High-Performance Data APIs',
+      badge: 'Core Backend',
+    },
+    {
+      name: 'Node.js',
+      iconKey: 'nodejs',
+      category: 'backend',
+      categoryLabel: 'Runtime Engine',
+      role: 'Event-Driven Asynchronous Non-Blocking Microservices & APIs',
+      badge: 'High Throughput',
+    },
+    {
+      name: 'Express.js',
+      iconKey: 'express',
+      category: 'backend',
+      categoryLabel: 'Backend Framework',
+      role: 'Robust RESTful API Routing & Scalable Server Middleware',
+      badge: 'Production APIs',
+    },
+    {
+      name: 'FastAPI',
+      iconKey: 'fastapi',
+      category: 'backend',
+      categoryLabel: 'API Framework',
+      role: 'High-Speed Python Asynchronous APIs with Automated OpenAPI Docs',
+      badge: 'High Speed',
     },
     {
       name: 'React Native',
+      iconKey: 'reactnative',
       category: 'mobile',
-      categoryLabel: 'Mobile Cross-Platform',
-      role: 'Native Performance for iOS & Android (Powered Oonloop Multi-App)',
+      categoryLabel: 'Mobile Framework',
+      role: 'Cross-Platform Native Apps for iOS & Android (Powers Oonloop Ecosystem)',
       badge: 'Native Mobile',
-      icon: LucideSmartphone,
     },
     {
       name: 'Flutter',
+      iconKey: 'flutter',
       category: 'mobile',
-      categoryLabel: 'Mobile Cross-Platform',
-      role: 'Cross-Platform Mobile Applications with Unified UI Engine',
-      badge: 'Multi-Platform',
-      icon: LucideSmartphone,
+      categoryLabel: 'Mobile Framework',
+      role: 'High-Fidelity Multi-Platform Mobile Apps with Unified UI Engine',
+      badge: 'Cross-Platform',
     },
     {
       name: 'MongoDB',
+      iconKey: 'mongodb',
       category: 'cloud',
-      categoryLabel: 'Database & Cloud',
-      role: 'NoSQL Document Store for Scalable SaaS Architectures',
-      badge: 'High Availability',
-      icon: LucideDatabase,
+      categoryLabel: 'NoSQL Database',
+      role: 'Document Cloud Database Engineered for High Scale & Rapid Iteration',
+      badge: 'Cloud Document',
     },
     {
       name: 'PostgreSQL',
+      iconKey: 'postgresql',
       category: 'cloud',
-      categoryLabel: 'Database & Cloud',
-      role: 'Relational ACID Data Integrity & Complex Queries',
-      badge: 'Relational Store',
-      icon: LucideDatabase,
-    },
-    {
-      name: 'AWS & Cloudflare',
-      category: 'cloud',
-      categoryLabel: 'Database & Cloud',
-      role: 'Edge Caching, Serverless Functions & Global CDN Delivery',
-      badge: 'Global Edge',
-      icon: LucideCloud,
-    },
-    {
-      name: 'Docker & CI/CD',
-      category: 'devops',
-      categoryLabel: 'DevOps & QA',
-      role: 'Containerization, GitHub Actions & Automated Zero-Downtime Deployments',
-      badge: 'Automated CI/CD',
-      icon: LucideShieldCheck,
-    },
-    {
-      name: 'Vitest & Playwright',
-      category: 'devops',
-      categoryLabel: 'DevOps & QA',
-      role: 'Unit & End-to-End Test Automation with Zero Defect Tolerance',
-      badge: 'Quality First',
-      icon: LucideShieldCheck,
+      categoryLabel: 'Relational Database',
+      role: 'ACID-Compliant Relational Data Store with Complex Query Performance',
+      badge: 'Enterprise SQL',
     },
     {
       name: 'Redis',
+      iconKey: 'redis',
       category: 'cloud',
-      categoryLabel: 'Database & Cloud',
-      role: 'In-Memory Caching, Pub/Sub Messaging & Rate Limiting',
-      badge: 'Sub-Millisecond',
-      icon: LucideDatabase,
+      categoryLabel: 'In-Memory Store',
+      role: 'Sub-Millisecond Caching, Pub/Sub Messaging, and High-Speed Rate Limiting',
+      badge: 'Ultra Fast',
+    },
+    {
+      name: 'Docker',
+      iconKey: 'docker',
+      category: 'devops',
+      categoryLabel: 'Containerization',
+      role: 'Isolated Reproducible Container Environments for Seamless Deployments',
+      badge: 'DevOps Standard',
+    },
+    {
+      name: 'AWS Cloud',
+      iconKey: 'aws',
+      category: 'cloud',
+      categoryLabel: 'Cloud Platform',
+      role: 'High-Availability Cloud Infrastructure, Auto-Scaling & Serverless Execution',
+      badge: 'Global Cloud',
+    },
+    {
+      name: 'Cloudflare',
+      iconKey: 'cloudflare',
+      category: 'cloud',
+      categoryLabel: 'Edge & CDN',
+      role: 'Edge Caching, DDoS Protection, DNS Routing & Zero-Trust Cloud Security',
+      badge: 'Edge Network',
+    },
+    {
+      name: 'Vitest & Playwright',
+      iconKey: 'vitest',
+      category: 'devops',
+      categoryLabel: 'Test Automation',
+      role: 'Blazing-Fast Unit, Integration & End-to-End Automated Test Suites',
+      badge: 'Zero Defect',
+    },
+    {
+      name: 'Tailwind CSS',
+      iconKey: 'tailwind',
+      category: 'frontend',
+      categoryLabel: 'CSS Framework',
+      role: 'Utility-First Scalable Styling for Rapid Responsive Interfaces',
+      badge: 'Utility CSS',
+    },
+    {
+      name: 'SCSS / Sass',
+      iconKey: 'scss',
+      category: 'frontend',
+      categoryLabel: 'CSS Preprocessor',
+      role: 'Modular Design Tokens, Clean Mixins, and Architectural Design Systems',
+      badge: 'Design Tokens',
+    },
+    {
+      name: 'Git & GitHub Actions',
+      iconKey: 'git',
+      category: 'devops',
+      categoryLabel: 'CI/CD Automation',
+      role: 'Version Control, Branch Protection & Automated Continuous Delivery Pipelines',
+      badge: 'Automated CI/CD',
+    },
+    {
+      name: 'NestJS',
+      iconKey: 'nestjs',
+      category: 'backend',
+      categoryLabel: 'Backend Framework',
+      role: 'Enterprise Scalable Node.js Server Architecture with Dependency Injection',
+      badge: 'Enterprise Node',
+    },
+    {
+      name: 'GraphQL & Apollo',
+      iconKey: 'graphql',
+      category: 'backend',
+      categoryLabel: 'Query Language',
+      role: 'Declarative Typed Data Fetching, Unified Schemas & Zero Over-Fetching',
+      badge: 'Modern APIs',
+    },
+    {
+      name: 'MySQL',
+      iconKey: 'mysql',
+      category: 'cloud',
+      categoryLabel: 'Relational Database',
+      role: 'ACID Transactions, High-Availability Replicas & Scalable Data Models',
+      badge: 'Enterprise SQL',
+    },
+    {
+      name: 'Supabase',
+      iconKey: 'supabase',
+      category: 'cloud',
+      categoryLabel: 'Cloud Platform',
+      role: 'Instant Realtime PostgreSQL Database, Authentication & Edge Serverless',
+      badge: 'Realtime Cloud',
+    },
+    {
+      name: 'Kubernetes (K8s)',
+      iconKey: 'kubernetes',
+      category: 'devops',
+      categoryLabel: 'Orchestration',
+      role: 'Automated Container Deployment, Scaling, Health Probes & Cluster Resilience',
+      badge: 'Cloud Native',
+    },
+    {
+      name: 'Nginx & Linux',
+      iconKey: 'nginx',
+      category: 'devops',
+      categoryLabel: 'Web Server & OS',
+      role: 'High-Concurrency Edge Reverse Proxy, SSL Offloading & Hardened Linux Hosts',
+      badge: 'Edge Proxy',
+    },
+    {
+      name: 'Electron',
+      iconKey: 'electron',
+      category: 'mobile',
+      categoryLabel: 'Desktop Platform',
+      role: 'Cross-Platform Native Desktop Software for macOS, Windows & Linux',
+      badge: 'Desktop Apps',
+    },
+    {
+      name: 'Prisma ORM',
+      iconKey: 'prisma',
+      category: 'backend',
+      categoryLabel: 'Database Toolkit',
+      role: 'Next-Generation Type-Safe Database Modeling, Migrations & Query Engine',
+      badge: 'Type-Safe ORM',
+    },
+    {
+      name: 'Redux & NgRx',
+      iconKey: 'redux',
+      category: 'frontend',
+      categoryLabel: 'State Management',
+      role: 'Predictable Reactive State Architecture with Store DevTools & Signal Stores',
+      badge: 'State Store',
     },
   ];
 
@@ -166,7 +293,27 @@ export class TechStack {
     return this.technologies.filter((t) => t.category === cat);
   });
 
+  readonly displayedTech = computed(() => {
+    const list = this.filteredTech();
+    if (this.activeCategory() === 'all' && !this.showAll()) {
+      return list.slice(0, this.initialVisibleCount);
+    }
+    return list;
+  });
+
+  readonly hasMoreToSee = computed(() => {
+    return this.activeCategory() === 'all' && this.filteredTech().length > this.initialVisibleCount;
+  });
+
+  readonly remainingCount = computed(() => {
+    return Math.max(0, this.filteredTech().length - this.initialVisibleCount);
+  });
+
   setCategory(cat: TechCategory): void {
     this.activeCategory.set(cat);
+  }
+
+  toggleShowMore(): void {
+    this.showAll.update((v) => !v);
   }
 }

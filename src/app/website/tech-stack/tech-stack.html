@@ -36,11 +36,11 @@
 
     <!-- Technologies Grid -->
     <div class="technologies-grid">
-      @for (item of filteredTech(); track item.name) {
+      @for (item of displayedTech(); track item.name) {
         <article class="tech-item-card">
           <div class="tech-card-top">
             <div class="tech-icon-wrap" aria-hidden="true">
-              <app-icon [icon]="item.icon" size="sm" />
+              <app-tech-icon [icon]="item.iconKey" />
             </div>
             <span class="tech-badge">{{ item.badge }}</span>
           </div>
@@ -52,6 +52,31 @@
           </div>
         </article>
       }
+    </div>
+
+    <!-- See More Technologies Action -->
+    @if (hasMoreToSee()) {
+      <div class="see-more-tech-wrap">
+        <button
+          type="button"
+          class="see-more-tech-btn"
+          (click)="toggleShowMore()"
+          [attr.aria-expanded]="showAll()"
+        >
+          <app-icon [icon]="showAll() ? LucideChevronUp : LucidePlus" size="sm" class="btn-icon" />
+          <span>{{ showAll() ? 'Show Fewer Technologies' : 'See More Tech Stack We Use To Build Software (' + remainingCount() + '+ More)' }}</span>
+        </button>
+      </div>
+    }
+
+    <!-- Custom Architecture Footer Banner -->
+    <div class="tech-stack-footer-ribbon">
+      <div class="ribbon-content">
+        <app-icon [icon]="LucideSparkles" size="sm" class="ribbon-icon" />
+        <span class="ribbon-text">
+          Need a specialized tech stack? We also engineer high-scale solutions in <strong>Java</strong>, <strong>Go</strong>, <strong>C# / .NET</strong>, and multi-region cloud infrastructures.
+        </span>
+      </div>
     </div>
   </div>
 </section>

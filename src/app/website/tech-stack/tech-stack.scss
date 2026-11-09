@@ -179,9 +179,9 @@
     box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08), 0 0 20px rgba($color-primary, 0.08);
 
     .tech-icon-wrap {
-      background: $color-primary;
-      color: #ffffff;
-      transform: scale(1.05);
+      transform: scale(1.08) translateY(-1px);
+      border-color: rgba($color-primary, 0.35);
+      box-shadow: 0 6px 16px rgba(59, 130, 246, 0.16);
     }
   }
 
@@ -192,15 +192,16 @@
     margin-bottom: 16px;
 
     .tech-icon-wrap {
-      width: 40px;
-      height: 40px;
-      border-radius: $radius-md;
-      background: $color-primary-light;
-      border: 1px solid rgba($color-primary, 0.15);
+      width: 44px;
+      height: 44px;
+      padding: 7px;
+      border-radius: $radius-lg;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color-primary;
       transition: all 0.25s ease;
     }
 
@@ -243,6 +244,86 @@
       font-size: 13.5px;
       line-height: 1.55;
       color: $color-text-body;
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   See More Tech Stack Action
+   ---------------------------------------------------------- */
+.see-more-tech-wrap {
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+
+  .see-more-tech-btn {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: $color-surface-white;
+    border: 1.5px solid rgba($color-primary, 0.25);
+    color: $color-heading;
+    font-family: $font-sans;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: $radius-full;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+    .btn-icon {
+      color: $color-primary;
+      transition: transform 0.25s ease;
+    }
+
+    &:hover {
+      background: $color-primary;
+      border-color: $color-primary;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
+
+      .btn-icon {
+        color: #ffffff;
+        transform: scale(1.15);
+      }
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   Footer Capabilities Ribbon
+   ---------------------------------------------------------- */
+.tech-stack-footer-ribbon {
+  margin-top: 40px;
+  padding: 16px 24px;
+  background: rgba($color-primary, 0.04);
+  border: 1px dashed rgba($color-primary, 0.24);
+  border-radius: $radius-xl;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  .ribbon-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: $color-text-body;
+
+    .ribbon-icon {
+      color: $color-primary;
+      flex-shrink: 0;
+    }
+
+    strong {
+      color: $color-heading;
+      font-weight: 750;
     }
   }
 }

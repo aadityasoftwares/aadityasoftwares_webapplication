@@ -89,5 +89,13 @@ describe('Projects', () => {
     component.prevProject();
     expect(component.activeProjectIndex()).toBe(1);
   });
+
+  it('should map project tech stack strings to valid tech icon keys', () => {
+    expect(component.getTechIconKey('Angular')).toBe('angular');
+    expect(component.getTechIconKey('React Native')).toBe('reactnative');
+    expect(component.getTechIconKey('Node.js')).toBe('nodejs');
+    expect(component.getTechIconKey('MongoDB')).toBe('mongodb');
+    expect(component.getTechIconKey('Cloudflare R2')).toBe('cloudflare');
+  });
 });
 

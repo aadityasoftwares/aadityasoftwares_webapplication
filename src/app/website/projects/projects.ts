@@ -45,6 +45,7 @@ import {
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { Button } from '../../shared/components/button/button';
 import { ScrollReveal } from '../scroll-reveal';
+import { TechIcon, getTechIconKey } from '../tech-stack/tech-icon';
 
 export interface ProjectSpecification {
   label: string;
@@ -86,12 +87,13 @@ export interface ProjectItem {
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, AppIcon, Button, ScrollReveal],
+  imports: [CommonModule, AppIcon, Button, ScrollReveal, TechIcon],
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Projects {
+  readonly getTechIconKey = getTechIconKey;
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucideExternalLink = LucideExternalLink;
   readonly LucideCheck = LucideCheck;

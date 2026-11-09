@@ -39,6 +39,7 @@ import { Button } from '../../../shared/components/button/button';
 import { ScrollReveal } from '../../scroll-reveal';
 import { WebsiteHeader } from '../../website-header/website-header';
 import { WebsiteFooter } from '../../website-footer/website-footer';
+import { TechIcon, getTechIconKey } from '../../tech-stack/tech-icon';
 
 export interface ProjectSpec {
   label: string;
@@ -110,6 +111,7 @@ export interface ClientTestimonial {
     ScrollReveal,
     WebsiteHeader,
     WebsiteFooter,
+    TechIcon,
   ],
   templateUrl: './projects-page.html',
   styleUrl: './projects-page.scss',
@@ -118,6 +120,7 @@ export interface ClientTestimonial {
 export class ProjectsPage {
   private readonly router = inject(Router);
 
+  readonly getTechIconKey = getTechIconKey;
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucideExternalLink = LucideExternalLink;
   readonly LucideCheck = LucideCheck;
