@@ -419,7 +419,7 @@
         flex-shrink: 0;
 
         &.dark {
-          background: #090e17;
+          background: #ffffff;
           border-color: rgba(6, 182, 212, 0.4);
         }
 
@@ -667,11 +667,11 @@
 }
 
 /* =========================================================
-   Section 3: Project Showcase Section (Reference: 2-Column Cards Grid)
+   Section 3: Project Showcase Section (Alternating Left-Right Non-Card Layout)
    ========================================================= */
 .project-showcase-section {
   padding: $section-padding-top 0 $section-padding-bottom;
-  background: $color-surface;
+  background: #ffffff;
   border-top: 1px solid $color-border;
   border-bottom: 1px solid $color-border;
 }
@@ -712,7 +712,7 @@
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: clamp(32px, 4vw, 44px);
+  margin-bottom: clamp(36px, 5vw, 56px);
 
   .filter-tab {
     appearance: none;
@@ -741,312 +741,267 @@
   }
 }
 
-/* 2-Column Grid matching Reference */
-.showcase-2col-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(24px, 3.5vw, 40px);
+/* Alternating Left-Right Showcase List (Open, Non-Card Editorial Layout) */
+.showcase-alternating-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(56px, 7vw, 96px);
+}
 
-  @media (max-width: 900px) {
+.showcase-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.15fr);
+  gap: clamp(36px, 5.5vw, 72px);
+  align-items: stretch;
+  padding-bottom: clamp(56px, 7vw, 96px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  position: relative;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  /* Reversed Combination (Odd rows: Technical Matrix on Left, Story on Right) */
+  &.is-reversed {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.05fr);
+
+    .showcase-story-col {
+      order: 2;
+    }
+
+    .showcase-matrix-col {
+      order: 1;
+    }
+  }
+
+  @media (max-width: 960px) {
     grid-template-columns: 1fr;
+    gap: 32px;
+    padding-bottom: 48px;
+
+    &.is-reversed {
+      grid-template-columns: 1fr;
+
+      .showcase-story-col {
+        order: 1;
+      }
+
+      .showcase-matrix-col {
+        order: 2;
+      }
+    }
   }
 }
 
-.showcase-card {
-  background: $color-surface-white;
-  border: 1px solid $color-border;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: $shadow-xs;
+/* Column 1: Narrative & Brand Identity */
+.showcase-story-col {
   display: flex;
   flex-direction: column;
-  transition: all 300ms ease;
+  justify-content: center;
+  text-align: left;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: $shadow-md;
-    border-color: rgba($color-primary, 0.4);
+  .showcase-brand-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
 
-    .card-preview-frame .preview-backdrop .preview-img {
-      transform: scale(1.04);
-    }
-  }
-
-  &.is-saas-card {
-    border: 1.5px solid rgba($color-accent, 0.4);
-    box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15);
-  }
-
-  /* Mockup style frame */
-  .card-preview-frame {
-    position: relative;
-    width: 100%;
-    height: clamp(240px, 28vw, 320px);
-    background: #0b1528;
-    overflow: hidden;
-
-    .preview-backdrop {
-      width: 100%;
-      height: 100%;
+    /* Product Logo Badge with Pure White Background */
+    .project-logo-badge {
+      width: 62px;
+      height: 62px;
+      border-radius: 16px;
+      background: #ffffff !important;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #091322 0%, #0f172a 100%);
+      padding: 9px;
+      flex-shrink: 0;
+      transition: transform 250ms ease, box-shadow 250ms ease;
 
-      &.saas-bg {
-        background: linear-gradient(135deg, #07172f 0%, #0b2246 100%);
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.1);
       }
 
-      .preview-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 500ms ease;
+      &.is-saas {
+        border-color: rgba(245, 158, 11, 0.35);
+        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.12);
+      }
 
-        &.saas-logo-style {
-          width: 75%;
-          height: auto;
-          object-fit: contain;
+      .project-logo-img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+    }
+
+    .brand-meta-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+
+      .brand-eyebrow-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+
+        .project-badge-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-family: $font-sans;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: $color-primary;
+          background: $color-primary-light;
+          border: 1px solid rgba(59, 130, 246, 0.25);
+          padding: 3px 10px;
+          border-radius: $radius-full;
+
+          .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: $color-primary;
+          }
+
+          &.saas-pill {
+            color: #d97706;
+            background: #fffbeb;
+            border-color: rgba(245, 158, 11, 0.35);
+
+            .badge-dot {
+              background: #f59e0b;
+            }
+          }
+        }
+
+        .project-domain-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-family: $font-mono;
+          font-size: 11.5px;
+          font-weight: 600;
+          color: $color-text-muted;
+          text-decoration: none;
+          background: #ffffff;
+          border: 1px solid rgba(226, 232, 240, 0.95);
+          padding: 3px 11px;
+          border-radius: $radius-full;
+          box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+          transition: all 180ms ease;
+
+          &:hover {
+            color: $color-primary;
+            background: #eff6ff;
+            border-color: rgba(59, 130, 246, 0.35);
+          }
         }
       }
-    }
 
-    .card-category-pill {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: $radius-full;
-      padding: 5px 12px;
-      font-family: $font-sans;
-      font-size: 11px;
-      font-weight: 750;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #ffffff;
-
-      .pill-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: $color-accent;
+      .showcase-project-title {
+        margin: 0;
+        font-family: $font-sans;
+        font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+        font-weight: 850;
+        line-height: 1.18;
+        color: $color-heading;
+        letter-spacing: -0.02em;
       }
-    }
-
-    .card-domain-badge {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: $radius-full;
-      padding: 5px 12px;
-      font-family: $font-mono;
-      font-size: 11.5px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.95);
     }
   }
 
-  .card-body {
-    padding: clamp(24px, 3.5vw, 32px);
+  .showcase-project-desc {
+    margin: 0 0 20px 0;
+    font-family: $font-sans;
+    font-size: 15px;
+    line-height: 1.65;
+    color: $color-text-body;
+  }
+
+  /* Challenge & Solution Narrative */
+  .showcase-narrative-box {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    gap: 12px;
+    background: #f8fafc;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 22px;
 
-    .card-header-bar {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
-
-      .card-project-title {
-        margin: 0;
-        font-family: $font-sans;
-        font-size: clamp(1.3rem, 2.2vw, 1.6rem);
-        font-weight: 850;
-        color: $color-heading;
-      }
-
-      .card-category-label {
-        font-family: $font-sans;
-        font-size: 12px;
-        font-weight: 700;
-        color: $color-primary;
-        white-space: nowrap;
-      }
-    }
-
-    .card-short-desc {
-      margin: 0 0 20px 0;
-      font-family: $font-sans;
-      font-size: 14.5px;
-      line-height: 1.6;
-      color: $color-text-body;
-    }
-
-    /* OonLoop 4-Platform Callout */
-    .ecosystem-callout-panel {
-      background: $color-surface;
-      border: 1px solid $color-border;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 20px;
-
-      .panel-tagline {
-        display: block;
-        font-family: $font-sans;
-        font-size: 11.5px;
-        font-weight: 750;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: $color-primary;
-        margin-bottom: 10px;
-      }
-
-      .platform-mini-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-
-        @media (max-width: 500px) {
-          grid-template-columns: 1fr;
-        }
-
-        .platform-chip {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          background: $color-surface-white;
-          border: 1px solid $color-border;
-          border-radius: 10px;
-          padding: 8px 12px;
-
-          .p-icon {
-            color: $color-primary;
-            flex-shrink: 0;
-          }
-
-          .p-meta {
-            display: flex;
-            flex-direction: column;
-
-            .p-name {
-              font-family: $font-sans;
-              font-size: 12.5px;
-              font-weight: 750;
-              color: $color-heading;
-            }
-
-            .p-stack {
-              font-family: $font-mono;
-              font-size: 10.5px;
-              color: $color-text-muted;
-            }
-          }
-        }
-      }
-    }
-
-    /* StickyJi 6-Feature Callout */
-    .saas-features-panel {
-      background: rgba($color-accent, 0.06);
-      border: 1px solid rgba($color-accent, 0.22);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 20px;
-
-      .panel-tagline {
-        display: block;
-        font-family: $font-sans;
-        font-size: 11.5px;
-        font-weight: 750;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: $color-accent;
-        margin-bottom: 10px;
-      }
-
-      .features-mini-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-
-        @media (max-width: 500px) {
-          grid-template-columns: 1fr;
-        }
-
-        .feature-chip {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          background: #ffffff;
-          border: 1px solid rgba($color-accent, 0.2);
-          border-radius: 8px;
-          padding: 7px 10px;
-
-          .f-icon {
-            color: $color-accent;
-            flex-shrink: 0;
-          }
-
-          .f-title {
-            font-family: $font-sans;
-            font-size: 12px;
-            font-weight: 700;
-            color: $color-heading;
-          }
-        }
-      }
-    }
-
-    /* Specs List */
-    .card-specs-list {
+    .narrative-point {
       display: flex;
       flex-direction: column;
-      gap: 7px;
-      padding: 14px 0;
-      border-top: 1px solid $color-border;
-      border-bottom: 1px solid $color-border;
-      margin-bottom: 18px;
+      gap: 6px;
 
-      .spec-row-item {
-        display: flex;
-        align-items: baseline;
-        gap: 8px;
+      .point-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         font-family: $font-sans;
-        font-size: 13px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        width: fit-content;
 
-        .spec-lbl {
-          font-weight: 700;
-          color: $color-text-muted;
-          min-width: 140px;
-          flex-shrink: 0;
+        &.challenge-badge {
+          color: #d97706;
         }
 
-        .spec-val {
-          color: $color-heading;
-          font-weight: 600;
+        &.solution-badge {
+          color: $color-primary;
         }
       }
+
+      .point-text {
+        margin: 0;
+        font-family: $font-sans;
+        font-size: 13.5px;
+        line-height: 1.55;
+        color: $color-text-body;
+      }
+
+      &.challenge-point {
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+      }
+    }
+  }
+
+  /* Technology Architecture Block */
+  .showcase-tech-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    .tech-block-label {
+      font-family: $font-sans;
+      font-size: 11.5px;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      color: $color-text-muted;
+      text-transform: uppercase;
     }
 
-    /* Tech Stack Pills */
-    .card-tech-tags {
+    .tech-tags-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 24px;
+      gap: 8px;
 
       .tech-pill {
         display: inline-flex;
@@ -1055,13 +1010,13 @@
         font-family: $font-sans;
         font-size: 12px;
         font-weight: 650;
-        background: $color-surface-white;
-        border: 1px solid $color-border;
+        background: #ffffff;
+        border: 1px solid rgba(226, 232, 240, 0.95);
         color: $color-heading;
-        padding: 4px 11px 4px 6px;
+        padding: 4px 11px 4px 7px;
         border-radius: $radius-full;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
-        transition: all 0.2s ease;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+        transition: all 180ms ease;
 
         .pill-tech-icon {
           width: 16px;
@@ -1079,27 +1034,368 @@
         }
       }
     }
+  }
 
-    .card-footer-action {
-      margin-top: auto;
+  /* Actions Row */
+  .showcase-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 4px;
 
-      .card-action-btn {
+    .showcase-primary-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: $color-primary;
+      color: #ffffff;
+      border: 1.5px solid $color-primary;
+      border-radius: $radius-full;
+      padding: 10px 22px;
+      font-family: $font-sans;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
+      transition: all 200ms ease;
+
+      &:hover {
+        background: $color-primary-dark;
+        border-color: $color-primary-dark;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+      }
+    }
+
+    .showcase-secondary-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: $font-sans;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: $color-text-body;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: $radius-full;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      background: #ffffff;
+      transition: all 180ms ease;
+
+      &:hover {
+        color: $color-primary;
+        border-color: rgba(59, 130, 246, 0.4);
+        background: #eff6ff;
+      }
+    }
+  }
+}
+
+/* Column 2: Architectural Deliverables & Capabilities Matrix */
+.showcase-matrix-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .matrix-stage-card {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    border-radius: 22px;
+    padding: clamp(24px, 3.5vw, 32px);
+    box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: transform 250ms ease, box-shadow 250ms ease;
+
+    &:hover {
+      box-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.1);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    &.is-saas-matrix {
+      background: #fffdf5;
+      border-color: rgba(245, 158, 11, 0.28);
+
+      &:hover {
+        border-color: rgba(245, 158, 11, 0.45);
+      }
+    }
+
+    /* Matrix Header Bar */
+    .matrix-header-bar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+
+      .matrix-header-left {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .matrix-eyebrow {
+          font-family: $font-sans;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: $color-primary;
+        }
+
+        .matrix-heading {
+          margin: 0;
+          font-family: $font-sans;
+          font-size: 17px;
+          font-weight: 850;
+          color: $color-heading;
+          letter-spacing: -0.01em;
+        }
+      }
+
+      .matrix-status-pill {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        background: none;
-        border: none;
-        padding: 0;
+        gap: 6px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: $radius-full;
+        padding: 4px 12px;
         font-family: $font-sans;
-        font-size: 14px;
+        font-size: 11px;
         font-weight: 750;
-        color: $color-primary;
-        cursor: pointer;
-        transition: color 160ms ease, transform 160ms ease;
+        color: #059669;
+        flex-shrink: 0;
+
+        .live-pulse-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #10b981;
+          box-shadow: 0 0 6px #10b981;
+        }
+      }
+    }
+
+    /* OonLoop 4-App Ecosystem Grid */
+    .matrix-ecosystem-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+
+      @media (max-width: 580px) {
+        grid-template-columns: 1fr;
+      }
+
+      .ecosystem-app-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        background: #f8fafc;
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        border-radius: 14px;
+        padding: 12px 14px;
+        transition: all 180ms ease;
 
         &:hover {
-          color: $color-primary-dark;
-          transform: translateX(3px);
+          background: #ffffff;
+          border-color: rgba(59, 130, 246, 0.35);
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+        }
+
+        .app-icon-wrap {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          background: #eff6ff;
+          border: 1px solid #bfdbfe;
+          color: $color-primary;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .app-info {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          flex-grow: 1;
+
+          .app-title-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+
+            .app-name {
+              font-family: $font-sans;
+              font-size: 13px;
+              font-weight: 800;
+              color: $color-heading;
+            }
+
+            .app-stack-pill {
+              font-family: $font-mono;
+              font-size: 10px;
+              font-weight: 600;
+              color: $color-text-muted;
+              background: #ffffff;
+              border: 1px solid rgba(226, 232, 240, 0.9);
+              padding: 2px 7px;
+              border-radius: $radius-full;
+            }
+          }
+
+          .app-role {
+            margin: 0;
+            font-family: $font-sans;
+            font-size: 11.5px;
+            line-height: 1.45;
+            color: $color-text-muted;
+          }
+        }
+      }
+    }
+
+    /* StickyJi 6-SaaS Features Grid */
+    .matrix-features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+
+      @media (max-width: 580px) {
+        grid-template-columns: 1fr;
+      }
+
+      .saas-feature-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: #ffffff;
+        border: 1px solid rgba(245, 158, 11, 0.22);
+        border-radius: 12px;
+        padding: 10px 12px;
+        transition: all 180ms ease;
+
+        &:hover {
+          background: #fffbeb;
+          border-color: rgba(245, 158, 11, 0.4);
+          transform: translateY(-1px);
+        }
+
+        .feat-icon-wrap {
+          width: 30px;
+          height: 30px;
+          border-radius: 8px;
+          background: #fef3c7;
+          border: 1px solid #fde68a;
+          color: #d97706;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .feat-info {
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+
+          .feat-title {
+            font-family: $font-sans;
+            font-size: 12.5px;
+            font-weight: 800;
+            color: $color-heading;
+          }
+
+          .feat-desc {
+            font-family: $font-sans;
+            font-size: 11px;
+            line-height: 1.4;
+            color: $color-text-muted;
+          }
+        }
+      }
+    }
+
+    /* SGTC India Key Outcomes List */
+    .matrix-outcomes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .outcome-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: #f8fafc;
+        border: 1px solid rgba(226, 232, 240, 0.85);
+        border-radius: 12px;
+        padding: 10px 14px;
+        transition: all 180ms ease;
+
+        &:hover {
+          background: #ffffff;
+          border-color: rgba(59, 130, 246, 0.35);
+          transform: translateX(2px);
+        }
+
+        .outcome-icon {
+          color: #10b981;
+          margin-top: 1px;
+          flex-shrink: 0;
+        }
+
+        .outcome-text {
+          font-family: $font-sans;
+          font-size: 13px;
+          font-weight: 650;
+          line-height: 1.5;
+          color: $color-heading;
+        }
+      }
+    }
+
+    /* Technical Specifications Grid */
+    .matrix-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(226, 232, 240, 0.85);
+
+      @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+      }
+
+      .spec-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: #f8fafc;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        border-radius: 10px;
+        padding: 8px 12px;
+
+        .spec-label {
+          font-family: $font-sans;
+          font-size: 10.5px;
+          font-weight: 750;
+          color: $color-text-muted;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+        }
+
+        .spec-value {
+          font-family: $font-sans;
+          font-size: 12.5px;
+          font-weight: 700;
+          color: $color-heading;
         }
       }
     }

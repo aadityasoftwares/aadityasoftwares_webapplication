@@ -43,6 +43,8 @@ import {
   LucideChevronLeft,
   LucideAward,
   LucideCpu,
+  LucideCheckCircle2,
+  LucideZap,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../../shared/components/icon/icon';
 import { Button } from '../../../shared/components/button/button';
@@ -180,6 +182,8 @@ export class ProjectsPage implements OnInit {
   readonly LucideChevronLeft = LucideChevronLeft;
   readonly LucideAward = LucideAward;
   readonly LucideCpu = LucideCpu;
+  readonly LucideCheckCircle2 = LucideCheckCircle2;
+  readonly LucideZap = LucideZap;
 
   readonly activeFilter = signal<string>('all');
   readonly activeStrategyIndex = signal<number>(0);

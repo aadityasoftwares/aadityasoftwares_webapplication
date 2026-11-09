@@ -252,111 +252,188 @@
         </button>
       </div>
 
-      <!-- 2-Column Grid matching Reference -->
-      <div class="showcase-2col-grid">
-        @for (project of filteredProjects; track project.id) {
-          <article
-            class="showcase-card"
-            [class.is-saas-card]="project.isProprietarySaaS"
+      <!-- Alternating Left-Right Showcase List (Non-Card Layout, Authentic Engineering Matrix) -->
+      <div class="showcase-alternating-list">
+        @for (project of filteredProjects; track project.id; let idx = $index) {
+          <div
+            class="showcase-row"
+            [class.is-reversed]="idx % 2 === 1"
+            [class.is-saas-row]="project.isProprietarySaaS"
+            [attr.id]="project.id"
           >
-            <!-- Card Image Preview Frame with Mockup Style -->
-            <div class="card-preview-frame">
-              <div class="preview-backdrop" [class.saas-bg]="project.isProprietarySaaS">
-                <img
-                  [src]="project.previewImage"
-                  [alt]="project.title"
-                  class="preview-img"
-                  [class.saas-logo-style]="project.isProprietarySaaS"
-                  loading="lazy"
-                />
+            <!-- Column 1: Narrative & Brand Identity -->
+            <div class="showcase-story-col">
+              <!-- Brand Identity Header -->
+              <div class="showcase-brand-header">
+                <!-- Pure White Logo Badge -->
+                <div class="project-logo-badge" [class.is-saas]="project.isProprietarySaaS">
+                  <img
+                    [src]="project.logoUrl"
+                    [alt]="project.logoAlt"
+                    class="project-logo-img"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="brand-meta-info">
+                  <div class="brand-eyebrow-row">
+                    <span class="project-badge-pill" [class.saas-pill]="project.isProprietarySaaS">
+                      <span class="badge-dot" aria-hidden="true"></span>
+                      <span>{{ project.badgeLabel }}</span>
+                    </span>
+                    <a
+                      [href]="'https://' + project.domainUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="project-domain-pill"
+                      title="Visit live domain in new tab"
+                    >
+                      <app-icon [icon]="LucideGlobe" size="xs" />
+                      <span>{{ project.domainUrl }}</span>
+                      <app-icon [icon]="LucideArrowUpRight" size="xs" />
+                    </a>
+                  </div>
+                  <h3 class="showcase-project-title">{{ project.title }}</h3>
+                </div>
               </div>
 
-              <!-- Top Left Category Pill -->
-              <div class="card-category-pill">
-                <span class="pill-dot" aria-hidden="true"></span>
-                <span>{{ project.badgeLabel }}</span>
+              <!-- Executive Description -->
+              <p class="showcase-project-desc">{{ project.shortDesc }}</p>
+
+              <!-- Problem & Architectural Solution Story -->
+              <div class="showcase-narrative-box">
+                <div class="narrative-point challenge-point">
+                  <div class="point-badge challenge-badge">
+                    <app-icon [icon]="LucideZap" size="xs" />
+                    <span>The Challenge</span>
+                  </div>
+                  <p class="point-text">{{ project.challenge }}</p>
+                </div>
+                <div class="narrative-point solution-point">
+                  <div class="point-badge solution-badge">
+                    <app-icon [icon]="LucideCheckCircle2" size="xs" />
+                    <span>Our Solution</span>
+                  </div>
+                  <p class="point-text">{{ project.solution }}</p>
+                </div>
               </div>
 
-              <!-- Top Right Domain Badge -->
-              <div class="card-domain-badge">
-                <app-icon [icon]="LucideGlobe" size="xs" />
-                <span>{{ project.domainUrl }}</span>
+              <!-- Technology Stack Architecture -->
+              <div class="showcase-tech-block">
+                <span class="tech-block-label">Architecture Stack:</span>
+                <div class="tech-tags-list">
+                  @for (tech of project.techStack; track tech) {
+                    <span class="tech-pill">
+                      <span class="pill-tech-icon" aria-hidden="true">
+                        <app-tech-icon [icon]="getTechIconKey(tech)" />
+                      </span>
+                      <span>{{ tech }}</span>
+                    </span>
+                  }
+                </div>
+              </div>
+
+              <!-- Actions Row -->
+              <div class="showcase-actions-row">
+                <button type="button" class="showcase-primary-btn" (click)="onContact()">
+                  <span>Discuss Similar Solution</span>
+                  <app-icon [icon]="LucideArrowRight" size="xs" />
+                </button>
+                <a
+                  [href]="'https://' + project.domainUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="showcase-secondary-link"
+                >
+                  <app-icon [icon]="LucideGlobe" size="xs" />
+                  <span>Visit {{ project.domainUrl }}</span>
+                  <app-icon [icon]="LucideArrowUpRight" size="xs" />
+                </a>
               </div>
             </div>
 
-            <!-- Card Meta & Content Bar -->
-            <div class="card-body">
-              <div class="card-header-bar">
-                <h3 class="card-project-title">{{ project.title }}</h3>
-                <span class="card-category-label">{{ project.category }}</span>
-              </div>
+            <!-- Column 2: Architectural Deliverables & Capabilities Matrix -->
+            <div class="showcase-matrix-col">
+              <div class="matrix-stage-card" [class.is-saas-matrix]="project.isProprietarySaaS">
+                <!-- Matrix Header Bar -->
+                <div class="matrix-header-bar">
+                  <div class="matrix-header-left">
+                    <span class="matrix-eyebrow">
+                      {{ project.platforms ? 'MULTI-APPLICATION ARCHITECTURE' : (project.features ? 'PROPRIETARY SAAS CAPABILITIES' : 'ENGINEERING DELIVERABLES & OUTCOMES') }}
+                    </span>
+                    <h4 class="matrix-heading">
+                      {{ project.platforms ? '4 Interconnected Production Apps' : (project.features ? 'Workspace Productivity Platform' : 'Production Performance & Reliability') }}
+                    </h4>
+                  </div>
+                  <div class="matrix-status-pill">
+                    <span class="live-pulse-dot" aria-hidden="true"></span>
+                    <span>{{ project.isProprietarySaaS ? 'Live Cloud SaaS' : 'Verified Production' }}</span>
+                  </div>
+                </div>
 
-              <p class="card-short-desc">{{ project.shortDesc }}</p>
-
-              <!-- Special OonLoop 4-Platform Ecosystem Visual Callout -->
-              @if (project.platforms && project.platforms.length > 0) {
-                <div class="ecosystem-callout-panel">
-                  <span class="panel-tagline">4 Interconnected Applications:</span>
-                  <div class="platform-mini-grid">
+                <!-- Specialized Ecosystem Grid (OonLoop) -->
+                @if (project.platforms && project.platforms.length > 0) {
+                  <div class="matrix-ecosystem-grid">
                     @for (p of project.platforms; track p.name) {
-                      <div class="platform-chip">
-                        <app-icon [icon]="p.icon" size="xs" class="p-icon" />
-                        <div class="p-meta">
-                          <span class="p-name">{{ p.name }}</span>
-                          <span class="p-stack">{{ p.stack }}</span>
+                      <div class="ecosystem-app-card">
+                        <div class="app-icon-wrap">
+                          <app-icon [icon]="p.icon" size="sm" />
+                        </div>
+                        <div class="app-info">
+                          <div class="app-title-line">
+                            <span class="app-name">{{ p.name }}</span>
+                            <span class="app-stack-pill">{{ p.stack }}</span>
+                          </div>
+                          <p class="app-role">{{ p.role }}</p>
                         </div>
                       </div>
                     }
                   </div>
-                </div>
-              }
+                }
 
-              <!-- Special StickyJi 6-Feature Proprietary SaaS Callout -->
-              @if (project.features && project.features.length > 0) {
-                <div class="saas-features-panel">
-                  <span class="panel-tagline">Proprietary SaaS Capabilities:</span>
-                  <div class="features-mini-grid">
+                <!-- Specialized SaaS Capabilities Grid (StickyJi) -->
+                @if (project.features && project.features.length > 0) {
+                  <div class="matrix-features-grid">
                     @for (feat of project.features; track feat.title) {
-                      <div class="feature-chip">
-                        <app-icon [icon]="feat.icon" size="xs" class="f-icon" />
-                        <span class="f-title">{{ feat.title }}</span>
+                      <div class="saas-feature-card">
+                        <div class="feat-icon-wrap">
+                          <app-icon [icon]="feat.icon" size="xs" />
+                        </div>
+                        <div class="feat-info">
+                          <span class="feat-title">{{ feat.title }}</span>
+                          <span class="feat-desc">{{ feat.description }}</span>
+                        </div>
                       </div>
                     }
                   </div>
-                </div>
-              }
+                }
 
-              <!-- Engineering Specs Row -->
-              <div class="card-specs-list">
-                @for (spec of project.specs; track spec.label) {
-                  <div class="spec-row-item">
-                    <span class="spec-lbl">{{ spec.label }}:</span>
-                    <span class="spec-val">{{ spec.value }}</span>
+                <!-- Key Outcomes List (SGTC India) -->
+                @if (!project.platforms && !project.features) {
+                  <div class="matrix-outcomes-list">
+                    @for (outcome of project.outcomes; track outcome) {
+                      <div class="outcome-row">
+                        <div class="outcome-icon" aria-hidden="true">
+                          <app-icon [icon]="LucideCheckCircle2" size="xs" />
+                        </div>
+                        <span class="outcome-text">{{ outcome }}</span>
+                      </div>
+                    }
                   </div>
                 }
-              </div>
 
-              <!-- Tech Stack Tags -->
-              <div class="card-tech-tags">
-                @for (tech of project.techStack; track tech) {
-                  <span class="tech-pill">
-                    <span class="pill-tech-icon" aria-hidden="true">
-                      <app-tech-icon [icon]="getTechIconKey(tech)" />
-                    </span>
-                    <span>{{ tech }}</span>
-                  </span>
-                }
-              </div>
-
-              <!-- Card Action Button -->
-              <div class="card-footer-action">
-                <button type="button" class="card-action-btn" (click)="onContact()">
-                  <span>Discuss Similar Solution</span>
-                  <app-icon [icon]="LucideArrowRight" size="xs" />
-                </button>
+                <!-- Technical Specifications Grid -->
+                <div class="matrix-specs-grid">
+                  @for (spec of project.specs; track spec.label) {
+                    <div class="spec-cell">
+                      <span class="spec-label">{{ spec.label }}</span>
+                      <span class="spec-value">{{ spec.value }}</span>
+                    </div>
+                  }
+                </div>
               </div>
             </div>
-          </article>
+          </div>
         }
       </div>
     </div>
