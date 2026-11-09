@@ -10,7 +10,15 @@ describe('WebsiteHeader', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [WebsiteHeader],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([
+          { path: '', component: class {} },
+          { path: 'about', component: class {} },
+          { path: 'services', component: class {} },
+          { path: 'projects', component: class {} },
+          { path: 'contact', component: class {} },
+        ]),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WebsiteHeader);
