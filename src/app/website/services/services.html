@@ -29,11 +29,11 @@
         </p>
 
         <div class="services-header-actions">
-          <a href="#services" class="services-action-link" (click)="scrollToTrack($event)">
+          <a routerLink="/services" class="services-action-link">
             <span>View All Services</span>
             <span class="action-chevron" aria-hidden="true">&rsaquo;</span>
           </a>
-          <a href="#contact" class="services-action-link primary" (click)="onDiscussProject()">
+          <a routerLink="/contact" class="services-action-link primary" (click)="onDiscussProject($event)">
             <span>Discuss Your Project</span>
             <span class="action-chevron" aria-hidden="true">&rsaquo;</span>
           </a>
@@ -47,7 +47,15 @@
     <div class="services-showcase-wrapper">
       <div #cardsTrack class="services-cards-track" (scroll)="onTrackScroll($event)">
         @for (s of services; track s.id) {
-          <article class="service-card" [class.is-featured]="s.isFeatured" (click)="openDetail(s)" role="button" tabindex="0" (keydown.enter)="openDetail(s)">
+          <article
+            class="service-card"
+            [class.is-featured]="s.isFeatured"
+            (click)="onServiceClick(s, $event)"
+            role="button"
+            tabindex="0"
+            (keydown.enter)="onServiceClick(s, $event)"
+            [attr.aria-label]="'Get consultation for ' + s.title"
+          >
             <!-- Background Image -->
             <img [src]="s.image" [alt]="s.title" class="card-bg-img" loading="lazy" />
 
@@ -71,8 +79,8 @@
                   type="button"
                   class="card-arrow-circle"
                   [class.accent-gold]="s.isFeatured"
-                  (click)="openDetail(s); $event.stopPropagation()"
-                  [attr.aria-label]="'Explore deliverables for ' + s.title"
+                  (click)="onServiceClick(s, $event); $event.stopPropagation()"
+                  [attr.aria-label]="'Get consultation for ' + s.title"
                 >
                   <app-icon [icon]="LucideArrowUpRight" size="sm" />
                 </button>
@@ -298,7 +306,7 @@
               variant="primary"
               size="md"
               [iconRight]="LucideArrowRight"
-              (buttonClick)="onDiscussProject()"
+              (buttonClick)="onDiscussProject($event, item.title)"
             >
               Discuss This Service
             </app-button>

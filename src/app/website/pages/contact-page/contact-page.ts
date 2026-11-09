@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   LucideArrowRight,
   LucidePhone,
@@ -62,8 +62,9 @@ export interface ContactFormData {
   styleUrl: './contact-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactPage {
+export class ContactPage implements OnInit {
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucidePhone = LucidePhone;
@@ -95,20 +96,105 @@ export class ContactPage {
     fullName: '',
     email: '',
     phone: '',
-    serviceCategory: 'Custom Software & Web Engineering',
+    serviceCategory: 'Custom Software Development',
     budgetRange: '$15k - $30k',
     projectDetails: '',
   };
 
   readonly serviceOptions = [
-    'Custom Software & Web Engineering',
-    'Mobile Application Ecosystems (iOS & Android)',
-    'Cloud Architecture & DevOps Automation',
-    'AI & Machine Learning Workflows',
-    'UI/UX & Design Systems',
-    'QA Automation & Security Audits',
+    'Custom Software Development',
+    'Mobile App Development',
+    'Cloud Infrastructure & DevOps',
+    'AI-Powered Engineering',
+    'Product Strategy & UI/UX Design',
+    'Quality Assurance & Testing',
+    'Maintenance & Continuous Support',
     'Full-Cycle Dedicated Team',
   ];
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      const serviceParam = params.get('service');
+      if (serviceParam) {
+        this.selectServiceCategory(serviceParam);
+        setTimeout(() => this.scrollToForm(), 120);
+      }
+    });
+
+    this.route.fragment.subscribe((frag) => {
+      if (frag === 'contact-form') {
+        setTimeout(() => this.scrollToForm(), 120);
+      }
+    });
+  }
+
+  private selectServiceCategory(query: string): void {
+    if (!query) return;
+    const cleanQuery = query.trim().toLowerCase();
+
+    // Mapping known service IDs and slugs to standard service options
+    const aliases: Record<string, string> = {
+      'custom-software': 'Custom Software Development',
+      'custom software': 'Custom Software Development',
+      'custom software development': 'Custom Software Development',
+      'custom software & web engineering': 'Custom Software Development',
+      'web': 'Custom Software Development',
+      'mobile-apps': 'Mobile App Development',
+      'mobile app': 'Mobile App Development',
+      'mobile app development': 'Mobile App Development',
+      'mobile application engineering': 'Mobile App Development',
+      'mobile application ecosystems (ios & android)': 'Mobile App Development',
+      'cloud-devops': 'Cloud Infrastructure & DevOps',
+      'cloud infrastructure & devops': 'Cloud Infrastructure & DevOps',
+      'cloud architecture & devops automation': 'Cloud Infrastructure & DevOps',
+      'cloud': 'Cloud Infrastructure & DevOps',
+      'devops': 'Cloud Infrastructure & DevOps',
+      'ai-engineering': 'AI-Powered Engineering',
+      'ai-powered engineering': 'AI-Powered Engineering',
+      'ai & machine learning workflows': 'AI-Powered Engineering',
+      'ai': 'AI-Powered Engineering',
+      'ui-ux': 'Product Strategy & UI/UX Design',
+      'uiux': 'Product Strategy & UI/UX Design',
+      'product strategy & ui/ux design': 'Product Strategy & UI/UX Design',
+      'ui/ux & design systems': 'Product Strategy & UI/UX Design',
+      'design': 'Product Strategy & UI/UX Design',
+      'qa-testing': 'Quality Assurance & Testing',
+      'quality assurance & testing': 'Quality Assurance & Testing',
+      'qa automation & security audits': 'Quality Assurance & Testing',
+      'qa': 'Quality Assurance & Testing',
+      'testing': 'Quality Assurance & Testing',
+      'maintenance': 'Maintenance & Continuous Support',
+      'maintenance & continuous support': 'Maintenance & Continuous Support',
+      'support': 'Maintenance & Continuous Support',
+      'full-cycle': 'Full-Cycle Dedicated Team',
+      'dedicated team': 'Full-Cycle Dedicated Team',
+      'full-cycle dedicated team': 'Full-Cycle Dedicated Team',
+    };
+
+    if (aliases[cleanQuery]) {
+      this.formData.serviceCategory = aliases[cleanQuery];
+      return;
+    }
+
+    // Direct match against serviceOptions
+    const exactMatch = this.serviceOptions.find(
+      (opt) => opt.toLowerCase() === cleanQuery
+    );
+    if (exactMatch) {
+      this.formData.serviceCategory = exactMatch;
+      return;
+    }
+
+    // Substring/partial match
+    const partialMatch = this.serviceOptions.find(
+      (opt) =>
+        opt.toLowerCase().includes(cleanQuery) ||
+        cleanQuery.includes(opt.toLowerCase())
+    );
+    if (partialMatch) {
+      this.formData.serviceCategory = partialMatch;
+    }
+  }
 
   readonly faqs = signal<FaqItem[]>([
     {

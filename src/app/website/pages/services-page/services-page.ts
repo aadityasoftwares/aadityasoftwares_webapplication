@@ -371,8 +371,12 @@ export class ServicesPage {
     return this.services.filter((s) => s.category === cat);
   }
 
-  onContact(): void {
-    this.router.navigate(['/contact']).then(() => {
+  onContact(serviceTitle?: string): void {
+    const queryParams = serviceTitle ? { service: serviceTitle } : undefined;
+    this.router.navigate(['/contact'], {
+      queryParams,
+      fragment: 'contact-form',
+    }).then(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }

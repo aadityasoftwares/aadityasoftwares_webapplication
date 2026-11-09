@@ -5,9 +5,11 @@ import {
   EventEmitter,
   Output,
   ViewChild,
+  inject,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import {
   LucideArrowRight,
   LucideArrowUpRight,
@@ -49,12 +51,13 @@ export interface PrincipleItem {
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, AppIcon, Button, ScrollReveal],
+  imports: [CommonModule, RouterLink, AppIcon, Button, ScrollReveal],
   templateUrl: './services.html',
   styleUrl: './services.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Services {
+  private readonly router = inject(Router);
   @ViewChild('cardsTrack') cardsTrackRef?: ElementRef<HTMLDivElement>;
 
   readonly LucideArrowRight = LucideArrowRight;
@@ -289,6 +292,18 @@ export class Services {
     this.selectedService.set(null);
   }
 
+  onServiceClick(service: ServiceItem, event?: Event): void {
+    if (event) {
+      event.preventDefault();
+    }
+    this.router.navigate(['/contact'], {
+      queryParams: { service: service.title },
+      fragment: 'contact-form',
+    }).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   scrollToTrack(event?: Event): void {
     if (event) event.preventDefault();
     const track = this.cardsTrackRef?.nativeElement;
@@ -297,15 +312,18 @@ export class Services {
     }
   }
 
-  onDiscussProject(event?: MouseEvent): void {
+  onDiscussProject(event?: MouseEvent, serviceTitle?: string): void {
     event?.preventDefault();
     this.ctaClick.emit();
     this.closeDetail();
-    const contactElem = document.getElementById('contact');
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.hash = 'contact';
-    }
+    const queryParams = serviceTitle || this.selectedService()?.title
+      ? { service: serviceTitle || this.selectedService()?.title }
+      : undefined;
+    this.router.navigate(['/contact'], {
+      queryParams,
+      fragment: 'contact-form',
+    }).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 }

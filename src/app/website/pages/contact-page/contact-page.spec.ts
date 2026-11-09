@@ -43,5 +43,16 @@ describe('ContactPage', () => {
     component.toggleFaq(0);
     expect(component.faqs()[0].open).toBe(true);
   });
+
+  it('should auto-select service category based on query parameters or aliases', () => {
+    (component as any).selectServiceCategory('mobile-apps');
+    expect(component.formData.serviceCategory).toBe('Mobile App Development');
+
+    (component as any).selectServiceCategory('cloud-devops');
+    expect(component.formData.serviceCategory).toBe('Cloud Infrastructure & DevOps');
+
+    (component as any).selectServiceCategory('Product Strategy & UI/UX Design');
+    expect(component.formData.serviceCategory).toBe('Product Strategy & UI/UX Design');
+  });
 });
 

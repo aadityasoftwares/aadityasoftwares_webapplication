@@ -224,6 +224,7 @@
     <!-- Client Partnerships & In-House Products Trust Bar -->
     <div class="hero-clients-bar">
       <div class="clients-header">
+        <span class="clients-header-dot" aria-hidden="true"></span>
         <span class="clients-tagline">Trusted by our clients &amp; powering in-house SaaS</span>
       </div>
 
@@ -239,15 +240,20 @@
           <div class="client-logo-badge">
             <img
               src="/sgtc.png"
-              alt="SGTC INDIA"
+              alt="SGTC India Logo"
               class="client-brand-img"
             />
           </div>
           <div class="client-meta">
-            <span class="client-name">SGTC INDIA</span>
-            <span class="client-sub">Enterprise Client</span>
+            <div class="client-name-row">
+              <span class="client-name">SGTC India</span>
+              <span class="client-category-pill">Enterprise</span>
+            </div>
+            <span class="client-sub">Logistics &amp; Supply Chain Portal</span>
           </div>
-          <app-icon [icon]="LucideExternalLink" size="xs" class="client-external-icon" />
+          <div class="client-arrow-circle" aria-hidden="true">
+            <app-icon [icon]="LucideExternalLink" size="xs" />
+          </div>
         </a>
 
         <!-- Client 2: Oonloop -->
@@ -256,20 +262,25 @@
           target="_blank"
           rel="noopener noreferrer"
           class="client-card"
-          title="Oonloop - Hyperlocal E-Commerce Client"
+          title="Oonloop - Hyperlocal E-Commerce Platform"
         >
           <div class="client-logo-badge">
             <img
               src="/oonloop.png"
-              alt="oonloop"
+              alt="OonLoop Logo"
               class="client-brand-img"
             />
           </div>
           <div class="client-meta">
-            <span class="client-name">oonloop</span>
-            <span class="client-sub">E-Commerce Client</span>
+            <div class="client-name-row">
+              <span class="client-name">OonLoop</span>
+              <span class="client-category-pill">E-Commerce</span>
+            </div>
+            <span class="client-sub">Hyperlocal Multi-App Ecosystem</span>
           </div>
-          <app-icon [icon]="LucideExternalLink" size="xs" class="client-external-icon" />
+          <div class="client-arrow-circle" aria-hidden="true">
+            <app-icon [icon]="LucideExternalLink" size="xs" />
+          </div>
         </a>
 
         <!-- In-House Flagship Product: StickyJi -->
@@ -283,15 +294,20 @@
           <div class="client-logo-badge">
             <img
               src="/companylogos/StickyJiLogo.png"
-              alt="StickyJi - In-House Product"
+              alt="StickyJi Logo"
               class="client-brand-img"
             />
           </div>
           <div class="client-meta">
-            <span class="client-name">StickyJi</span>
-            <span class="client-tag-badge">Our In-House Product</span>
+            <div class="client-name-row">
+              <span class="client-name">StickyJi</span>
+              <span class="client-category-pill pill-featured">In-House SaaS</span>
+            </div>
+            <span class="client-sub">Sticky Notes &amp; Productivity Tool</span>
           </div>
-          <app-icon [icon]="LucideExternalLink" size="xs" class="client-external-icon" />
+          <div class="client-arrow-circle" aria-hidden="true">
+            <app-icon [icon]="LucideExternalLink" size="xs" />
+          </div>
         </a>
       </div>
     </div>

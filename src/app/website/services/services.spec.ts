@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Services } from './services';
 
 describe('Services', () => {
@@ -8,6 +9,7 @@ describe('Services', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Services],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Services);
@@ -55,5 +57,16 @@ describe('Services', () => {
 
     component.closeDetail();
     expect(component.selectedService()).toBeNull();
+  });
+
+  it('should navigate to contact with service query parameter on onServiceClick', () => {
+    const router = TestBed.inject(provideRouter([]).providers ? (component as any).router : (component as any).router);
+    const navigateSpy = vi.spyOn((component as any).router, 'navigate').mockResolvedValue(true);
+    const service = component.services[1]; // Custom Software Development
+    component.onServiceClick(service);
+    expect(navigateSpy).toHaveBeenCalledWith(['/contact'], {
+      queryParams: { service: service.title },
+      fragment: 'contact-form',
+    });
   });
 });

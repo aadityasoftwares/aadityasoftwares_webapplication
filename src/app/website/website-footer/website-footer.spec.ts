@@ -23,7 +23,7 @@ describe('WebsiteFooter', () => {
     expect(component.socialLinks.length).toBe(6);
     const names = component.socialLinks.map((s) => s.name);
     expect(names).toContain('LinkedIn');
-    expect(names).toContain('GitHub');
+    expect(names).toContain('Facebook');
     expect(names).toContain('X (Twitter)');
     expect(names).toContain('Instagram');
     expect(names).toContain('YouTube');
