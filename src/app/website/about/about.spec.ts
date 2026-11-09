@@ -35,6 +35,19 @@ describe('About', () => {
     expect(component.pillars).toEqual(['SECURITY', 'QUALITY', 'PERFORMANCE', 'SCALABILITY']);
   });
 
+  it('should have 5 methodology points', () => {
+    expect(component.methodologyPoints.length).toBe(5);
+    expect(component.methodologyPoints[0]).toBe('Clear and focused strategy');
+    expect(component.methodologyPoints[4]).toBe('Smart solutions, tailored for you');
+  });
+
+  it('should have 4 key metrics configured', () => {
+    expect(component.metrics.experience.value).toBe('9+');
+    expect(component.metrics.satisfaction.value).toBe('99%');
+    expect(component.metrics.projects.value).toBe('100+');
+    expect(component.metrics.brands.value).toBe('86+');
+  });
+
   it('should emit contactClick on onWorkTogether', () => {
     let emitted = false;
     component.contactClick.subscribe(() => (emitted = true));

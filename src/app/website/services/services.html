@@ -100,34 +100,150 @@
     </div>
 
     <!-- =======================================================
-         Part 3: Our Engineering Philosophy (White Background)
+         Part 3: Our Engineering Philosophy (Mosaic Architectural Grid)
          ======================================================= -->
     <div class="services-philosophy-block">
-      <div class="philosophy-header">
-        <div class="philosophy-eyebrow">
-          <span>OUR ENGINEERING PHILOSOPHY</span>
+      <!-- Section Header: Pill, Large Display Title, Narrative & Contact CTA -->
+      <div class="philosophy-header-split">
+        <div class="philosophy-header-left">
+          <div class="philosophy-header-pill">
+            <span class="pill-dot" aria-hidden="true"></span>
+            <span>OUR ENGINEERING PHILOSOPHY</span>
+          </div>
+          <h2 class="philosophy-display-title">
+            CHANGING CONCEPTS<br />
+            IN ENGINEERING
+          </h2>
         </div>
-        <h3 class="philosophy-title">
-          We Don't Just Build Software. We Build It Right.
-        </h3>
-        <p class="philosophy-sub">
-          Our engineering standards ensure that every solution we ship is resilient, scalable, and secure.
-        </p>
+
+        <div class="philosophy-header-right">
+          <p class="philosophy-lead-copy">
+            Engineering Is More Than The Delivery Of Code; It Is A Disciplined Craft That Reflects The Architecture, Reliability, And Aspirations Of Modern Businesses.
+          </p>
+          <a href="#contact" class="philosophy-header-cta" (click)="onDiscussProject($event)">
+            <span>Contact Us</span>
+            <span class="cta-arrow-circle" aria-hidden="true">
+              <app-icon [icon]="LucideArrowRight" size="xs" />
+            </span>
+          </a>
+        </div>
       </div>
 
-      <div class="philosophy-grid">
-        @for (p of principles; track p.id) {
-          <div class="principle-card">
-            <div class="principle-top-row">
-              <div class="principle-icon-box">
-                <app-icon [icon]="p.icon" size="sm" />
-              </div>
-              <span class="principle-index">{{ p.num }}</span>
-            </div>
-            <h4 class="principle-card-title">{{ p.title }}</h4>
-            <p class="principle-card-desc">{{ p.description }}</p>
+      <!-- Architectural 4-Column Mosaic Matrix -->
+      <div class="philosophy-mosaic-grid">
+        <!-- Row 1, Cell 1: Solid Deep Navy Tile -->
+        <div class="mosaic-tile tile-solid-navy">
+          <div class="tile-tech-marker" aria-hidden="true">
+            <span class="marker-code">SYS-01 // ARCH</span>
+            <app-icon [icon]="LucideShieldCheck" size="sm" class="marker-icon" />
           </div>
-        }
+        </div>
+
+        <!-- Row 1, Cell 2: Studio Light Photo (Sunlight through window blinds) -->
+        <div class="mosaic-tile tile-photo">
+          <img
+            src="/images/engineering-studio-light.jpg"
+            alt="Modern architectural engineering studio workspace with natural sunlight"
+            class="mosaic-photo-img"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Row 1, Cell 3: Solid Deep Navy Tile -->
+        <div class="mosaic-tile tile-solid-navy">
+          <div class="tile-tech-marker" aria-hidden="true">
+            <span class="marker-code">SYS-02 // DEBT-ZERO</span>
+            <app-icon [icon]="LucideCode2" size="sm" class="marker-icon" />
+          </div>
+        </div>
+
+        <!-- Row 1, Cell 4: Slate Blue Card - CLEAN ARCHITECTURE -->
+        <div class="mosaic-tile tile-card tile-slate-card">
+          <div class="tile-card-top">
+            <h4 class="tile-card-title">CLEAN<br />ARCHITECTURE</h4>
+            <span class="tile-corner-arrow" aria-hidden="true">
+              <app-icon [icon]="LucideArrowUpRight" size="xs" />
+            </span>
+          </div>
+          <div class="tile-card-bottom">
+            <p class="tile-card-desc">Decoupled domain boundaries, modular services, and zero technical debt engineered to scale effortlessly.</p>
+          </div>
+        </div>
+
+        <!-- Row 2, Cell 1: Studio Stairs Photo (Stone steps, olive branch, soft shadow) -->
+        <div class="mosaic-tile tile-photo">
+          <img
+            src="/images/engineering-studio-stairs.jpg"
+            alt="Minimalist architectural space with stone steps and ambient shadow"
+            class="mosaic-photo-img"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Row 2, Cell 2: Solid Deep Navy Tile -->
+        <div class="mosaic-tile tile-solid-navy">
+          <div class="tile-tech-marker" aria-hidden="true">
+            <span class="marker-code">SYS-03 // AI-VELOCITY</span>
+            <app-icon [icon]="LucideCpu" size="sm" class="marker-icon" />
+          </div>
+        </div>
+
+        <!-- Row 2, Cell 3: Warm Earth Card - AI + HUMAN EXPERTISE -->
+        <div class="mosaic-tile tile-card tile-earth-card">
+          <div class="tile-card-top">
+            <h4 class="tile-card-title">AI + HUMAN<br />EXPERTISE</h4>
+            <span class="tile-corner-arrow" aria-hidden="true">
+              <app-icon [icon]="LucideArrowUpRight" size="xs" />
+            </span>
+          </div>
+          <div class="tile-card-bottom">
+            <p class="tile-card-desc">Accelerating velocity with modern AI workflows backed strictly by senior engineering oversight.</p>
+          </div>
+        </div>
+
+        <!-- Row 2, Cell 4: Deep Navy Quote Tile -->
+        <div class="mosaic-tile tile-card tile-quote-card">
+          <p class="tile-quote-text">
+            Software Is More Than Just Features; It Is A Disciplined Craft Built On Security, Reliability, And Standards That Stand The Test Of Time.
+          </p>
+        </div>
+
+        <!-- Row 3, Cell 1: Solid Deep Navy Tile -->
+        <div class="mosaic-tile tile-solid-navy">
+          <div class="tile-tech-marker" aria-hidden="true">
+            <span class="marker-code">SYS-04 // RESILIENCE</span>
+            <app-icon [icon]="LucideZap" size="sm" class="marker-icon" />
+          </div>
+        </div>
+
+        <!-- Row 3, Cell 2: Teal Card - SECURITY & QUALITY -->
+        <div class="mosaic-tile tile-card tile-teal-card">
+          <div class="tile-card-top">
+            <h4 class="tile-card-title">SECURITY &amp;<br />QUALITY FIRST</h4>
+            <span class="tile-corner-arrow" aria-hidden="true">
+              <app-icon [icon]="LucideArrowUpRight" size="xs" />
+            </span>
+          </div>
+          <div class="tile-card-bottom">
+            <p class="tile-card-desc">OWASP zero-trust security standards, automated regression testing, and sub-second execution.</p>
+          </div>
+        </div>
+
+        <!-- Row 3, Cell 3 & 4: Spanning 2 Columns - OUR CORE ENGINEERING STANDARDS -->
+        <div class="mosaic-tile tile-card tile-spanning-banner">
+          <div class="banner-top-pill">
+            <span class="pill-dot" aria-hidden="true"></span>
+            <span>Standards</span>
+          </div>
+          <h3 class="banner-main-title">
+            OUR MOST RIGOROUS<br />
+            ENGINEERING STANDARDS
+          </h3>
+          <a href="#contact" class="banner-action-link" (click)="onDiscussProject($event)">
+            <span>Discover our predictable sprint cycles</span>
+            <app-icon [icon]="LucideArrowRight" size="xs" />
+          </a>
+        </div>
       </div>
     </div>
 

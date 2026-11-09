@@ -15,7 +15,7 @@
         <h2 class="projects-main-heading">Projects That Bring Ideas to Life</h2>
         <p class="projects-main-desc">
           From business websites to multi-platform applications and SaaS products,
-          we turn ideas into reliable digital solutions.
+          we turn ideas into reliable, scalable digital solutions.
         </p>
       </div>
 
@@ -32,476 +32,307 @@
     </div>
 
     <!-- =======================================================
-         Alternating Left / Right Software Application Rows
-         (No enclosed cards - Open professional software showcase)
+         Modular Bento Studio Dashboard Showcase
+         (Simple, Understandable & Professional Software Provider)
          ======================================================= -->
-    <div class="projects-showcase-stream">
-      @for (project of projects; track project.id; let idx = $index; let isEven = $even; let isLast = $last) {
-        <div
-          class="project-showcase-row"
-          [class.row-reverse]="!isEven"
-          [class.is-saas-row]="project.isProprietarySaaS"
-        >
-          <!-- ===================================================
-               Column 1: Software Narrative & Technical Architecture
-               =================================================== -->
-          <div class="project-content-col">
-            <!-- Eyebrow & Status Indicator -->
-            <div class="project-meta-line">
-              <span class="project-category-pill" [class.saas-pill]="project.isProprietarySaaS">
-                @if (project.isProprietarySaaS) {
-                  <app-icon [icon]="LucideSparkles" size="xs" class="pill-sparkle" />
-                }
-                {{ project.badgeLabel }}
-              </span>
+    <div class="portfolio-bento-canvas">
+      <!-- =====================================================
+           Left Column: Signature Studio Card with Vertical Rail
+           ===================================================== -->
+      <div class="bento-left-studio-card">
+        <!-- Far-Left Vertical Navigation Rail -->
+        <div class="vertical-nav-rail" aria-label="Portfolio Category Navigation">
+          <button
+            type="button"
+            class="nav-rail-item"
+            [class.active]="activeCategory() === 'all'"
+            (click)="selectCategory('all')"
+          >
+            All Work
+          </button>
+          <button
+            type="button"
+            class="nav-rail-item"
+            [class.active]="activeCategory() === 'saas'"
+            (click)="selectCategory('saas')"
+          >
+            SaaS Product
+          </button>
+          <button
+            type="button"
+            class="nav-rail-item"
+            [class.active]="activeCategory() === 'marketplace'"
+            (click)="selectCategory('marketplace')"
+          >
+            Ecosystems
+          </button>
+          <button
+            type="button"
+            class="nav-rail-item"
+            [class.active]="activeCategory() === 'website'"
+            (click)="selectCategory('website')"
+          >
+            Web Apps
+          </button>
+        </div>
 
-              <span class="project-live-indicator">
-                <span class="live-dot" [class.dot-saas]="project.isProprietarySaaS" aria-hidden="true"></span>
-                <span class="live-label">
-                  {{ project.isProprietarySaaS ? 'In-House Innovation' : 'Production Verified' }}
-                </span>
-              </span>
+        <!-- Studio Card Inner Content -->
+        <div class="studio-card-inner">
+          <!-- Top Tab Cutout Pill -->
+          <div class="studio-tab-pill">
+            <app-icon [icon]="LucideSparkles" size="xs" />
+            <span>Software Studio</span>
+          </div>
+
+          <!-- Concentric Ring Emblem (Aaditya Softwares Brand Mark) -->
+          <div class="concentric-emblem-wrap">
+            <div class="ring outer-ring" aria-hidden="true"></div>
+            <div class="ring inner-ring" aria-hidden="true"></div>
+            <div class="emblem-core-box">
+              <img
+                src="/companylogos/AadityaSoftwaresLogo.png"
+                alt="Aaditya Softwares Brand Emblem"
+                class="emblem-img"
+              />
             </div>
+          </div>
 
-            <!-- Project Title -->
-            <h3 class="project-title">{{ project.title }}</h3>
+          <!-- Bottom Studio Name & Subtitle -->
+          <div class="studio-bottom-meta">
+            <span class="studio-greeting">We Are,</span>
+            <h3 class="studio-brand-title">Aaditya<br />Softwares</h3>
+            <a
+              href="mailto:contact@aadityasoftwares.com"
+              class="studio-email-pill"
+              aria-label="Email Aaditya Softwares"
+            >
+              <span>contact&#64;aadityasoftwares.com</span>
+              <app-icon [icon]="LucideExternalLink" size="xs" />
+            </a>
+          </div>
 
-            <!-- Short Premise -->
-            <p class="project-desc">{{ project.shortDesc }}</p>
+          <!-- Rotating Circular Technical Stamp (Bottom-Right) -->
+          <div class="rotating-badge-stamp" aria-hidden="true">
+            <div class="stamp-inner-disc"><span>PRO</span></div>
+            <svg class="stamp-svg" viewBox="0 0 100 100">
+              <path id="stampPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+              <text class="stamp-text">
+                <textPath href="#stampPath" startOffset="0%">AADITYA SOFTWARES &bull; DEV STUDIO &bull;</textPath>
+              </text>
+            </svg>
+          </div>
+        </div>
+      </div>
 
-            <!-- Case 1: SGTC India - Software Architecture Highlights -->
-            @if (project.highlights && !project.platforms && !project.features) {
-              <div class="project-highlights-block">
-                <span class="block-eyebrow-label">CORE CAPABILITIES &amp; DELIVERABLES</span>
-                <div class="highlights-grid">
-                  @for (hl of project.highlights; track hl) {
-                    <div class="highlight-item">
-                      <span class="highlight-check-icon">
-                        <app-icon [icon]="LucideCheckCircle2" size="xs" />
-                      </span>
-                      <span class="highlight-text">{{ hl }}</span>
-                    </div>
-                  }
-                </div>
-              </div>
-            }
+      <!-- =====================================================
+           Right Column: Bento Modular Showcase Grid
+           ===================================================== -->
+      <div class="bento-right-content">
+        <!-- Top Row: Mega Display Title & Project Switcher Pills -->
+        <div class="bento-header-bar">
+          <div class="bento-title-group">
+            <h2 class="bento-mega-title">
+              Portfolio<span class="mega-title-accent" aria-hidden="true">↗</span>
+            </h2>
+          </div>
 
-            <!-- Case 2: OonLoop - 4 Integrated Platforms Ecosystem Grid -->
-            @if (project.platforms) {
-              <div class="platforms-highlight-block">
-                <span class="block-eyebrow-label">FOUR INTEGRATED PRODUCTION PLATFORMS</span>
-                <div class="platforms-grid">
-                  @for (platform of project.platforms; track platform.name) {
-                    <div class="platform-chip">
-                      <div class="platform-icon-wrap">
-                        <app-icon [icon]="platform.icon" size="xs" />
-                      </div>
-                      <div class="platform-meta">
-                        <span class="platform-name">{{ platform.name }}</span>
-                        <span class="platform-role">{{ platform.role }}</span>
-                      </div>
-                    </div>
-                  }
-                </div>
-              </div>
-            }
-
-            <!-- Case 3: StickyJi - 6 In-House SaaS Capabilities Grid -->
-            @if (project.features) {
-              <div class="saas-features-block">
-                <span class="block-eyebrow-label">FLAGSHIP SAAS CAPABILITIES</span>
-                <div class="features-grid">
-                  @for (feature of project.features; track feature.title) {
-                    <div class="feature-item">
-                      <span class="feature-icon-box">
-                        <app-icon [icon]="feature.icon" size="xs" />
-                      </span>
-                      <span class="feature-name">{{ feature.title }}</span>
-                    </div>
-                  }
-                </div>
-              </div>
-            }
-
-            <!-- Technology Stack Pills -->
-            <div class="project-tech-row" aria-label="Technology Stack">
-              <span class="tech-lead-label">Tech Stack:</span>
-              <div class="tech-pills-wrap">
-                @for (tech of project.techStack; track tech) {
-                  <span class="tech-tag" [class.tech-tag-saas]="project.isProprietarySaaS">{{ tech }}</span>
-                }
-              </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="project-actions-row">
+          <!-- Project Quick Switcher Pills -->
+          <div class="project-switcher-pills" role="tablist" aria-label="Select featured project">
+            @for (proj of projects; track proj.id; let idx = $index) {
               <button
                 type="button"
-                class="project-detail-btn"
-                [class.btn-saas]="project.isProprietarySaaS"
-                (click)="openProjectModal(project)"
-                [attr.aria-label]="'Explore case study for ' + project.title"
+                class="switcher-pill-btn"
+                [class.active]="activeProjectIndex() === idx"
+                (click)="selectProjectByIndex(idx)"
+                role="tab"
+                [attr.aria-selected]="activeProjectIndex() === idx"
               >
-                <span>Explore Case Study</span>
-                <app-icon [icon]="LucideArrowRight" size="xs" class="btn-arrow" />
+                <span class="pill-num">0{{ idx + 1 }}</span>
+                <span class="pill-name">{{ proj.title }}</span>
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Bento Row 1: Main Project Showcase Theater + Two Stacked Stat Cards -->
+        <div class="bento-top-row">
+          <!-- Main Project Showcase Theater Card -->
+          <div
+            class="bento-theater-card"
+            [class.theater-saas]="activeProject.isProprietarySaaS"
+            (click)="openProjectModal(activeProject)"
+          >
+            <!-- Card Top Bar: Status Badge + Live Domain -->
+            <div class="theater-top-bar">
+              <span class="theater-badge" [class.badge-saas]="activeProject.isProprietarySaaS">
+                <span class="badge-pulse-dot" aria-hidden="true"></span>
+                {{ activeProject.badgeLabel }}
+              </span>
+
+              <span class="theater-domain">
+                <app-icon [icon]="LucideGlobe" size="xs" />
+                <span>{{ activeProject.domainUrl }}</span>
+              </span>
+            </div>
+
+            <!-- Theater Visual Frame with Play / Explore Button -->
+            <div class="theater-visual-box">
+              <img
+                [src]="activeProject.previewImage || '/images/services/service-software.jpg'"
+                [alt]="activeProject.title + ' preview'"
+                class="theater-preview-img"
+              />
+              <div class="theater-visual-overlay"></div>
+
+              <!-- Center Interactive Play / Explore Trigger -->
+              <button
+                type="button"
+                class="theater-play-btn"
+                aria-label="Explore interactive case study"
+              >
+                <app-icon [icon]="LucidePlay" size="sm" class="play-ico" />
               </button>
 
+              <span class="theater-corner-mark mark-tl" aria-hidden="true"></span>
+              <span class="theater-corner-mark mark-tr" aria-hidden="true"></span>
+            </div>
+
+            <!-- Theater Bottom Information -->
+            <div class="theater-info-row">
+              <div class="theater-text-group">
+                <h4 class="theater-project-title">{{ activeProject.title }}</h4>
+                <p class="theater-project-desc">{{ activeProject.shortDesc }}</p>
+                <div class="theater-tech-pills">
+                  @for (tech of activeProject.techStack; track tech) {
+                    <span class="tech-tag-pill">{{ tech }}</span>
+                  }
+                </div>
+              </div>
+
               <button
                 type="button"
-                class="project-discuss-link"
-                (click)="onDiscussProject()"
+                class="theater-action-btn"
+                (click)="openProjectModal(activeProject); $event.stopPropagation()"
               >
-                <span>Discuss Similar Solution</span>
-                <app-icon [icon]="LucideExternalLink" size="xs" />
+                <span>View Case Study</span>
+                <app-icon [icon]="LucideArrowRight" size="xs" />
               </button>
             </div>
           </div>
 
-          <!-- ===================================================
-               Column 2: Software Application Window UI Showcase
-               =================================================== -->
-          <div class="project-visual-col">
-            <div class="software-app-window" [class.window-saas]="project.isProprietarySaaS">
-              <!-- Window Chrome Header -->
-              <div class="app-chrome-header">
-                <div class="traffic-lights" aria-hidden="true">
-                  <span class="traffic-dot dot-close"></span>
-                  <span class="traffic-dot dot-min"></span>
-                  <span class="traffic-dot dot-max"></span>
-                </div>
-
-                <div class="chrome-address-pill">
-                  <app-icon [icon]="LucideGlobe" size="xs" class="address-icon" />
-                  <span class="address-url">{{ project.domainUrl }}</span>
-                  <app-icon [icon]="LucideShieldCheck" size="xs" class="address-lock" />
-                </div>
-
-                <div class="chrome-status-tag">
-                  <span class="tag-pulse-dot" aria-hidden="true"></span>
-                  <span>LIVE APP</span>
-                </div>
+          <!-- Far-Right: Two Stacked Stat Cards -->
+          <div class="bento-stats-stack">
+            <!-- Top Stat Card: Projects Delivered -->
+            <div class="bento-stat-card stat-card-light">
+              <span class="stat-corner-arrow" aria-hidden="true">
+                <app-icon [icon]="LucideArrowUpRight" size="xs" />
+              </span>
+              <div class="stat-content">
+                <span class="stat-number">100+</span>
+                <span class="stat-label">Projects Delivered</span>
+                <span class="stat-sub">Enterprise &amp; SaaS Systems</span>
               </div>
+            </div>
 
-              <!-- Software Application View Body -->
-              <div class="app-screen-body">
-                <!-- ==============================================
-                     Application View 1: SGTC India (B2B Scientific Portal)
-                     ============================================== -->
-                @if (project.previewType === 'website') {
-                  <div class="app-view-website">
-                    <!-- App Internal Navigation Bar -->
-                    <div class="screen-subnav">
-                      <div class="subnav-brand">
-                        <img
-                          [src]="project.logoUrl"
-                          [alt]="project.logoAlt"
-                          class="subnav-logo"
-                          loading="lazy"
-                        />
-                        <div class="subnav-text">
-                          <span class="brand-name">SGTC India</span>
-                          <span class="brand-tag">Laboratory Equipment &amp; Scientific Products</span>
-                        </div>
-                      </div>
-
-                      <div class="subnav-badge">
-                        <app-icon [icon]="LucideShieldCheck" size="xs" />
-                        <span>ISO / CE Certified Catalog</span>
-                      </div>
-                    </div>
-
-                    <!-- Simulated Search & Filter Interface -->
-                    <div class="screen-search-bar">
-                      <app-icon [icon]="LucideSearch" size="xs" class="search-ico" />
-                      <span class="search-placeholder">Search 5,000+ laboratory glassware, analytical instruments, reagents...</span>
-                      <span class="search-kbd">⌘K</span>
-                    </div>
-
-                    <!-- Category Pills -->
-                    <div class="screen-category-tabs">
-                      <span class="cat-tab active">All Categories</span>
-                      <span class="cat-tab">Borosilicate Glassware</span>
-                      <span class="cat-tab">Analytical Instruments</span>
-                      <span class="cat-tab">Chemical Reagents</span>
-                    </div>
-
-                    <!-- Product Grid Preview -->
-                    <div class="screen-products-grid">
-                      <div class="app-product-card">
-                        <div class="p-card-header">
-                          <span class="p-tag glass">Glassware</span>
-                          <span class="p-code">ISO 3819</span>
-                        </div>
-                        <h5 class="p-title">Borosilicate Laboratory Beakers</h5>
-                        <p class="p-spec">Low thermal expansion, double graduated scale &bull; 250ml - 5000ml</p>
-                        <div class="p-footer">
-                          <span class="p-stock">In Stock</span>
-                          <span class="p-action">View Specs &rarr;</span>
-                        </div>
-                      </div>
-
-                      <div class="app-product-card">
-                        <div class="p-card-header">
-                          <span class="p-tag inst">Instruments</span>
-                          <span class="p-code">CAL-900</span>
-                        </div>
-                        <h5 class="p-title">Digital Analytical pH Meters</h5>
-                        <p class="p-spec">Automatic temperature compensation &bull; 3-point calibration</p>
-                        <div class="p-footer">
-                          <span class="p-stock">Calibrated</span>
-                          <span class="p-action">View Specs &rarr;</span>
-                        </div>
-                      </div>
-
-                      <div class="app-product-card">
-                        <div class="p-card-header">
-                          <span class="p-tag chem">Chemicals</span>
-                          <span class="p-code">AR-GRADE</span>
-                        </div>
-                        <h5 class="p-title">Analytical Grade Reagents</h5>
-                        <p class="p-spec">High-purity solvents &amp; buffers with Certificate of Analysis (CoA)</p>
-                        <div class="p-footer">
-                          <span class="p-stock">Certified</span>
-                          <span class="p-action">View Specs &rarr;</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Telemetry Footer Bar -->
-                    <div class="screen-status-bar">
-                      <span class="status-indicator-item">
-                        <app-icon [icon]="LucideCode2" size="xs" />
-                        <span>Angular Single Page Architecture</span>
-                      </span>
-                      <span class="status-indicator-item">
-                        <app-icon [icon]="LucideZap" size="xs" />
-                        <span>Sub-Second Catalog Search</span>
-                      </span>
-                    </div>
-                  </div>
-                }
-
-                <!-- ==============================================
-                     Application View 2: OonLoop (4-Platform Synchronized Ecosystem)
-                     ============================================== -->
-                @if (project.previewType === 'ecosystem') {
-                  <div class="app-view-ecosystem">
-                    <!-- Central Hub Node -->
-                    <div class="eco-nexus-center">
-                      <div class="nexus-pulse-ring" aria-hidden="true"></div>
-                      <div class="nexus-logo-box">
-                        <img
-                          [src]="project.logoUrl"
-                          [alt]="project.logoAlt"
-                          class="nexus-logo-img"
-                          loading="lazy"
-                        />
-                      </div>
-                      <span class="nexus-title">OonLoop Real-Time Commerce Engine</span>
-                    </div>
-
-                    <!-- 4 Interconnected Satellite Tiles -->
-                    <div class="eco-satellites-container">
-                      <!-- Satellite 1: User App -->
-                      <div class="eco-sat-card sat-user">
-                        <div class="sat-header">
-                          <div class="sat-icon-wrap blue">
-                            <app-icon [icon]="LucideSmartphone" size="xs" />
-                          </div>
-                          <span class="sat-badge">React Native</span>
-                        </div>
-                        <h5 class="sat-heading">User Storefront App</h5>
-                        <p class="sat-desc">Instant cart checkout, live driver telemetry &amp; payment gateway</p>
-                        <div class="sat-metric">
-                          <span class="metric-val">iOS &amp; Android</span>
-                          <span class="metric-dot green"></span>
-                        </div>
-                      </div>
-
-                      <!-- Satellite 2: Vendor App -->
-                      <div class="eco-sat-card sat-vendor">
-                        <div class="sat-header">
-                          <div class="sat-icon-wrap cyan">
-                            <app-icon [icon]="LucideStore" size="xs" />
-                          </div>
-                          <span class="sat-badge">Store Portal</span>
-                        </div>
-                        <h5 class="sat-heading">Vendor Management</h5>
-                        <p class="sat-desc">Live inventory synchronization, order dispatch &amp; payout ledger</p>
-                        <div class="sat-metric">
-                          <span class="metric-val">Real-Time Sync</span>
-                          <span class="metric-dot cyan"></span>
-                        </div>
-                      </div>
-
-                      <!-- Satellite 3: Rider App -->
-                      <div class="eco-sat-card sat-rider">
-                        <div class="sat-header">
-                          <div class="sat-icon-wrap emerald">
-                            <app-icon [icon]="LucideBike" size="xs" />
-                          </div>
-                          <span class="sat-badge">Dispatch App</span>
-                        </div>
-                        <h5 class="sat-heading">Rider Logistics App</h5>
-                        <p class="sat-desc">GPS turn-by-turn routing, instant delivery acceptance &amp; earnings</p>
-                        <div class="sat-metric">
-                          <span class="metric-val">GPS Mesh Active</span>
-                          <span class="metric-dot green"></span>
-                        </div>
-                      </div>
-
-                      <!-- Satellite 4: Admin Hub -->
-                      <div class="eco-sat-card sat-admin">
-                        <div class="sat-header">
-                          <div class="sat-icon-wrap indigo">
-                            <app-icon [icon]="LucideLayoutDashboard" size="xs" />
-                          </div>
-                          <span class="sat-badge">Angular Suite</span>
-                        </div>
-                        <h5 class="sat-heading">Central Admin Suite</h5>
-                        <p class="sat-desc">Multi-tenant operations, commission payouts, dispute resolution &amp; analytics</p>
-                        <div class="sat-metric">
-                          <span class="metric-val">Enterprise Ops</span>
-                          <span class="metric-dot indigo"></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Telemetry Footer Bar -->
-                    <div class="screen-status-bar">
-                      <span class="status-indicator-item">
-                        <app-icon [icon]="LucideDatabase" size="xs" />
-                        <span>MongoDB Distributed Replica Set</span>
-                      </span>
-                      <span class="status-indicator-item">
-                        <app-icon [icon]="LucideActivity" size="xs" />
-                        <span>Real-Time WebSocket Orchestration</span>
-                      </span>
-                    </div>
-                  </div>
-                }
-
-                <!-- ==============================================
-                     Application View 3: StickyJi (Collaborative SaaS Workspace)
-                     ============================================== -->
-                @if (project.previewType === 'saas') {
-                  <div class="app-view-saas">
-                    <!-- SaaS Workspace Top Bar -->
-                    <div class="saas-workspace-nav">
-                      <div class="ws-brand-group">
-                        <img
-                          src="/companylogos/StickyJiHorizontalLogo.png"
-                          alt="StickyJi Horizontal Logo"
-                          class="ws-brand-logo"
-                          loading="lazy"
-                        />
-                        <span class="ws-separator">/</span>
-                        <div class="ws-workspace-select">
-                          <span class="ws-name">Engineering Sprint Workspace</span>
-                          <span class="ws-tag">PRO</span>
-                        </div>
-                      </div>
-
-                      <!-- Teammate Avatars Presence -->
-                      <div class="ws-presence-group">
-                        <div class="avatar-stack">
-                          <span class="avatar a1">AS</span>
-                          <span class="avatar a2">RK</span>
-                          <span class="avatar a3">MD</span>
-                          <span class="avatar-more">+4</span>
-                        </div>
-                        <span class="presence-pulse" title="7 Teammates Active"></span>
-                      </div>
-                    </div>
-
-                    <!-- SaaS Kanban Workspace Canvas -->
-                    <div class="saas-kanban-canvas">
-                      <!-- Column 1: Workspace Notes -->
-                      <div class="kanban-column">
-                        <div class="col-header">
-                          <span class="col-pill yellow">WORKSPACE NOTES</span>
-                          <span class="col-count">3</span>
-                        </div>
-                        <div class="app-sticky-card card-yellow">
-                          <div class="card-pin" aria-hidden="true"></div>
-                          <h6 class="card-title">Sprint 24 Architecture</h6>
-                          <p class="card-body">High-throughput real-time collaboration engine with optimistic UI updates.</p>
-                          <div class="card-checklist">
-                            <div class="cl-item checked">
-                              <app-icon [icon]="LucideCheck" size="xs" />
-                              <span>Distributed WebSocket Sync</span>
-                            </div>
-                            <div class="cl-item checked">
-                              <app-icon [icon]="LucideCheck" size="xs" />
-                              <span>Zero-latency local cache</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Column 2: In-Progress Kanban Tasks -->
-                      <div class="kanban-column">
-                        <div class="col-header">
-                          <span class="col-pill cyan">IN PROGRESS</span>
-                          <span class="col-count">2</span>
-                        </div>
-                        <div class="app-sticky-card card-cyan">
-                          <div class="card-pin" aria-hidden="true"></div>
-                          <h6 class="card-title">Cloudflare R2 Storage</h6>
-                          <p class="card-body">Edge object storage pipeline for unlimited file attachments with zero egress fees.</p>
-                          <div class="card-tag-row">
-                            <span class="card-mini-tag">Cloudflare R2</span>
-                            <span class="card-mini-tag">Edge Caching</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Column 3: Organized & Completed -->
-                      <div class="kanban-column">
-                        <div class="col-header">
-                          <span class="col-pill green">ORGANIZED</span>
-                          <span class="col-count">5</span>
-                        </div>
-                        <div class="app-sticky-card card-green">
-                          <div class="card-pin" aria-hidden="true"></div>
-                          <h6 class="card-title">Role-Based Access</h6>
-                          <p class="card-body">Granular permissions for workspaces, boards, and encrypted team notes.</p>
-                          <div class="card-tag-row">
-                            <span class="card-mini-tag">Auth &amp; RBAC</span>
-                            <span class="card-mini-tag">Production Verified</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Telemetry Footer Bar -->
-                    <div class="screen-status-bar saas-status-bar">
-                      <span class="status-indicator-item">
-                        <app-icon [icon]="LucideCloud" size="xs" />
-                        <span>Cloudflare R2 Distributed Object Storage</span>
-                      </span>
-                      <span class="status-indicator-item">
-                        <app-icon [icon]="LucideSparkles" size="xs" />
-                        <span>Multi-Tenant In-House SaaS Platform</span>
-                      </span>
-                    </div>
-                  </div>
-                }
+            <!-- Bottom Stat Card: Client Satisfaction -->
+            <div class="bento-stat-card stat-card-accent">
+              <span class="stat-corner-arrow" aria-hidden="true">
+                <app-icon [icon]="LucideArrowUpRight" size="xs" />
+              </span>
+              <div class="stat-content">
+                <span class="stat-number">99%</span>
+                <span class="stat-label">Client Retention</span>
+                <span class="stat-sub">Quality &amp; Scalability</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Row Separator Divider -->
-        @if (!isLast) {
-          <div class="project-row-separator" aria-hidden="true"></div>
+        <!-- Bento Row 2: Three Distinct Bottom Tiles -->
+        <div class="bento-bottom-row">
+          <!-- Card 1: Enterprise Clients (Dark Slate) -->
+          <div class="bento-sub-card card-clients-dark">
+            <span class="sub-corner-arrow" aria-hidden="true">
+              <app-icon [icon]="LucideArrowUpRight" size="xs" />
+            </span>
+            <div class="card-icon-box">
+              <app-icon [icon]="LucideShieldCheck" size="md" />
+            </div>
+            <div class="card-meta">
+              <span class="sub-card-title">Enterprise Clients</span>
+              <span class="sub-card-desc">B2B scientific, e-commerce &amp; logistics enterprises.</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Clean Architecture Core (3D Geometric SLA) -->
+          <div class="bento-sub-card card-mesh-dark">
+            <div class="mesh-orb-visual" aria-hidden="true">
+              <div class="orb-ring orb-ring-1"></div>
+              <div class="orb-ring orb-ring-2"></div>
+              <div class="orb-center-glow"></div>
+            </div>
+            <div class="card-meta">
+              <span class="sub-card-title">Clean Architecture SLA</span>
+              <span class="sub-card-desc">Modular boundaries &bull; Zero technical debt.</span>
+            </div>
+          </div>
+
+          <!-- Card 3: 100% Code Ownership (Warm Amber Card) -->
+          <div class="bento-sub-card card-amber-highlight">
+            <span class="sub-corner-arrow" aria-hidden="true">
+              <app-icon [icon]="LucideArrowUpRight" size="xs" />
+            </span>
+            <div class="amber-content">
+              <span class="amber-big-num">100%</span>
+              <span class="sub-card-title text-dark">Code Ownership</span>
+              <span class="sub-card-desc text-dark-muted">Full repository &amp; IP transfer with zero vendor lock-in.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         Interactive 3-Project Selection Shelf
+         ======================================================= -->
+    <div class="portfolio-projects-shelf">
+      <div class="shelf-header">
+        <span class="shelf-eyebrow">EXPLORE ALL PRODUCTION CASE STUDIES</span>
+      </div>
+
+      <div class="shelf-grid">
+        @for (project of projects; track project.id; let idx = $index) {
+          <div
+            class="shelf-card"
+            [class.active-shelf]="activeProjectIndex() === idx"
+            (click)="selectProjectByIndex(idx)"
+          >
+            <div class="shelf-card-top">
+              <span class="shelf-num">0{{ idx + 1 }}</span>
+              <span class="shelf-category-tag">{{ project.category }}</span>
+            </div>
+
+            <h4 class="shelf-title">{{ project.title }}</h4>
+            <p class="shelf-desc">{{ project.shortDesc }}</p>
+
+            <div class="shelf-footer">
+              <button
+                type="button"
+                class="shelf-modal-btn"
+                (click)="openProjectModal(project); $event.stopPropagation()"
+              >
+                <span>Read Case Study</span>
+                <app-icon [icon]="LucideArrowRight" size="xs" />
+              </button>
+            </div>
+          </div>
         }
-      }
+      </div>
     </div>
   </div>
 
   <!-- =======================================================
-       Interactive Case Study Overview Modal (Triggered by "Explore Case Study")
+       Interactive Case Study Overview Modal (Triggered by "Read Case Study")
        ======================================================= -->
   @if (activeModalProject(); as activeProject) {
     <div

@@ -13,6 +13,7 @@ import {
   LucideLayers,
   LucideTarget,
   LucideZap,
+  LucideStar,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { ScrollReveal } from '../scroll-reveal';
@@ -68,7 +69,46 @@ export class About {
   readonly LucideLayers = LucideLayers;
   readonly LucideTarget = LucideTarget;
   readonly LucideZap = LucideZap;
+  readonly LucideStar = LucideStar;
 
+  /**
+   * Methodology bullet points matching reference layout.
+   */
+  readonly methodologyPoints: string[] = [
+    'Clear and focused strategy',
+    'Design that drives impact',
+    'Collaboration without the chaos',
+    'Outcomes that build momentum',
+    'Smart solutions, tailored for you',
+  ];
+
+  /**
+   * 4-Card key metrics matching reference layout.
+   */
+  readonly metrics = {
+    experience: {
+      label: 'Years of experience',
+      value: '9+',
+      note: 'Expertise that drives meaningful results.',
+    },
+    satisfaction: {
+      ratingLabel: 'Happy clients worldwide',
+      value: '99%',
+      note: 'Clients stay for our quality and results.',
+    },
+    projects: {
+      label: 'Projects delivered',
+      value: '100+',
+      note: 'Creative solutions built with purpose.',
+    },
+    brands: {
+      label: 'Brands transformed',
+      value: '86+',
+      note: 'From strategy to standout visuals.',
+    },
+  };
+
+  /* Retained for backward-compatibility & testing */
   readonly pillars = ['SECURITY', 'QUALITY', 'PERFORMANCE', 'SCALABILITY'] as const;
 
   readonly pillarDetails: Record<
@@ -228,4 +268,3 @@ export class About {
     }
   }
 }
-

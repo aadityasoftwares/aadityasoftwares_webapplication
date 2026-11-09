@@ -63,6 +63,12 @@ export class Services {
   readonly LucideChevronRight = LucideChevronRight;
   readonly LucideCheck = LucideCheck;
   readonly LucideX = LucideX;
+  readonly LucideShieldCheck = LucideShieldCheck;
+  readonly LucideCpu = LucideCpu;
+  readonly LucideCode2 = LucideCode2;
+  readonly LucideCircleCheck = LucideCircleCheck;
+  readonly LucideZap = LucideZap;
+  readonly LucideRocket = LucideRocket;
 
   @Output() ctaClick = new EventEmitter<void>();
 
@@ -291,7 +297,8 @@ export class Services {
     }
   }
 
-  onDiscussProject(): void {
+  onDiscussProject(event?: MouseEvent): void {
+    event?.preventDefault();
     this.ctaClick.emit();
     this.closeDetail();
     const contactElem = document.getElementById('contact');

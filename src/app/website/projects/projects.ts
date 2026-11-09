@@ -35,6 +35,9 @@ import {
   LucideBarChart3,
   LucideWorkflow,
   LucideRadio,
+  LucidePlay,
+  LucideAward,
+  LucideArrowUpRight,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { Button } from '../../shared/components/button/button';
@@ -74,6 +77,7 @@ export interface ProjectItem {
   previewType: 'website' | 'ecosystem' | 'saas';
   accentColor: string;
   domainUrl: string;
+  previewImage?: string;
 }
 
 @Component({
@@ -113,9 +117,37 @@ export class Projects {
   readonly LucideBarChart3 = LucideBarChart3;
   readonly LucideWorkflow = LucideWorkflow;
   readonly LucideRadio = LucideRadio;
+  readonly LucidePlay = LucidePlay;
+  readonly LucideAward = LucideAward;
+  readonly LucideArrowUpRight = LucideArrowUpRight;
 
   // Selected project for the interactive case-study drawer/modal
   readonly activeModalProject = signal<ProjectItem | null>(null);
+
+  // Active highlighted project inside the Bento theater
+  readonly activeProjectIndex = signal<number>(2); // StickyJi by default
+  readonly activeCategory = signal<string>('all');
+
+  get activeProject(): ProjectItem {
+    return this.projects[this.activeProjectIndex()] ?? this.projects[0];
+  }
+
+  selectProjectByIndex(index: number): void {
+    if (index >= 0 && index < this.projects.length) {
+      this.activeProjectIndex.set(index);
+    }
+  }
+
+  selectCategory(cat: string): void {
+    this.activeCategory.set(cat);
+    if (cat === 'saas') {
+      this.activeProjectIndex.set(2);
+    } else if (cat === 'marketplace') {
+      this.activeProjectIndex.set(1);
+    } else if (cat === 'website') {
+      this.activeProjectIndex.set(0);
+    }
+  }
 
   readonly projects: ProjectItem[] = [
     {
@@ -146,6 +178,7 @@ export class Projects {
       previewType: 'website',
       accentColor: '#3b82f6',
       domainUrl: 'sgtcindia.com',
+      previewImage: '/images/services/service-software.jpg',
     },
     {
       id: 'oonloop',
@@ -197,6 +230,7 @@ export class Projects {
       previewType: 'ecosystem',
       accentColor: '#06b6d4',
       domainUrl: 'oonloop.app',
+      previewImage: '/images/services/service-mobile.jpg',
     },
     {
       id: 'stickyji',
@@ -241,6 +275,7 @@ export class Projects {
       previewType: 'saas',
       accentColor: '#f59e0b',
       domainUrl: 'stickyji.com',
+      previewImage: '/images/services/service-uiux.jpg',
     },
   ];
 
