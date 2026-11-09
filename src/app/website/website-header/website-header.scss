@@ -26,14 +26,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1360px;
+  max-width: $container-max-width;
   height: 76px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 $container-padding-x;
 
   @media (max-width: 768px) {
     height: 68px;
-    padding: 0 20px;
+    padding: 0 $container-padding-x-mobile;
   }
 }
 

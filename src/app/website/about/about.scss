@@ -52,12 +52,12 @@
 .about-container {
   position: relative;
   z-index: 1;
-  max-width: 1260px;
+  max-width: $container-max-width;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 $container-padding-x;
 
   @media (max-width: 768px) {
-    padding: 0 20px;
+    padding: 0 $container-padding-x-mobile;
   }
 }
 
@@ -69,7 +69,7 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 32px;
-  margin-bottom: clamp(40px, 5vw, 60px);
+  margin-bottom: $section-header-margin-bottom;
 
   @media (max-width: 860px) {
     flex-direction: column;
