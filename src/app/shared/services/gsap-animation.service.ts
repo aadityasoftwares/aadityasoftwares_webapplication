@@ -109,6 +109,71 @@ export class GsapAnimationService {
   }
 
   /**
+   * Staggered entrance animation for inner page heroes (About, Services, Projects, Contact)
+   */
+  animatePageHero(heroElement: HTMLElement): gsap.core.Timeline | null {
+    if (typeof window === 'undefined') return null;
+
+    const prefersReducedMotion =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+    if (prefersReducedMotion) return null;
+
+    return this.ngZone.runOutsideAngular(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      const eyebrow = heroElement.querySelector('.section-sub-eyebrow');
+      const title = heroElement.querySelector('.page-hero-title');
+      const subtitle = heroElement.querySelector('.page-hero-subtitle');
+      const actions = heroElement.querySelector('.page-hero-actions');
+      const cards = heroElement.querySelectorAll(
+        '.metric-glass-card, .discipline-card, .projects-strategy-card, .projects-featured-deliverable, .guarantee-card, .about-metrics-deck > div, .services-disciplines-grid > div, .contact-guarantees-grid > div',
+      );
+
+      if (eyebrow) {
+        tl.fromTo(eyebrow, { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.55 }, 0.08);
+      }
+
+      if (title) {
+        tl.fromTo(title, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.75 }, 0.18);
+      }
+
+      if (subtitle) {
+        tl.fromTo(subtitle, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.65 }, 0.35);
+      }
+
+      if (actions) {
+        tl.fromTo(actions, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55 }, 0.5);
+      }
+
+      if (cards.length) {
+        tl.fromTo(
+          cards,
+          { opacity: 0, y: 32, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.75, stagger: 0.09, ease: 'power2.out' },
+          0.6,
+        );
+      }
+
+      // Gentle ambient floating glow for orbs
+      const orbs = heroElement.querySelectorAll('.glow-orb');
+      if (orbs.length) {
+        gsap.to(orbs, {
+          y: '+=14',
+          duration: 3.5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          stagger: 0.5,
+        });
+      }
+
+      return tl;
+    });
+  }
+
+  /**
    * ScrollTrigger-powered reveal for sections:
    * 1. Header texts (eyebrow, title, description) with staggered upward slide-in
    * 2. Content boxes / cards (grid items, metric cards, pillars) with scale & stagger
@@ -116,18 +181,21 @@ export class GsapAnimationService {
   animateSection(sectionElement: HTMLElement): ScrollTrigger | null {
     if (typeof window === 'undefined') return null;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
     if (prefersReducedMotion) return null;
 
     return this.ngZone.runOutsideAngular(() => {
-      // Find header texts
+      // Find header texts across Home and dedicated inner pages
       const headerTexts = sectionElement.querySelectorAll(
-        '.process-eyebrow, .services-eyebrow, .portfolio-eyebrow, .section-eyebrow, .why-eyebrow, .tech-eyebrow, .industries-eyebrow, .testimonials-eyebrow, .faq-eyebrow, .about-eyebrow, .section-sub-eyebrow, h2, .process-lead, .services-lead-text, .portfolio-hero-desc, .why-lead, .tech-lead, .about-subtitle, .about-lead, .about-lead-paragraph, .faq-lead, .testimonials-lead, .section-lead',
+        '.process-eyebrow, .services-eyebrow, .portfolio-eyebrow, .section-eyebrow, .why-eyebrow, .tech-eyebrow, .industries-eyebrow, .testimonials-eyebrow, .faq-eyebrow, .about-eyebrow, .section-sub-eyebrow, h2, .process-lead, .services-lead-text, .portfolio-hero-desc, .why-lead, .tech-lead, .about-subtitle, .about-lead, .about-lead-paragraph, .faq-lead, .testimonials-lead, .section-lead, .split-title, .split-desc, .showcase-title, .showcase-lead, .reference-title, .reference-sub, .matrix-title, .matrix-subtitle, .contact-main-heading, .contact-lead-desc, .cta-banner-title, .cta-banner-subtitle, .cta-title, .cta-sub',
       );
 
-      // Find cards / boxes
+      // Find cards / boxes across Home and dedicated inner pages
       const boxes = sectionElement.querySelectorAll(
-        '.service-card, .deliverable-card, .tech-card, .project-card, .testimonial-card, .industry-card, .faq-item, .why-pillar-card, .pillar-card, .why-comparison-card, .trust-card, .about-metric-card, .metric-card, .about-middle-grid > div, .highlight-card, .detail-deliverables-panel, .cta-banner-card, .floating-newsletter-card',
+        '.service-card, .deliverable-card, .tech-card, .project-card, .testimonial-card, .industry-card, .faq-item, .why-pillar-card, .pillar-card, .why-comparison-card, .trust-card, .about-metric-card, .metric-card, .about-middle-grid > div, .highlight-card, .detail-deliverables-panel, .cta-banner-card, .floating-newsletter-card, .balance-card, .commitment-card, .formula-step-card, .routine-card, .discipline-card, .metric-glass-card, .projects-strategy-card, .projects-featured-deliverable, .guarantee-card, .service-strip-card, .matrix-target-card, .gallery-project-card, .dp-card, .model-card, .feature-split-card, .arch-code-preview-card, .showcase-card, .strategy-step-card, .testimonial-card-frame, .projects-cta-banner, .contact-info-col, .form-card-container, .contact-channels-strip',
       );
 
       // Orbital stage or centerpiece graphic

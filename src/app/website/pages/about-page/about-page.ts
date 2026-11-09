@@ -1,6 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  OnInit,
+  afterNextRender,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { GsapAnimationService } from '../../../shared/services/gsap-animation.service';
 import {
   LucideArrowRight,
   LucideShieldCheck,
@@ -73,6 +82,18 @@ export interface PracticeCard {
 })
 export class AboutPage implements OnInit {
   private readonly router = inject(Router);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly gsapService = inject(GsapAnimationService);
+
+  constructor() {
+    afterNextRender(() => {
+      const tl = this.gsapService.animatePageHero(this.elementRef.nativeElement);
+      this.destroyRef.onDestroy(() => {
+        tl?.kill();
+      });
+    });
+  }
 
   ngOnInit(): void {
     if (typeof window !== 'undefined' && !window.location.hash) {

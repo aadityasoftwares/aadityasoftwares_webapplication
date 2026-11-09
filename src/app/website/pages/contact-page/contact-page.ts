@@ -1,7 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  OnInit,
+  afterNextRender,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GsapAnimationService } from '../../../shared/services/gsap-animation.service';
 import {
   LucideArrowRight,
   LucidePhone,
@@ -65,6 +75,18 @@ export interface ContactFormData {
 export class ContactPage implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly gsapService = inject(GsapAnimationService);
+
+  constructor() {
+    afterNextRender(() => {
+      const tl = this.gsapService.animatePageHero(this.elementRef.nativeElement);
+      this.destroyRef.onDestroy(() => {
+        tl?.kill();
+      });
+    });
+  }
 
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucidePhone = LucidePhone;
