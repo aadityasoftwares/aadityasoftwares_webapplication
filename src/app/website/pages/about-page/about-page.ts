@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -71,8 +71,14 @@ export interface PracticeCard {
   styleUrl: './about-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AboutPage {
+export class AboutPage implements OnInit {
   private readonly router = inject(Router);
+
+  ngOnInit(): void {
+    if (typeof window !== 'undefined' && !window.location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }
 
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucideShieldCheck = LucideShieldCheck;
@@ -206,20 +212,14 @@ export class AboutPage {
   ];
 
   onContact(): void {
-    this.router.navigate(['/contact']).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    this.router.navigate(['/contact']);
   }
 
   onViewServices(): void {
-    this.router.navigate(['/services']).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    this.router.navigate(['/services']);
   }
 
   onViewProjects(): void {
-    this.router.navigate(['/projects']).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    this.router.navigate(['/projects']);
   }
 }

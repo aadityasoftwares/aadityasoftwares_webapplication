@@ -299,8 +299,6 @@ export class Services {
     this.router.navigate(['/contact'], {
       queryParams: { service: service.title },
       fragment: 'contact-form',
-    }).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -322,8 +320,6 @@ export class Services {
     this.router.navigate(['/contact'], {
       queryParams,
       fragment: 'contact-form',
-    }).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 }

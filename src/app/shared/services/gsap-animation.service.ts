@@ -14,7 +14,7 @@ export class GsapAnimationService {
   }
 
   private registerPlugins(): void {
-    if (typeof window !== 'undefined' && !this.isScrollTriggerRegistered) {
+    if (typeof window !== 'undefined' && typeof window.matchMedia === 'function' && !this.isScrollTriggerRegistered) {
       gsap.registerPlugin(ScrollTrigger);
       this.isScrollTriggerRegistered = true;
     }
@@ -26,7 +26,10 @@ export class GsapAnimationService {
   animateHero(heroElement: HTMLElement): gsap.core.Timeline | null {
     if (typeof window === 'undefined') return null;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
     if (prefersReducedMotion) return null;
 
     return this.ngZone.runOutsideAngular(() => {

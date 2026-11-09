@@ -50,7 +50,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+  background-color: #ffffff;
 }
 
 section[id],
@@ -63,10 +64,12 @@ body {
   margin: 0;
   padding: 0;
   color: var(--color-text-body);
-  background-color: var(--color-surface);
+  background-color: #ffffff;
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.5;
+  overscroll-behavior-y: none;
+  min-height: 100vh;
 }
 
 /* Custom Blue Dot Cursor - Hide default system pointer on desktop fine pointer devices */

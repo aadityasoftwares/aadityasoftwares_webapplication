@@ -172,7 +172,11 @@ export class WebsiteHeader {
   @HostListener('window:scroll')
   onWindowScroll(): void {
     const scrollY = this.document.defaultView?.scrollY ?? 0;
-    this.isScrolled.set(scrollY > 20);
+    if (scrollY <= 5) {
+      this.isScrolled.set(false);
+    } else if (scrollY > 70) {
+      this.isScrolled.set(true);
+    }
   }
 
   toggleMobileMenu(): void {
@@ -196,14 +200,7 @@ export class WebsiteHeader {
       return;
     }
 
-    this.router
-      .navigate(['/'])
-      .catch(() => {})
-      .then(() => {
-        if (typeof window !== 'undefined') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      });
+    this.router.navigate(['/']);
   }
 
   onNavClick(item: HeaderNavItem, event?: MouseEvent): void {
@@ -226,15 +223,8 @@ export class WebsiteHeader {
       return;
     }
 
-    // Navigate to the target page and scroll to top
-    this.router
-      .navigate([targetRoute])
-      .catch(() => {})
-      .then(() => {
-        if (typeof window !== 'undefined') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      });
+    // Navigate to the target page (Angular router restores scroll to top natively)
+    this.router.navigate([targetRoute]);
   }
 
   onBookCall(event?: MouseEvent): void {
@@ -254,13 +244,6 @@ export class WebsiteHeader {
       return;
     }
 
-    this.router
-      .navigate(['/contact'])
-      .catch(() => {})
-      .then(() => {
-        if (typeof window !== 'undefined') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      });
+    this.router.navigate(['/contact']);
   }
 }

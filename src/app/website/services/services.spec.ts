@@ -9,7 +9,7 @@ describe('Services', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Services],
-      providers: [provideRouter([])],
+      providers: [provideRouter([{ path: 'contact', component: class {} }])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Services);
@@ -60,8 +60,8 @@ describe('Services', () => {
   });
 
   it('should navigate to contact with service query parameter on onServiceClick', () => {
-    const router = TestBed.inject(provideRouter([]).providers ? (component as any).router : (component as any).router);
-    const navigateSpy = vi.spyOn((component as any).router, 'navigate').mockResolvedValue(true);
+    const router = (component as any).router;
+    const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
     const service = component.services[1]; // Custom Software Development
     component.onServiceClick(service);
     expect(navigateSpy).toHaveBeenCalledWith(['/contact'], {

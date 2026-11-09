@@ -30,11 +30,10 @@ describe('WebsiteFooter', () => {
     expect(names).toContain('Discord');
   });
 
-  it('should contain 3 main navigation columns', () => {
-    expect(component.footerCols.length).toBe(3);
+  it('should contain main navigation columns', () => {
+    expect(component.footerCols.length).toBe(2);
     expect(component.footerCols[0].title).toBe('Company');
     expect(component.footerCols[1].title).toBe('Services & Capabilities');
-    expect(component.footerCols[2].title).toBe('Engineering Stack');
   });
 
   it('should have current year in copyright', () => {

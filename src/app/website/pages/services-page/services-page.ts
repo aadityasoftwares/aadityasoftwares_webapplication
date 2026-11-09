@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -86,8 +86,14 @@ export interface ServiceShowcaseProject {
   styleUrl: './services-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ServicesPage {
+export class ServicesPage implements OnInit {
   private readonly router = inject(Router);
+
+  ngOnInit(): void {
+    if (typeof window !== 'undefined' && !window.location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }
 
   readonly LucideArrowRight = LucideArrowRight;
   readonly LucideCode2 = LucideCode2;
@@ -376,14 +382,10 @@ export class ServicesPage {
     this.router.navigate(['/contact'], {
       queryParams,
       fragment: 'contact-form',
-    }).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
   onViewProjects(): void {
-    this.router.navigate(['/projects']).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    this.router.navigate(['/projects']);
   }
 }

@@ -324,9 +324,7 @@ export class Projects {
   onDiscussProject(): void {
     this.closeProjectModal();
     this.contactClick.emit();
-    this.router.navigate(['/contact'], { fragment: 'contact-form' }).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    this.router.navigate(['/contact'], { fragment: 'contact-form' });
   }
 }
 

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-website',
@@ -9,5 +10,19 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './website.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Website {}
+export class Website implements OnInit {
+  private readonly router = inject(Router);
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        if (!event.urlAfterRedirects.includes('#')) {
+          if (typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          }
+        }
+      });
+  }
+}
 

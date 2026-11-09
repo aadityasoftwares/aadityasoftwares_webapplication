@@ -184,9 +184,7 @@ export class Hero implements OnInit, OnDestroy {
 
   onExplore(): void {
     this.exploreClick.emit();
-    this.router.navigate(['/projects']).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    this.router.navigate(['/projects']);
   }
 
   onPlay(): void {

@@ -113,9 +113,11 @@ export class ContactPage implements OnInit {
   ];
 
   ngOnInit(): void {
+    let hasTarget = false;
     this.route.queryParamMap.subscribe((params) => {
       const serviceParam = params.get('service');
       if (serviceParam) {
+        hasTarget = true;
         this.selectServiceCategory(serviceParam);
         setTimeout(() => this.scrollToForm(), 120);
       }
@@ -123,9 +125,14 @@ export class ContactPage implements OnInit {
 
     this.route.fragment.subscribe((frag) => {
       if (frag === 'contact-form') {
+        hasTarget = true;
         setTimeout(() => this.scrollToForm(), 120);
       }
     });
+
+    if (!hasTarget && typeof window !== 'undefined' && !window.location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
   }
 
   private selectServiceCategory(query: string): void {
@@ -248,15 +255,11 @@ export class ContactPage implements OnInit {
   }
 
   onViewServices(): void {
-    this.router.navigate(['/services']).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    this.router.navigate(['/services']);
   }
 
   onViewProjects(): void {
-    this.router.navigate(['/projects']).then(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    this.router.navigate(['/projects']);
   }
 
   onSubmit(): void {

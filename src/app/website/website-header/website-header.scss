@@ -186,6 +186,19 @@
   height: 10px;
   background: #ffffff;
   pointer-events: auto;
+  position: relative;
+
+  /* Upward white shield to prevent dark browser window canvas showing on elastic overscroll */
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    background: #ffffff;
+    pointer-events: none;
+  }
 }
 
 /* ----------------------------------------------------------

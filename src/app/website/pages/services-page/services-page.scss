@@ -148,6 +148,10 @@
 .hero-center-copy {
   max-width: 900px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .page-hero-title {
@@ -158,16 +162,18 @@
   line-height: 1.12;
   letter-spacing: $letter-spacing-display;
   color: $color-heading;
+  text-align: center;
 }
 
 .page-hero-subtitle {
-  margin: 0 0 28px 0;
+  margin: 0 auto 28px;
   font-family: $font-sans;
   font-size: clamp(15.5px, 2vw, 18px);
   font-weight: 450;
   line-height: $line-height-body;
   color: $color-text-body;
   max-width: 820px;
+  text-align: center;
 }
 
 .page-hero-actions {

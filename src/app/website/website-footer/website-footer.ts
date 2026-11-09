@@ -161,9 +161,7 @@ export class WebsiteFooter {
   scrollToSection(href: string, event: Event): void {
     if (href.startsWith('/')) {
       event.preventDefault();
-      this.router?.navigate([href]).then(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+      this.router?.navigate([href]);
       return;
     }
 
@@ -182,9 +180,7 @@ export class WebsiteFooter {
           home: '/',
         };
         const targetRoute = routeMap[targetId] || '/';
-        this.router?.navigate([targetRoute]).then(() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        this.router?.navigate([targetRoute]);
       }
     }
   }

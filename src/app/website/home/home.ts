@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { WebsiteHeader } from '../website-header/website-header';
 import { Hero } from '../hero/hero';
 import { TrustHighlights } from '../trust-highlights/trust-highlights';
@@ -37,5 +37,11 @@ import { WebsiteFooter } from '../website-footer/website-footer';
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Home {}
+export class Home implements OnInit {
+  ngOnInit(): void {
+    if (typeof window !== 'undefined' && !window.location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }
+}
 

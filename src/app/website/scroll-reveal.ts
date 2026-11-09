@@ -18,12 +18,12 @@ export class ScrollReveal {
   constructor() {
     afterNextRender(() => {
       const viewport = this.element.ownerDocument?.defaultView;
-      if (!viewport) {
+      if (!viewport || typeof viewport.matchMedia !== 'function') {
         return;
       }
 
       const motion = viewport.matchMedia('(prefers-reduced-motion: reduce)');
-      if (motion.matches) {
+      if (motion?.matches) {
         return;
       }
 
