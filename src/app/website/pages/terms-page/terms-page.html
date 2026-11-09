@@ -1,0 +1,453 @@
+<app-website-header></app-website-header>
+
+<main class="page-main terms-page">
+  <!-- =======================================================
+       Section 1: Increased-Height Editorial Hero (Brand Consistent)
+       ======================================================= -->
+  <section class="page-hero-section editorial-tall-hero">
+    <!-- Ambient Glow Mesh (Aaditya Softwares Brand Theme) -->
+    <div class="hero-ambient-glow" aria-hidden="true">
+      <div class="glow-orb glow-orb-top-right"></div>
+      <div class="glow-orb glow-orb-top-left"></div>
+      <div class="glow-orb glow-orb-center"></div>
+    </div>
+
+    <div class="page-hero-container">
+      <!-- Eyebrow & Display Title -->
+      <div class="hero-center-copy">
+        <span class="section-sub-eyebrow">LEGAL AGREEMENT &amp; ENGAGEMENT FRAMEWORK</span>
+        <h1 class="page-hero-title">
+          Terms of Use &amp; Service Engagements
+        </h1>
+        <p class="page-hero-subtitle">
+          These Terms of Use govern all visitor interactions with our digital portals and define the master operational framework under which Aaditya Softwares delivers software engineering, cloud architectures, and digital product solutions.
+        </p>
+
+        <!-- Meta Badge Row -->
+        <div class="policy-meta-badges">
+          <span class="meta-pill">
+            <app-icon [icon]="LucideClock" size="xs" />
+            <span>Effective Date: {{ lastUpdated }}</span>
+          </span>
+          <span class="meta-pill version">
+            <app-icon [icon]="LucideScale" size="xs" />
+            <span>Version {{ version }} (Enterprise Edition)</span>
+          </span>
+          <span class="meta-pill jurisdiction">
+            <app-icon [icon]="LucideMapPin" size="xs" />
+            <span>Jurisdiction: Vadodara, Gujarat, India</span>
+          </span>
+        </div>
+
+        <!-- Quick Hero Action -->
+        <div class="page-hero-actions">
+          <app-button
+            variant="primary"
+            size="md"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onContact()"
+          >
+            Initiate Project Engagement
+          </app-button>
+          <app-button
+            variant="secondary"
+            size="md"
+            [iconRight]="LucideFileText"
+            (buttonClick)="scrollToSection('agreement-acceptance')"
+          >
+            Review Terms &amp; Conditions
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Terms Core Highlights Deck -->
+      <div class="hero-highlights-deck">
+        @for (item of highlights; track item.num) {
+          <div class="highlight-card">
+            <div class="highlight-top">
+              <span class="highlight-num">{{ item.num }}</span>
+              <span class="highlight-badge" [ngClass]="item.badgeClass">{{ item.badge }}</span>
+            </div>
+            <h3 class="highlight-title">{{ item.title }}</h3>
+            <p class="highlight-desc">{{ item.description }}</p>
+            <div class="highlight-footer">
+              <app-icon [icon]="item.icon" size="xs" />
+              <span>{{ item.footerNote }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 2: Sticky Table of Contents + Full Terms Layout
+       ======================================================= -->
+  <section class="legal-content-section" appScrollReveal>
+    <div class="section-container legal-grid-container">
+      <!-- Left Sidebar: Sticky Table of Contents -->
+      <aside class="legal-sidebar" aria-label="Table of Contents">
+        <div class="sidebar-sticky-wrapper">
+          <div class="sidebar-header">
+            <h4 class="sidebar-title">Terms Navigation</h4>
+            <span class="sidebar-badge">12 Clauses</span>
+          </div>
+
+          <nav class="toc-nav">
+            <ul class="toc-list">
+              @for (item of tocSections; track item.id) {
+                <li class="toc-item">
+                  <a
+                    [href]="'#' + item.id"
+                    class="toc-link"
+                    [class.is-active]="activeSection() === item.id"
+                    (click)="scrollToSection(item.id, $event)"
+                  >
+                    <span class="toc-num">{{ item.number }}</span>
+                    <span class="toc-label">{{ item.title }}</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          </nav>
+
+          <!-- Sidebar Contracting Card -->
+          <div class="sidebar-support-card">
+            <div class="support-icon-circle">
+              <app-icon [icon]="LucideScale" size="sm" />
+            </div>
+            <h5 class="support-card-title">Commercial Counsel</h5>
+            <p class="support-card-text">
+              Require an enterprise Master Services Agreement (MSA) customized to your procurement team?
+            </p>
+            <a href="mailto:legal@aadityasoftwares.in" class="support-link">
+              <span>legal@aadityasoftwares.in</span>
+              <app-icon [icon]="LucideArrowRight" size="xs" />
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Main Column: Detailed Terms Clauses -->
+      <article class="legal-main-content">
+        <!-- Clause 1: Acceptance of Terms -->
+        <section id="agreement-acceptance" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">01</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Binding Agreement</span>
+              <h2 class="article-title">Acceptance of Terms</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Please read these Terms of Use carefully. By accessing or browsing the <strong>Aaditya Softwares</strong> website (<em>aadityasoftwares.in</em>), requesting technical proposals, or executing a Statement of Work (SOW), you acknowledge that you have read, understood, and agreed to be legally bound by these terms and our Privacy Policy.
+            </p>
+            <p>
+              If you are agreeing to these Terms on behalf of a corporation, partnership, or other legal entity, you represent and warrant that you possess full corporate authority to bind such entity to these provisions. If you do not accept these terms, you must discontinue use of our site and services immediately.
+            </p>
+          </div>
+        </section>
+
+        <!-- Clause 2: Engagement Models & SOWs -->
+        <section id="engagement-models" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">02</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Contract Structure</span>
+              <h2 class="article-title">Engagement Models &amp; Statements of Work</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Professional engineering engagements between Aaditya Softwares and clients are governed by individually executed <strong>Statements of Work (SOW)</strong> or <strong>Service Orders</strong>. In the event of any direct conflict between these general Terms and an executed SOW, the specific terms of the SOW shall prevail.
+            </p>
+
+            <div class="engagement-cards-grid">
+              <div class="eng-card">
+                <span class="eng-badge blue">Model A</span>
+                <h4>Fixed-Scope Milestone Engagements</h4>
+                <p>Predetermined feature roadmap, deliverables, and cost schedule divided into verifiable staging milestones with formal client acceptance criteria.</p>
+              </div>
+
+              <div class="eng-card">
+                <span class="eng-badge cyan">Model B</span>
+                <h4>Dedicated Engineering Squads</h4>
+                <p>Full-time specialized frontend, backend, AI, or mobile developers integrated into your product sprints on a dedicated monthly retainer.</p>
+              </div>
+
+              <div class="eng-card">
+                <span class="eng-badge green">Model C</span>
+                <h4>Time &amp; Materials (T&amp;M) / Retainers</h4>
+                <p>Flexible technical advisory, architectural audits, and DevOps maintenance billed on pre-agreed hourly or monthly engineering cadences.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Clause 3: Intellectual Property & IP Handover -->
+        <section id="ip-ownership" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">03</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">100% IP Ownership</span>
+              <h2 class="article-title">Intellectual Property Rights &amp; Code Ownership</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Aaditya Softwares adheres to an unequivocal client-ownership standard:
+            </p>
+
+            <div class="legal-callout-box success">
+              <app-icon [icon]="LucideShieldCheck" size="sm" class="callout-icon" />
+              <div class="callout-content">
+                <strong>Complete IP Assignment:</strong> Upon receipt of full and final payment for the services rendered under any applicable SOW, Aaditya Softwares assigns to the Client all right, title, and interest in and to the bespoke deliverables, including source code repositories, schema definitions, custom UI designs, scripts, and documentation developed specifically for the Client.
+              </div>
+            </div>
+
+            <p>
+              <strong>Background Technology &amp; Reusable Tools:</strong> Aaditya Softwares retains ownership of pre-existing generic algorithms, developer tooling, boilerplate scaffolds, and internal utilities developed prior to or independently of the engagement (<em>"Background IP"</em>). To the extent Background IP is embedded in Client deliverables, Aaditya Softwares grants Client a perpetual, irrevocable, worldwide, royalty-free license to use, execute, modify, and display such Background IP solely in connection with the deliverable.
+            </p>
+          </div>
+        </section>
+
+        <!-- Clause 4: Invoicing & Milestone Payments -->
+        <section id="invoicing-payment" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">04</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Commercial Standards</span>
+              <h2 class="article-title">Invoicing, Milestones &amp; Payment Terms</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <ul class="legal-checklist">
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Milestone Invoicing:</strong> Invoices are generated upon milestone completion or on scheduled billing intervals as defined in the applicable SOW.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Payment Due Dates:</strong> Unless otherwise specified in writing, payment is due within <strong>15 calendar days</strong> from the invoice date (Net 15).</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Accepted Currencies:</strong> We accept Indian Rupees (INR), United States Dollars (USD), Euros (EUR), and British Pounds (GBP) via direct electronic bank wire (SWIFT/NEFT/RTGS) and approved merchant gateways.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Taxes &amp; Duties:</strong> All service fees are exclusive of applicable Goods and Services Tax (GST) in India or local withholding taxes, which shall be indicated transparently on each invoice.</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Clause 5: Client Obligations -->
+        <section id="client-responsibilities" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">05</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Collaboration Duties</span>
+              <h2 class="article-title">Client Obligations &amp; Approvals</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Efficient software development requires mutual partnership and timely coordination. The Client agrees to:
+            </p>
+            <ul class="legal-checklist">
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span>Designate a Technical Point of Contact empowered to review sprint demos and approve deliverables.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span>Furnish required brand collateral, staging access tokens, third-party API credentials, and clarifications in a timely manner.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span>Conduct milestone reviews and provide consolidated feedback within <strong>five (5) business days</strong> following deliverable handoff on staging environments.</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Clause 6: Warranties & 60-Day SLA -->
+        <section id="warranties-sla" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">06</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Warranty Period</span>
+              <h2 class="article-title">Warranties &amp; 60-Day Defect Remediation SLA</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Aaditya Softwares warrants that all bespoke code delivered will materially conform to the agreed-upon technical specifications documented in the SOW.
+            </p>
+
+            <div class="warranty-card">
+              <div class="w-top">
+                <span class="w-num">60 DAYS</span>
+                <span class="w-badge">Complimentary Warranty</span>
+              </div>
+              <h4 class="w-title">Post-Launch Defect Warranty</h4>
+              <p class="w-desc">
+                For a period of sixty (60) days following production launch or final acceptance, Aaditya Softwares will promptly investigate and correct any verifiable software bugs or defects deviating from the SOW specifications at no additional charge.
+              </p>
+            </div>
+
+            <p class="w-exceptions">
+              <em>Warranty Exclusions:</em> The warranty does not cover defects arising from unauthorized code modifications by third parties, unexpected changes or outages in third-party APIs, or modifications to server host environments made without our written sign-off.
+            </p>
+          </div>
+        </section>
+
+        <!-- Clause 7: Confidentiality & Non-Solicitation -->
+        <section id="confidentiality-non-solicitation" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">07</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Mutual Trust</span>
+              <h2 class="article-title">Confidentiality &amp; Non-Solicitation</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              <strong>Bilateral Confidentiality:</strong> Both parties agree to protect and keep strictly confidential all technical specifications, business plans, financial data, and source code disclosed during the engagement. This confidentiality obligation remains in force during the engagement and for <strong>three (3) years</strong> following contract termination.
+            </p>
+            <p>
+              <strong>Non-Solicitation of Engineers:</strong> During the term of any active SOW and for a period of twelve (12) months thereafter, neither party shall directly solicit, induce, or hire any software engineer, technical lead, or employee of the other party without prior written agreement.
+            </p>
+          </div>
+        </section>
+
+        <!-- Clause 8: Limitation of Liability -->
+        <section id="limitation-liability" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">08</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Legal Limitations</span>
+              <h2 class="article-title">Limitation of Liability</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              To the maximum extent permitted by applicable law, neither Aaditya Softwares nor the Client shall be liable to the other for any indirect, incidental, punitive, special, or consequential damages, including loss of profits, data, revenue, or business interruption.
+            </p>
+            <p>
+              In all circumstances, Aaditya Softwares' cumulative aggregate liability arising under or related to any SOW shall be strictly limited to the total fees actually paid by the Client to Aaditya Softwares under that specific SOW during the preceding twelve (12) month period.
+            </p>
+          </div>
+        </section>
+
+        <!-- Clause 9: Third-Party APIs & OSS Licenses -->
+        <section id="third-party-oss" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">09</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Open Source &amp; Integrations</span>
+              <h2 class="article-title">Third-Party APIs &amp; Open Source Software</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Where modern architectures utilize open-source software (OSS) libraries (such as MIT, Apache 2.0, or BSD licensed packages), Aaditya Softwares ensures all utilized packages comply with commercial redistribution terms and generates a clear Software Bill of Materials (SBOM).
+            </p>
+            <p>
+              Aaditya Softwares cannot be held responsible for the downtime, deprecation, pricing changes, or service discontinuance of external third-party services (e.g., payment gateways, SMS providers, public LLM endpoints, map APIs).
+            </p>
+          </div>
+        </section>
+
+        <!-- Clause 10: Termination & Clean Handover -->
+        <section id="termination-handover" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">10</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Contract Concurrency</span>
+              <h2 class="article-title">Termination &amp; Clean Handover Procedures</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Either party may terminate an ongoing SOW for convenience by providing <strong>thirty (30) days prior written notice</strong>. Either party may terminate immediately for cause if the other party commits a material breach and fails to cure such breach within fifteen (15) days of receiving written notice.
+            </p>
+            <p>
+              <strong>Handover Guarantees:</strong> Upon contract completion or termination, provided all outstanding invoices are settled, Aaditya Softwares guarantees a clean transition: transfer of all Git repositories, production keys, deployment configs, and database dumps to the client's infrastructure.
+            </p>
+          </div>
+        </section>
+
+        <!-- Clause 11: Governing Law & Jurisdiction -->
+        <section id="governing-law" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">11</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Jurisdiction</span>
+              <h2 class="article-title">Governing Law &amp; Dispute Resolution</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              These Terms, and any dispute or claim arising out of or in connection with them or their subject matter, shall be governed by and construed in accordance with the laws of <strong>India</strong>, without giving effect to any conflict of law principles.
+            </p>
+            <p>
+              In the event of any technical or commercial disagreement, both parties agree to first engage in good-faith executive mediation for thirty (30) days. Any formal legal proceedings shall be subject to the exclusive jurisdiction of the competent courts in <strong>Vadodara, Gujarat, India</strong>.
+            </p>
+          </div>
+        </section>
+
+        <!-- Clause 12: Legal Inquiries & Notices -->
+        <section id="legal-contact" class="legal-article-card dpo-card">
+          <div class="article-header">
+            <span class="article-number">12</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Official Inquiries</span>
+              <h2 class="article-title">Legal Inquiries &amp; Notices</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              All formal legal notices, contract revisions, or inquiries regarding Master Services Agreements should be directed to our Legal Operations department:
+            </p>
+
+            <div class="dpo-details-box">
+              <div class="dpo-line">
+                <span class="dpo-label">Corporate Entity:</span>
+                <span class="dpo-value"><strong>Aaditya Softwares</strong></span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Registered Office:</span>
+                <span class="dpo-value">Vadodara, Gujarat, India</span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Legal Inquiries:</span>
+                <span class="dpo-value"><a href="mailto:legal@aadityasoftwares.in">legal@aadityasoftwares.in</a></span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Direct Phone:</span>
+                <span class="dpo-value"><a href="tel:+918849863872">+91 88498 63872</a></span>
+              </div>
+            </div>
+
+            <div class="dpo-actions">
+              <app-button
+                variant="primary"
+                size="md"
+                [iconRight]="LucideArrowRight"
+                (buttonClick)="onContact()"
+              >
+                Start an Engineering SOW
+              </app-button>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </section>
+</main>
+
+<app-website-footer></app-website-footer>
+

@@ -178,6 +178,12 @@ export class WebsiteFooter {
           projects: '/projects',
           contact: '/contact',
           home: '/',
+          'privacy-policy': '/privacy-policy',
+          privacy: '/privacy-policy',
+          'terms-of-use': '/terms-of-use',
+          terms: '/terms-of-use',
+          legal: '/legal',
+          'legal-notice': '/legal',
         };
         const targetRoute = routeMap[targetId] || '/';
         this.router?.navigate([targetRoute]);

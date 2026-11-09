@@ -1,0 +1,605 @@
+<app-website-header></app-website-header>
+
+<main class="page-main privacy-page">
+  <!-- =======================================================
+       Section 1: Increased-Height Editorial Hero (Brand Consistent)
+       ======================================================= -->
+  <section class="page-hero-section editorial-tall-hero">
+    <!-- Ambient Glow Mesh (Aaditya Softwares Brand Theme) -->
+    <div class="hero-ambient-glow" aria-hidden="true">
+      <div class="glow-orb glow-orb-top-right"></div>
+      <div class="glow-orb glow-orb-top-left"></div>
+      <div class="glow-orb glow-orb-center"></div>
+    </div>
+
+    <div class="page-hero-container">
+      <!-- Eyebrow & Display Title -->
+      <div class="hero-center-copy">
+        <span class="section-sub-eyebrow">DATA PRIVACY &amp; INTEGRITY</span>
+        <h1 class="page-hero-title">
+          Privacy Policy &amp; Data Governance
+        </h1>
+        <p class="page-hero-subtitle">
+          At Aaditya Softwares, data governance is an engineering discipline. We build, deploy, and maintain digital products with zero data brokering, end-to-end cryptographic confidentiality, and strict adherence to global privacy laws.
+        </p>
+
+        <!-- Meta Badge Row -->
+        <div class="policy-meta-badges">
+          <span class="meta-pill">
+            <app-icon [icon]="LucideClock" size="xs" />
+            <span>Last Updated: {{ lastUpdated }}</span>
+          </span>
+          <span class="meta-pill version">
+            <app-icon [icon]="LucideCheckCircle2" size="xs" />
+            <span>Version {{ version }} (Global Edition)</span>
+          </span>
+          <span class="meta-pill jurisdiction">
+            <app-icon [icon]="LucideMapPin" size="xs" />
+            <span>HQ: Vadodara, Gujarat, India</span>
+          </span>
+        </div>
+
+        <!-- Quick Hero Action -->
+        <div class="page-hero-actions">
+          <app-button
+            variant="primary"
+            size="md"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onContact()"
+          >
+            Contact Privacy Officer
+          </app-button>
+          <app-button
+            variant="secondary"
+            size="md"
+            [iconRight]="LucideFileText"
+            (buttonClick)="scrollToSection('scope-application')"
+          >
+            Review Policy Clauses
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Privacy Core Highlights Deck -->
+      <div class="hero-highlights-deck">
+        @for (item of highlights; track item.num) {
+          <div class="highlight-card">
+            <div class="highlight-top">
+              <span class="highlight-num">{{ item.num }}</span>
+              <span class="highlight-badge" [ngClass]="item.badgeClass">{{ item.badge }}</span>
+            </div>
+            <h3 class="highlight-title">{{ item.title }}</h3>
+            <p class="highlight-desc">{{ item.description }}</p>
+            <div class="highlight-footer">
+              <app-icon [icon]="item.icon" size="xs" />
+              <span>{{ item.footerNote }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 2: Sticky Table of Contents + Full Legal Content Layout
+       ======================================================= -->
+  <section class="legal-content-section" appScrollReveal>
+    <div class="section-container legal-grid-container">
+      <!-- Left Sidebar: Sticky Table of Contents -->
+      <aside class="legal-sidebar" aria-label="Table of Contents">
+        <div class="sidebar-sticky-wrapper">
+          <div class="sidebar-header">
+            <h4 class="sidebar-title">Table of Contents</h4>
+            <span class="sidebar-badge">12 Sections</span>
+          </div>
+
+          <nav class="toc-nav">
+            <ul class="toc-list">
+              @for (item of tocSections; track item.id) {
+                <li class="toc-item">
+                  <a
+                    [href]="'#' + item.id"
+                    class="toc-link"
+                    [class.is-active]="activeSection() === item.id"
+                    (click)="scrollToSection(item.id, $event)"
+                  >
+                    <span class="toc-num">{{ item.number }}</span>
+                    <span class="toc-label">{{ item.title }}</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          </nav>
+
+          <!-- Sidebar Quick Support Card -->
+          <div class="sidebar-support-card">
+            <div class="support-icon-circle">
+              <app-icon [icon]="LucideShield" size="sm" />
+            </div>
+            <h5 class="support-card-title">Privacy Assistance</h5>
+            <p class="support-card-text">
+              Have questions regarding data processing agreements or repository isolation?
+            </p>
+            <a href="mailto:privacy@aadityasoftwares.in" class="support-link">
+              <span>privacy@aadityasoftwares.in</span>
+              <app-icon [icon]="LucideArrowRight" size="xs" />
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Main Column: Detailed Policy Sections -->
+      <article class="legal-main-content">
+        <!-- Section 1: Scope & Application -->
+        <section id="scope-application" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">01</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Scope &amp; Governance</span>
+              <h2 class="article-title">Scope &amp; Application of this Policy</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              This Privacy Policy applies to <strong>Aaditya Softwares</strong> (referred to herein as <em>"Aaditya Softwares"</em>, <em>"we"</em>, <em>"us"</em>, or <em>"our"</em>), having its registered development hub in <strong>Vadodara, Gujarat, India</strong>. This document regulates how we collect, store, process, protect, and share data across:
+            </p>
+            <ul class="legal-checklist">
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span>Our public digital portals, website (<strong>aadityasoftwares.in</strong>), and interactive showcase pages.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span>Client discovery sessions, technical consultations, project estimates, and contractual RFP exchanges.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span>Active software engineering engagements, custom web and mobile app development, cloud infrastructure deployments, and ongoing maintenance retainers.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span>Our proprietary digital products and internal SaaS platforms, including the StickyJi platform.</span>
+              </li>
+            </ul>
+
+            <div class="legal-callout-box info">
+              <app-icon [icon]="LucideAlertCircle" size="sm" class="callout-icon" />
+              <div class="callout-content">
+                <strong>Data Controller &amp; Data Processor Roles:</strong> For website visitors, Aaditya Softwares acts as the <em>Data Controller</em>. In client development projects where we process end-user data on your behalf, we act strictly as a <em>Data Processor</em> governed by a bilateral Data Processing Agreement (DPA).
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Information We Collect -->
+        <section id="info-collection" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">02</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Data Categories</span>
+              <h2 class="article-title">Information We Collect</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              We practice data minimization: we collect only information that is strictly necessary to deliver high-quality engineering services, maintain infrastructure security, and fulfill commercial contracts.
+            </p>
+
+            <div class="data-categories-grid">
+              <div class="category-pill-card">
+                <div class="cat-top">
+                  <app-icon [icon]="LucideMail" size="xs" class="cat-icon blue" />
+                  <h4>Client Contact Data</h4>
+                </div>
+                <p>Full names, corporate email addresses, phone numbers, job titles, and company names provided through contact forms, email inquiries, or discovery calls.</p>
+              </div>
+
+              <div class="category-pill-card">
+                <div class="cat-top">
+                  <app-icon [icon]="LucideServer" size="xs" class="cat-icon cyan" />
+                  <h4>Technical Specifications</h4>
+                </div>
+                <p>System architecture requirements, API documentation, database schemas, feature wireframes, budget ranges, and timeline requirements.</p>
+              </div>
+
+              <div class="category-pill-card">
+                <div class="cat-top">
+                  <app-icon [icon]="LucideDatabase" size="xs" class="cat-icon green" />
+                  <h4>Access &amp; Deployment Keys</h4>
+                </div>
+                <p>Staging environment credentials, temporary git tokens, and third-party API keys provided for development purposes (managed exclusively via secret vaults).</p>
+              </div>
+
+              <div class="category-pill-card">
+                <div class="cat-top">
+                  <app-icon [icon]="LucideClock" size="xs" class="cat-icon purple" />
+                  <h4>Automated Telemetry</h4>
+                </div>
+                <p>Standard server logs, browser user-agent, operating system, IP address, referral sources, and page interaction timestamps collected for security and performance optimization.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Processing Purposes & Legal Basis -->
+        <section id="processing-purposes" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">03</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Lawful Processing</span>
+              <h2 class="article-title">Processing Purposes &amp; Legal Basis</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Under both the <strong>India Digital Personal Data Protection (DPDP) Act 2023</strong> and the <strong>EU General Data Protection Regulation (GDPR)</strong>, our data processing is anchored on documented legal bases:
+            </p>
+
+            <div class="legal-table-responsive">
+              <table class="legal-table">
+                <thead>
+                  <tr>
+                    <th>Processing Activity</th>
+                    <th>Data Involved</th>
+                    <th>Legal Basis</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Engineering &amp; SOW Execution</strong></td>
+                    <td>Project requirements, technical specifications, repository access</td>
+                    <td><span class="table-badge blue">Contractual Necessity</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Client Discovery &amp; Inquiries</strong></td>
+                    <td>Name, email, phone, company name, project brief</td>
+                    <td><span class="table-badge cyan">Consent / Pre-contractual</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Platform Security &amp; DDoS Prevention</strong></td>
+                    <td>IP addresses, server logs, firewall telemetry</td>
+                    <td><span class="table-badge green">Legitimate Interest</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Invoicing &amp; Tax Compliance</strong></td>
+                    <td>Billing address, tax/GST registration numbers, bank wire logs</td>
+                    <td><span class="table-badge purple">Legal Obligation</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Client IP & NDA Protection -->
+        <section id="ip-confidentiality" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">04</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Intellectual Property</span>
+              <h2 class="article-title">Client IP &amp; Non-Disclosure Safeguards</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              A fundamental tenet of Aaditya Softwares is <strong>absolute client intellectual property protection</strong>. Software assets, business logic, source code, and data models shared with us are treated with strict confidentiality:
+            </p>
+
+            <div class="confidentiality-grid">
+              <div class="c-card">
+                <app-icon [icon]="LucideShieldCheck" size="sm" class="c-icon" />
+                <h4>Bilateral NDA Protection</h4>
+                <p>We execute standard mutual non-disclosure agreements prior to reviewing proprietary business logic, schemas, or confidential codebases.</p>
+              </div>
+
+              <div class="c-card">
+                <app-icon [icon]="LucideLock" size="sm" class="c-icon" />
+                <h4>No Public AI Training</h4>
+                <p>We <strong>strictly forbid</strong> the ingestion of client source code, architectural blueprints, or client proprietary datasets into public LLM training datasets.</p>
+              </div>
+
+              <div class="c-card">
+                <app-icon [icon]="LucideKey" size="sm" class="c-icon" />
+                <h4>Isolated Tenant Environments</h4>
+                <p>Client repositories, Docker containers, and test staging pipelines run in isolated, access-restricted workspaces with multi-factor authentication (MFA).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Subprocessors & Infrastructure -->
+        <section id="subprocessors" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">05</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Third-Party Infrastructure</span>
+              <h2 class="article-title">Subprocessors &amp; Cloud Partners</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              We collaborate exclusively with industry-standard, SOC 2 Type II and ISO 27001 certified cloud infrastructure providers:
+            </p>
+
+            <ul class="infra-list">
+              <li>
+                <div class="infra-name">
+                  <strong>Cloudflare (Global CDN &amp; Security)</strong>
+                  <span class="infra-loc">Global Edge Networks</span>
+                </div>
+                <p class="infra-desc">Provides DDoS mitigation, SSL/TLS termination, edge caching, and firewall security for web properties.</p>
+              </li>
+              <li>
+                <div class="infra-name">
+                  <strong>GitHub Enterprise / GitLab (Version Control)</strong>
+                  <span class="infra-loc">USA / EU Hosted</span>
+                </div>
+                <p class="infra-desc">Secure version control, CI/CD automated test pipelines, and repository management with encrypted storage.</p>
+              </li>
+              <li>
+                <div class="infra-name">
+                  <strong>Amazon Web Services / Google Cloud Platform</strong>
+                  <span class="infra-loc">India &amp; Global Regions</span>
+                </div>
+                <p class="infra-desc">Secure hosting for staging servers, Docker image registries, and database backups as mandated per project SOW.</p>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Section 6: International Data Transfers -->
+        <section id="cross-border" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">06</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Cross-Border Compliance</span>
+              <h2 class="article-title">International Data Transfers</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Because Aaditya Softwares serves clients across North America, Europe, the Middle East, and Asia-Pacific, information may be transferred to and processed in India, where our engineering center is headquartered.
+            </p>
+            <p>
+              For transfers from the European Economic Area (EEA), United Kingdom, or Switzerland, we implement <strong>Standard Contractual Clauses (SCCs)</strong> approved by the European Commission, ensuring recipients uphold equivalent levels of data protection.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 7: Storage & Security Controls -->
+        <section id="storage-security" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">07</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Security Architecture</span>
+              <h2 class="article-title">Data Storage, Encryption &amp; Security Controls</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              We enforce multi-tiered defense-in-depth security measures to protect data against unauthorized alteration, disclosure, destruction, or interception:
+            </p>
+
+            <div class="security-grid">
+              <div class="sec-item">
+                <span class="sec-badge">Cryptographic Safeguards</span>
+                <h5>AES-256 &amp; TLS 1.3</h5>
+                <p>All data in transit is encrypted using TLS 1.3. Persistent database volumes and storage buckets use AES-256 bit encryption.</p>
+              </div>
+
+              <div class="sec-item">
+                <span class="sec-badge">Access Control</span>
+                <h5>Role-Based Access (RBAC) &amp; MFA</h5>
+                <p>Strict principle of least privilege. Hardware security keys / authenticator app MFA is mandatory across all internal developer accounts.</p>
+              </div>
+
+              <div class="sec-item">
+                <span class="sec-badge">Code Auditing</span>
+                <h5>Automated SAST &amp; Secret Scanning</h5>
+                <p>Continuous vulnerability scanning and automated secret detection to prevent accidental credential leakage in repositories.</p>
+              </div>
+
+              <div class="sec-item">
+                <span class="sec-badge">Endpoint Security</span>
+                <h5>Encrypted Developer Workstations</h5>
+                <p>Company-managed developer machines feature full-disk encryption (BitLocker/FileVault), automatic OS security patching, and remote wipe capabilities.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 8: Retention & Right to Erasure -->
+        <section id="retention-deletion" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">08</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Lifecycle Management</span>
+              <h2 class="article-title">Retention &amp; Deletion Policy</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              We retain personal and project data only as long as necessary to fulfill the purposes for which it was gathered:
+            </p>
+            <ul class="legal-checklist">
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Active Engagements:</strong> Retained throughout the project lifecycle and the contractual warranty/maintenance period.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Post-Project Repositories:</strong> Staged repositories and test environments are permanently wiped or transferred within 60 days following formal handover and final sign-off, unless a maintenance retainer is active.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Diagnostic Logs:</strong> Web server diagnostic telemetry is automatically purged on a rolling 30-day retention window.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Statutory Financial Records:</strong> Invoices and tax documents are retained for seven (7) years in compliance with Indian corporate and GST laws.</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Section 9: Your Statutory Rights -->
+        <section id="privacy-rights" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">09</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Empowerment</span>
+              <h2 class="article-title">Your Statutory Privacy Rights</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Regardless of your geographical location, Aaditya Softwares affords you comprehensive control over your personal data:
+            </p>
+
+            <div class="rights-grid">
+              <div class="right-box">
+                <span class="right-title">Right to Access &amp; Portability</span>
+                <p>Request an encrypted copy of all personal records we hold regarding you or your organization in a machine-readable JSON or CSV format.</p>
+              </div>
+              <div class="right-box">
+                <span class="right-title">Right to Rectification</span>
+                <p>Update or correct inaccurate or incomplete contact, organizational, or billing information at any time.</p>
+              </div>
+              <div class="right-box">
+                <span class="right-title">Right to Erasure ("Right to be Forgotten")</span>
+                <p>Request the complete, verifiable erasure of your personal data from our systems, subject to legal compliance requirements.</p>
+              </div>
+              <div class="right-box">
+                <span class="right-title">Right to Object &amp; Restrict Processing</span>
+                <p>Opt out of non-essential communications, email newsletters, or restrict processing activities with immediate effect.</p>
+              </div>
+            </div>
+
+            <p class="rights-note">
+              To exercise any of these rights, email us at <a href="mailto:privacy@aadityasoftwares.in">privacy@aadityasoftwares.in</a>. We respond to all verified statutory requests within <strong>72 business hours</strong> with zero administrative fees.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 10: Cookies & Tracking Tech -->
+        <section id="cookies-tracking" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">10</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Browser Storage</span>
+              <h2 class="article-title">Cookies &amp; Tracking Technologies</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              We use small text files called cookies to facilitate website navigation, maintain security sessions, and analyze aggregated traffic patterns:
+            </p>
+            <ul class="legal-checklist">
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Strictly Necessary Cookies:</strong> Essential for site routing, CSRF token validation, and performance caching. Cannot be disabled.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Preference Cookies:</strong> Store theme or navigation preferences across visits.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Privacy-Preserving Analytics:</strong> Aggregated, anonymized statistics without cross-site tracking or advertising profile construction.</span>
+              </li>
+            </ul>
+            <p>
+              You can instruct your browser to refuse all cookies or indicate when a cookie is being sent via your browser settings.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 11: Incident Response SLA -->
+        <section id="incident-response" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">11</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Continuity &amp; Response</span>
+              <h2 class="article-title">Incident Response &amp; Breach Notification SLA</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              In the unlikely event of a verified security incident affecting confidential client assets or personal data:
+            </p>
+            <div class="sla-steps">
+              <div class="step-card">
+                <span class="step-badge">Within 24 Hours</span>
+                <h5>Containment &amp; Triage</h5>
+                <p>Isolation of affected resources, cryptographic key revocation, and root-cause analysis by our security response squad.</p>
+              </div>
+              <div class="step-card">
+                <span class="step-badge">Within 72 Hours</span>
+                <h5>Client &amp; Authority Notification</h5>
+                <p>Direct notification to impacted clients and regulatory authorities (CERT-In, Data Protection Authorities) detailing incident nature and remediations.</p>
+              </div>
+              <div class="step-card">
+                <span class="step-badge">Within 7 Days</span>
+                <h5>Full Forensic Report</h5>
+                <p>Comprehensive forensic audit report, corrective actions taken, and reinforced safeguards implemented.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 12: Contact Privacy Office -->
+        <section id="contact-dpo" class="legal-article-card dpo-card">
+          <div class="article-header">
+            <span class="article-number">12</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Official Inquiries</span>
+              <h2 class="article-title">Data Protection Officer &amp; Inquiries</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              For privacy inquiries, Data Processing Agreement (DPA) execution, or to exercise your statutory rights, contact our Data Governance Team:
+            </p>
+
+            <div class="dpo-details-box">
+              <div class="dpo-line">
+                <span class="dpo-label">Data Controller:</span>
+                <span class="dpo-value"><strong>Aaditya Softwares</strong></span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Engineering Hub:</span>
+                <span class="dpo-value">Vadodara, Gujarat, India</span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Dedicated Privacy Email:</span>
+                <span class="dpo-value"><a href="mailto:privacy@aadityasoftwares.in">privacy@aadityasoftwares.in</a></span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">General Operations:</span>
+                <span class="dpo-value"><a href="mailto:contact@aadityasoftwares.in">contact@aadityasoftwares.in</a></span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Direct Phone:</span>
+                <span class="dpo-value"><a href="tel:+918849863872">+91 88498 63872</a></span>
+              </div>
+            </div>
+
+            <div class="dpo-actions">
+              <app-button
+                variant="primary"
+                size="md"
+                [iconRight]="LucideArrowRight"
+                (buttonClick)="onContact()"
+              >
+                Submit Privacy Request
+              </app-button>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </section>
+</main>
+
+<app-website-footer></app-website-footer>
+

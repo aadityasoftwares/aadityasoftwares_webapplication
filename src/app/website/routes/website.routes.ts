@@ -30,6 +30,41 @@ export const WEBSITE_ROUTES: Routes = [
         loadComponent: () => import('../pages/contact-page/contact-page').then((m) => m.ContactPage),
         title: 'Contact Us - AadityaSoftwares | Start Your Project',
       },
+      {
+        path: 'privacy-policy',
+        loadComponent: () =>
+          import('../pages/privacy-policy-page/privacy-policy-page').then(
+            (m) => m.PrivacyPolicyPage,
+          ),
+        title: 'Privacy Policy - AadityaSoftwares | Data Protection & Security',
+      },
+      {
+        path: 'privacy',
+        redirectTo: 'privacy-policy',
+        pathMatch: 'full',
+      },
+      {
+        path: 'terms-of-use',
+        loadComponent: () =>
+          import('../pages/terms-page/terms-page').then((m) => m.TermsPage),
+        title: 'Terms of Use - AadityaSoftwares | Master Service Agreement & Legal Terms',
+      },
+      {
+        path: 'terms',
+        redirectTo: 'terms-of-use',
+        pathMatch: 'full',
+      },
+      {
+        path: 'legal',
+        loadComponent: () =>
+          import('../pages/legal-page/legal-page').then((m) => m.LegalPage),
+        title: 'Legal Notice & Compliance - AadityaSoftwares | Corporate Disclosures',
+      },
+      {
+        path: 'legal-notice',
+        redirectTo: 'legal',
+        pathMatch: 'full',
+      },
     ],
   },
 ];

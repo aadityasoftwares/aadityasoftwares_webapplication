@@ -1,0 +1,395 @@
+<app-website-header></app-website-header>
+
+<main class="page-main legal-page">
+  <!-- =======================================================
+       Section 1: Increased-Height Editorial Hero (Brand Consistent)
+       ======================================================= -->
+  <section class="page-hero-section editorial-tall-hero">
+    <!-- Ambient Glow Mesh (Aaditya Softwares Brand Theme) -->
+    <div class="hero-ambient-glow" aria-hidden="true">
+      <div class="glow-orb glow-orb-top-right"></div>
+      <div class="glow-orb glow-orb-top-left"></div>
+      <div class="glow-orb glow-orb-center"></div>
+    </div>
+
+    <div class="page-hero-container">
+      <!-- Eyebrow & Display Title -->
+      <div class="hero-center-copy">
+        <span class="section-sub-eyebrow">CORPORATE DISCLOSURES &amp; GOVERNANCE</span>
+        <h1 class="page-hero-title">
+          Legal Notice &amp; Compliance Disclosures
+        </h1>
+        <p class="page-hero-subtitle">
+          Transparent statutory disclosures, corporate identity verification, trademark notices, cookie governance, vulnerability reporting policies, and compliance standards governing Aaditya Softwares.
+        </p>
+
+        <!-- Meta Badge Row -->
+        <div class="policy-meta-badges">
+          <span class="meta-pill">
+            <app-icon [icon]="LucideClock" size="xs" />
+            <span>Last Updated: {{ lastUpdated }}</span>
+          </span>
+          <span class="meta-pill version">
+            <app-icon [icon]="LucideBuilding" size="xs" />
+            <span>Entity Status: Active &amp; Good Standing</span>
+          </span>
+          <span class="meta-pill jurisdiction">
+            <app-icon [icon]="LucideMapPin" size="xs" />
+            <span>Registered Hub: Vadodara, Gujarat, India</span>
+          </span>
+        </div>
+
+        <!-- Quick Hero Action -->
+        <div class="page-hero-actions">
+          <app-button
+            variant="primary"
+            size="md"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onContact()"
+          >
+            Contact Governance Office
+          </app-button>
+          <app-button
+            variant="secondary"
+            size="md"
+            [iconRight]="LucideFileText"
+            (buttonClick)="scrollToSection('entity-information')"
+          >
+            View Entity Disclosures
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Legal Core Highlights Deck -->
+      <div class="hero-highlights-deck">
+        @for (item of highlights; track item.num) {
+          <div class="highlight-card">
+            <div class="highlight-top">
+              <span class="highlight-num">{{ item.num }}</span>
+              <span class="highlight-badge" [ngClass]="item.badgeClass">{{ item.badge }}</span>
+            </div>
+            <h3 class="highlight-title">{{ item.title }}</h3>
+            <p class="highlight-desc">{{ item.description }}</p>
+            <div class="highlight-footer">
+              <app-icon [icon]="item.icon" size="xs" />
+              <span>{{ item.footerNote }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 2: Sticky Table of Contents + Full Legal Notice Layout
+       ======================================================= -->
+  <section class="legal-content-section" appScrollReveal>
+    <div class="section-container legal-grid-container">
+      <!-- Left Sidebar: Sticky Table of Contents -->
+      <aside class="legal-sidebar" aria-label="Table of Contents">
+        <div class="sidebar-sticky-wrapper">
+          <div class="sidebar-header">
+            <h4 class="sidebar-title">Governance Topics</h4>
+            <span class="sidebar-badge">6 Pillars</span>
+          </div>
+
+          <nav class="toc-nav">
+            <ul class="toc-list">
+              @for (item of tocSections; track item.id) {
+                <li class="toc-item">
+                  <a
+                    [href]="'#' + item.id"
+                    class="toc-link"
+                    [class.is-active]="activeSection() === item.id"
+                    (click)="scrollToSection(item.id, $event)"
+                  >
+                    <span class="toc-num">{{ item.number }}</span>
+                    <span class="toc-label">{{ item.title }}</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          </nav>
+
+          <!-- Sidebar Support Card -->
+          <div class="sidebar-support-card">
+            <div class="support-icon-circle">
+              <app-icon [icon]="LucideBuilding" size="sm" />
+            </div>
+            <h5 class="support-card-title">Corporate Affairs</h5>
+            <p class="support-card-text">
+              For regulatory filings, vendor registration packs, or official corporate verification:
+            </p>
+            <a href="mailto:contact@aadityasoftwares.in" class="support-link">
+              <span>contact@aadityasoftwares.in</span>
+              <app-icon [icon]="LucideArrowRight" size="xs" />
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Main Column: Detailed Legal Notice Pillars -->
+      <article class="legal-main-content">
+        <!-- Pillar 1: Entity Details & Statutory Information -->
+        <section id="entity-information" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">01</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Corporate Identity</span>
+              <h2 class="article-title">Corporate Identification &amp; Statutory Information</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              In compliance with applicable business disclosure regulations and international commercial standards, the following information provides statutory identification for our software engineering studio:
+            </p>
+
+            <div class="entity-info-grid">
+              <div class="entity-tile">
+                <span class="tile-label">Trade / Operating Name</span>
+                <span class="tile-val"><strong>Aaditya Softwares</strong></span>
+              </div>
+
+              <div class="entity-tile">
+                <span class="tile-label">Industry Classification</span>
+                <span class="tile-val">Custom Computer Programming &amp; Software Engineering Services</span>
+              </div>
+
+              <div class="entity-tile">
+                <span class="tile-label">Headquarters / Engineering Center</span>
+                <span class="tile-val">Vadodara, Gujarat, India</span>
+              </div>
+
+              <div class="entity-tile">
+                <span class="tile-label">Official Domain</span>
+                <span class="tile-val"><a href="https://aadityasoftwares.in" target="_blank" rel="noopener">aadityasoftwares.in</a></span>
+              </div>
+
+              <div class="entity-tile">
+                <span class="tile-label">General Operations Email</span>
+                <span class="tile-val"><a href="mailto:contact@aadityasoftwares.in">contact@aadityasoftwares.in</a></span>
+              </div>
+
+              <div class="entity-tile">
+                <span class="tile-label">Direct Technical Telephone</span>
+                <span class="tile-val"><a href="tel:+918849863872">+91 88498 63872</a></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pillar 2: Intellectual Property, Trademarks & Brand -->
+        <section id="ip-trademarks" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">02</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Brand &amp; Trademarks</span>
+              <h2 class="article-title">Intellectual Property &amp; Trademark Disclosures</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              <strong>Aaditya Softwares Proprietary Marks:</strong> The name <em>"Aaditya Softwares"</em>, our official emblem, brand typography, and proprietary product names (including our in-house multi-platform productivity ecosystem <strong>StickyJi</strong> and <em>stickyji.com</em>) are trademarks and intellectual property of Aaditya Softwares. They may not be copied, reproduced, or used without our prior written authorization.
+            </p>
+            <p>
+              <strong>Third-Party Trademarks:</strong> All other brand names, product logos, technology trademarks, and company marks cited on this website (such as Angular, React, TypeScript, Node.js, Docker, Kubernetes, AWS, Google Cloud, Azure, and Cloudflare) are the property of their respective owners. Their mention on our website serves solely to identify technology proficiencies and architectural compatibility, and does not imply endorsement or official sponsorship.
+            </p>
+          </div>
+        </section>
+
+        <!-- Pillar 3: Cookie & Web Storage Disclosures -->
+        <section id="cookie-policy" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">03</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Tracking Disclosure</span>
+              <h2 class="article-title">Cookie Policy &amp; Web Storage Governance</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              We operate an ethical, privacy-respecting website. We do not use third-party advertising cookies, cross-site tracking pixels, or invasive behavioral fingerprinting.
+            </p>
+
+            <div class="legal-table-responsive">
+              <table class="legal-table">
+                <thead>
+                  <tr>
+                    <th>Cookie Category</th>
+                    <th>Purpose &amp; Scope</th>
+                    <th>Retention Period</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Strictly Necessary</strong></td>
+                    <td>Maintains application routing, cross-site request forgery (CSRF) tokens, and CDN security load balancing.</td>
+                    <td><span class="table-badge blue">Session / 30 Days</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Preferences &amp; UI State</strong></td>
+                    <td>Saves user UI preferences, such as navigation bar state or dismissed banners.</td>
+                    <td><span class="table-badge cyan">1 Year</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Anonymized Telemetry</strong></td>
+                    <td>Aggregated page load telemetry and performance diagnostics without user IP tracking.</td>
+                    <td><span class="table-badge green">90 Days</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              You can configure your browser to reject cookies or delete saved cookies at any time via your browser settings without impacting core navigation on our website.
+            </p>
+          </div>
+        </section>
+
+        <!-- Pillar 4: Vulnerability Disclosure Program (VDP) -->
+        <section id="vdp-security" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">04</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Responsible Disclosure</span>
+              <h2 class="article-title">Vulnerability Disclosure Program (VDP) &amp; Safe Harbor</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              We take the security of our platforms, digital products, and client repositories seriously. We welcome responsible security reports from white-hat researchers and the global cybersecurity community.
+            </p>
+
+            <div class="legal-callout-box info">
+              <app-icon [icon]="LucideShieldCheck" size="sm" class="callout-icon" />
+              <div class="callout-content">
+                <strong>Safe Harbor Guarantee:</strong> If you conduct vulnerability research in good faith and adhere strictly to the rules outlined below, Aaditya Softwares will consider your activities authorized, will not initiate civil litigation, and will not contact law enforcement.
+              </div>
+            </div>
+
+            <ul class="legal-checklist">
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Reporting Channel:</strong> Email security reports directly to <a href="mailto:security@aadityasoftwares.in">security@aadityasoftwares.in</a> (or <a href="mailto:contact@aadityasoftwares.in">contact@aadityasoftwares.in</a> with subject <em>[SECURITY VULNERABILITY]</em>).</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Response SLA:</strong> We acknowledge receipt of vulnerability reports within <strong>48 hours</strong> and provide regular updates until resolution.</span>
+              </li>
+              <li>
+                <app-icon [icon]="LucideCheck" size="xs" class="check-icon" />
+                <span><strong>Prohibited Activities:</strong> Do not attempt Denial of Service (DoS/DDoS), social engineering of employees, physical security attacks, or extraction of customer/client proprietary data.</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Pillar 5: Ethics & Anti-Corruption -->
+        <section id="ethics-compliance" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">05</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Corporate Responsibility</span>
+              <h2 class="article-title">Ethics, Anti-Corruption &amp; Regulatory Compliance</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              Aaditya Softwares conducts all operations with strict business integrity and ethical responsibility:
+            </p>
+
+            <div class="compliance-blocks-grid">
+              <div class="comp-block">
+                <h5>Anti-Bribery &amp; Anti-Corruption</h5>
+                <p>Zero tolerance for bribery, kickbacks, or corrupt commercial inducements in compliance with the Indian Prevention of Corruption Act and international anti-bribery standards (e.g. UK Bribery Act, US FCPA).</p>
+              </div>
+
+              <div class="comp-block">
+                <h5>Fair Labor &amp; Human Rights</h5>
+                <p>We uphold fair compensation, human dignity, modern ergonomics, and completely prohibit child labor, forced labor, or exploitation across all development operations and supply chains.</p>
+              </div>
+
+              <div class="comp-block">
+                <h5>Equal Opportunity &amp; Diversity</h5>
+                <p>Aaditya Softwares is an equal opportunity employer. We maintain zero tolerance for discrimination or harassment based on gender, religion, race, age, disability, or background.</p>
+              </div>
+
+              <div class="comp-block">
+                <h5>Information Technology Compliance</h5>
+                <p>Full compliance with the Indian Information Technology Act 2000 (and amendments), DPDP Act 2023, and guidelines issued by CERT-In for cyber defense reporting.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pillar 6: Disclaimers & Liability Limits -->
+        <section id="disclaimers" class="legal-article-card">
+          <div class="article-header">
+            <span class="article-number">06</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Important Notice</span>
+              <h2 class="article-title">Website Disclaimers &amp; Scope of Information</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              <strong>Informational Purposes Only:</strong> The technical articles, case studies, architectural blueprints, and content published on this website are provided for general informational and marketing purposes. While we strive to maintain accurate, up-to-date documentation, they do not constitute specific architectural guarantees or legal advice. Binding technical commitments are established exclusively via signed Statements of Work.
+            </p>
+            <p>
+              <strong>External Hyperlinks:</strong> Our website may contain links to external third-party services, case study client platforms, or documentation repositories. Aaditya Softwares exercises no editorial control over external sites and accepts no responsibility for their content, policies, or availability.
+            </p>
+          </div>
+        </section>
+
+        <!-- Pillar 7: Governance Contact Card -->
+        <section class="legal-article-card dpo-card">
+          <div class="article-header">
+            <span class="article-number">07</span>
+            <div class="article-title-wrap">
+              <span class="article-tag">Contact Office</span>
+              <h2 class="article-title">Governance &amp; Statutory Inquiries</h2>
+            </div>
+          </div>
+          <div class="article-body">
+            <p>
+              For statutory compliance confirmations, vendor verification forms, or executive governance discussions, please reach out directly:
+            </p>
+
+            <div class="dpo-details-box">
+              <div class="dpo-line">
+                <span class="dpo-label">Corporate Office:</span>
+                <span class="dpo-value"><strong>Aaditya Softwares</strong></span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Location:</span>
+                <span class="dpo-value">Vadodara, Gujarat, India</span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Corporate Email:</span>
+                <span class="dpo-value"><a href="mailto:contact@aadityasoftwares.in">contact@aadityasoftwares.in</a></span>
+              </div>
+              <div class="dpo-line">
+                <span class="dpo-label">Telephone:</span>
+                <span class="dpo-value"><a href="tel:+918849863872">+91 88498 63872</a></span>
+              </div>
+            </div>
+
+            <div class="dpo-actions">
+              <app-button
+                variant="primary"
+                size="md"
+                [iconRight]="LucideArrowRight"
+                (buttonClick)="onContact()"
+              >
+                Submit Corporate Inquiry
+              </app-button>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </section>
+</main>
+
+<app-website-footer></app-website-footer>
+
