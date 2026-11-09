@@ -1,0 +1,53 @@
+<section id="faq" class="faq-section" appScrollReveal>
+  <!-- Ambient Atmospheric Glows -->
+  <div class="faq-ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-top"></div>
+    <div class="glow-orb glow-bottom"></div>
+  </div>
+
+  <div class="faq-container">
+    <!-- Header -->
+    <div class="faq-header">
+      <span class="faq-eyebrow">FREQUENTLY ASKED QUESTIONS</span>
+      <h2 class="faq-title">
+        Clear Answers on Engineering,<br />
+        <span class="title-highlight">Process &amp; Ownership</span>
+      </h2>
+      <p class="faq-lead">
+        Transparent details on how we partner, protect your intellectual property, execute agile sprints, and guarantee software excellence.
+      </p>
+    </div>
+
+    <!-- Accordion List -->
+    <div class="faq-accordion-list" role="region" aria-label="Frequently Asked Questions Accordion">
+      @for (item of faqs; track item.question; let idx = $index) {
+        @let isOpen = openIndex() === idx;
+        <article class="faq-accordion-card" [class.is-open]="isOpen">
+          <button
+            type="button"
+            class="faq-question-btn"
+            (click)="toggle(idx)"
+            [attr.aria-expanded]="isOpen"
+            [attr.aria-controls]="'faq-answer-' + idx"
+          >
+            <div class="question-left-group">
+              <span class="faq-cat-tag">{{ item.category }}</span>
+              <h3 class="faq-question-text">{{ item.question }}</h3>
+            </div>
+
+            <div class="chevron-circle" [class.is-rotated]="isOpen" aria-hidden="true">
+              <app-icon [icon]="LucideChevronDown" size="sm" />
+            </div>
+          </button>
+
+          @if (isOpen) {
+            <div [id]="'faq-answer-' + idx" class="faq-answer-body" role="region">
+              <p class="answer-text">{{ item.answer }}</p>
+            </div>
+          }
+        </article>
+      }
+    </div>
+  </div>
+</section>
+

@@ -42,10 +42,10 @@ describe('About', () => {
   });
 
   it('should have 4 key metrics configured', () => {
-    expect(component.metrics.experience.value).toBe('9+');
-    expect(component.metrics.satisfaction.value).toBe('99%');
-    expect(component.metrics.projects.value).toBe('100+');
-    expect(component.metrics.brands.value).toBe('86+');
+    expect(component.metrics.experience.value).toBe('3+');
+    expect(component.metrics.satisfaction.value).toBe('100%');
+    expect(component.metrics.projects.value).toBe('12+');
+    expect(component.metrics.brands.value).toBe('1 (StickyJi)');
   });
 
   it('should emit contactClick on onWorkTogether', () => {

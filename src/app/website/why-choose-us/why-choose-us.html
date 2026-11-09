@@ -1,0 +1,78 @@
+<section id="why-choose-us" class="why-section" appScrollReveal>
+  <!-- Ambient Subtle Background Glow -->
+  <div class="why-ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-top"></div>
+    <div class="glow-orb glow-bottom"></div>
+  </div>
+
+  <div class="why-container">
+    <!-- Header Section -->
+    <div class="why-header">
+      <span class="why-eyebrow">WHY CHOOSE AADITYA SOFTWARES</span>
+      <h2 class="why-title">
+        Engineering Rigor That Powers<br />
+        <span class="title-highlight">Predictable Commercial Success</span>
+      </h2>
+      <p class="why-lead">
+        We eliminate agency bureaucracy and technical debt. By pairing direct senior developer collaboration with disciplined sprint execution, we deliver software built to scale with your business.
+      </p>
+    </div>
+
+    <!-- 6 Pillar Grid -->
+    <div class="why-pillars-grid">
+      @for (pillar of pillars; track pillar.title) {
+        <article class="pillar-card">
+          <div class="pillar-top-row">
+            <div class="pillar-icon-box" aria-hidden="true">
+              <app-icon [icon]="pillar.icon" size="sm" />
+            </div>
+            <span class="pillar-badge">{{ pillar.badge }}</span>
+          </div>
+
+          <h3 class="pillar-title">{{ pillar.title }}</h3>
+          <p class="pillar-desc">{{ pillar.description }}</p>
+        </article>
+      }
+    </div>
+
+    <!-- Comparison Table: Traditional Agencies vs. Aaditya Softwares -->
+    <div class="why-comparison-card">
+      <div class="comparison-header">
+        <h3 class="comparison-heading">How We Compare with Traditional IT Agencies</h3>
+        <span class="comparison-sub">Transparent software engineering without hidden surprises</span>
+      </div>
+
+      <div class="comparison-table-wrapper" role="region" aria-label="Comparison Table">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th scope="col" class="col-feature">Key Capability</th>
+              <th scope="col" class="col-trad">Traditional IT Agencies</th>
+              <th scope="col" class="col-aaditya">Aaditya Softwares</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of comparisonRows; track row.feature) {
+              <tr>
+                <td class="cell-feature">{{ row.feature }}</td>
+                <td class="cell-trad">
+                  <div class="trad-cell-content">
+                    <app-icon [icon]="LucideX" size="xs" class="x-icon" />
+                    <span>{{ row.traditional }}</span>
+                  </div>
+                </td>
+                <td class="cell-aaditya">
+                  <div class="aaditya-cell-content">
+                    <app-icon [icon]="LucideCheckCircle2" size="xs" class="check-icon" />
+                    <span>{{ row.aaditya }}</span>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+

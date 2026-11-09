@@ -1,0 +1,72 @@
+<section id="process" class="process-section" appScrollReveal>
+  <!-- Ambient Atmospheric Glows -->
+  <div class="process-ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-top"></div>
+    <div class="glow-orb glow-bottom"></div>
+  </div>
+
+  <div class="process-container">
+    <!-- Header -->
+    <div class="process-header">
+      <span class="process-eyebrow">OUR DEVELOPMENT PROCESS</span>
+      <h2 class="process-title">
+        From Architecture to<br />
+        <span class="title-highlight">Zero-Downtime Delivery</span>
+      </h2>
+      <p class="process-lead">
+        A disciplined 5-stage software engineering framework that turns complex business requirements into fast, dependable production systems.
+      </p>
+    </div>
+
+    <!-- Stepper Navigation Bar (01 to 05) -->
+    <div class="process-nav-bar" role="tablist" aria-label="Development process stages">
+      @for (step of steps; track step.id; let idx = $index) {
+        <button
+          type="button"
+          role="tab"
+          class="process-step-tab"
+          [class.is-active]="activeStepIndex() === idx"
+          [attr.aria-selected]="activeStepIndex() === idx"
+          (click)="selectStep(idx)"
+        >
+          <span class="tab-step-id">{{ step.id }}</span>
+          <div class="tab-meta">
+            <span class="tab-step-name">{{ step.name }}</span>
+            <span class="tab-step-duration">{{ step.duration }}</span>
+          </div>
+        </button>
+      }
+    </div>
+
+    <!-- Active Step Spotlight Card -->
+    @let activeStep = steps[activeStepIndex()];
+    <article class="process-detail-card" [attr.aria-label]="activeStep.name + ' Details'">
+      <div class="detail-header">
+        <div class="detail-badge-group">
+          <span class="step-num-pill">Stage {{ activeStep.id }}</span>
+          <span class="step-duration-chip">{{ activeStep.duration }}</span>
+        </div>
+
+        <div class="detail-icon-circle" aria-hidden="true">
+          <app-icon [icon]="activeStep.icon" size="md" />
+        </div>
+      </div>
+
+      <h3 class="detail-headline">{{ activeStep.headline }}</h3>
+      <p class="detail-description">{{ activeStep.description }}</p>
+
+      <div class="detail-deliverables-panel">
+        <h4 class="deliverables-heading">Key Production Deliverables:</h4>
+        <div class="deliverables-grid">
+          @for (item of activeStep.deliverables; track item) {
+            <div class="deliverable-item">
+              <app-icon [icon]="LucideCheckCircle2" size="xs" class="check-ico" />
+              <span>{{ item }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+

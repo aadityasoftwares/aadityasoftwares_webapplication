@@ -1,0 +1,55 @@
+<section id="industries" class="industries-section" appScrollReveal>
+  <!-- Ambient Atmospheric Glows -->
+  <div class="industries-ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-top"></div>
+    <div class="glow-orb glow-bottom"></div>
+  </div>
+
+  <div class="industries-container">
+    <!-- Header -->
+    <div class="industries-header">
+      <span class="industries-eyebrow">INDUSTRIES WE SERVE</span>
+      <h2 class="industries-title">
+        Domain-Specific Engineering for<br />
+        <span class="title-highlight">Mission-Critical Sectors</span>
+      </h2>
+      <p class="industries-lead">
+        From multi-state logistics and high-volume marketplaces to enterprise SaaS platforms, we build software tuned to the exact requirements of your industry.
+      </p>
+    </div>
+
+    <!-- 6 Industry Cards Grid -->
+    <div class="industries-grid">
+      @for (ind of industries; track ind.title) {
+        <article class="industry-card">
+          <div class="card-top">
+            <div class="industry-icon-box" aria-hidden="true">
+              <app-icon [icon]="ind.icon" size="sm" />
+            </div>
+            <span class="industry-cat-chip">{{ ind.category }}</span>
+          </div>
+
+          <h3 class="industry-title">{{ ind.title }}</h3>
+          <p class="industry-desc">{{ ind.description }}</p>
+
+          <div class="industry-capabilities">
+            @for (cap of ind.capabilities; track cap) {
+              <div class="cap-pill">
+                <app-icon [icon]="LucideCheckCircle2" size="xs" class="cap-check" />
+                <span>{{ cap }}</span>
+              </div>
+            }
+          </div>
+
+          @if (ind.caseReference) {
+            <div class="industry-reference-bar">
+              <span class="ref-label">Field-Tested:</span>
+              <span class="ref-val">{{ ind.caseReference }}</span>
+            </div>
+          }
+        </article>
+      }
+    </div>
+  </div>
+</section>
+

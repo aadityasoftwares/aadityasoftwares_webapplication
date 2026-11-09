@@ -1,0 +1,203 @@
+@use '../../styles/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  position: relative;
+  background-color: $color-surface-white;
+}
+
+.trust-highlights-section {
+  position: relative;
+  width: 100%;
+  padding-top: clamp(24px, 3.5vw, 44px);
+  padding-bottom: clamp(36px, 4.5vw, 56px);
+  overflow: hidden;
+  font-family: $font-sans;
+}
+
+.highlights-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+
+  .ambient-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+  }
+
+  .glow-left {
+    top: 10%;
+    left: -5%;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba($color-primary, 0.12) 0%, rgba($color-accent, 0.04) 60%, transparent 75%);
+  }
+
+  .glow-right {
+    bottom: 5%;
+    right: -5%;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba($color-primary-hover, 0.09) 0%, rgba($color-accent, 0.03) 60%, transparent 75%);
+  }
+}
+
+.highlights-container {
+  position: relative;
+  z-index: 1;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $container-padding-x;
+
+  @media (max-width: 768px) {
+    padding: 0 $container-padding-x-mobile;
+  }
+}
+
+/* ----------------------------------------------------------
+   Top Trust Badges Bar
+   ---------------------------------------------------------- */
+.highlights-pill-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(28px, 4vw, 40px);
+
+  .trust-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-full;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: $color-text-body;
+    box-shadow: $shadow-xs;
+    transition: all 0.2s ease;
+
+    .badge-icon {
+      color: $color-primary;
+    }
+
+    &:hover {
+      background: $color-surface-white;
+      border-color: $color-border-hover;
+      transform: translateY(-1px);
+      box-shadow: $shadow-sm;
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   4 Core Metrics Grid
+   ---------------------------------------------------------- */
+.highlights-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2.5vw, 24px);
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.highlight-stat-card {
+  position: relative;
+  background: $color-surface-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  padding: clamp(22px, 2.8vw, 28px);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba($color-primary, 0.35);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08), 0 0 20px rgba($color-primary, 0.08);
+
+    .stat-icon-wrap {
+      background: $color-primary;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+  }
+
+  .stat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    .stat-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: $color-primary;
+      background: $color-primary-light;
+      padding: 3px 10px;
+      border-radius: $radius-full;
+      border: 1px solid rgba($color-primary, 0.15);
+    }
+
+    .stat-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: $radius-md;
+      background: $color-surface;
+      border: 1px solid $color-border;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-primary;
+      transition: all 0.25s ease;
+    }
+  }
+
+  .stat-value-group {
+    margin-bottom: 10px;
+
+    .stat-number {
+      display: block;
+      font-family: $font-sans;
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      font-weight: 850;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: $color-heading;
+      margin-bottom: 4px;
+    }
+
+    .stat-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: $color-heading;
+      margin: 0;
+      letter-spacing: -0.015em;
+    }
+  }
+
+  .stat-desc {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: $color-text-muted;
+    margin: 0;
+    margin-top: auto;
+  }
+}
+

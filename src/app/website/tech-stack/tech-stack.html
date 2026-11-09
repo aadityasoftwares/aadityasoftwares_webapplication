@@ -1,0 +1,58 @@
+<section id="tech-stack" class="tech-section" appScrollReveal>
+  <!-- Ambient Atmospheric Glow -->
+  <div class="tech-ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-top"></div>
+    <div class="glow-orb glow-bottom"></div>
+  </div>
+
+  <div class="tech-container">
+    <!-- Header -->
+    <div class="tech-header">
+      <span class="tech-eyebrow">OUR TECHNOLOGY STACK</span>
+      <h2 class="tech-title">
+        Modern, Battle-Tested Tools<br />
+        <span class="title-highlight">Engineered for Scale</span>
+      </h2>
+      <p class="tech-lead">
+        We select the best-in-class programming languages, frameworks, and cloud infrastructure to ensure your application runs with sub-second response times and high security.
+      </p>
+    </div>
+
+    <!-- Filter Tabs Bar -->
+    <div class="tech-filter-bar" role="tablist" aria-label="Technology categories">
+      @for (cat of categories; track cat.id) {
+        <button
+          type="button"
+          role="tab"
+          class="filter-tab-pill"
+          [class.is-active]="activeCategory() === cat.id"
+          [attr.aria-selected]="activeCategory() === cat.id"
+          (click)="setCategory(cat.id)"
+        >
+          <span>{{ cat.label }}</span>
+        </button>
+      }
+    </div>
+
+    <!-- Technologies Grid -->
+    <div class="technologies-grid">
+      @for (item of filteredTech(); track item.name) {
+        <article class="tech-item-card">
+          <div class="tech-card-top">
+            <div class="tech-icon-wrap" aria-hidden="true">
+              <app-icon [icon]="item.icon" size="sm" />
+            </div>
+            <span class="tech-badge">{{ item.badge }}</span>
+          </div>
+
+          <div class="tech-card-content">
+            <span class="tech-cat-label">{{ item.categoryLabel }}</span>
+            <h3 class="tech-name">{{ item.name }}</h3>
+            <p class="tech-role">{{ item.role }}</p>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+

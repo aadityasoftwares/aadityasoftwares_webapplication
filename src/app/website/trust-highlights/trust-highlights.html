@@ -1,0 +1,41 @@
+<section id="highlights" class="trust-highlights-section" appScrollReveal>
+  <!-- Ambient Glow Background -->
+  <div class="highlights-ambient-glow" aria-hidden="true">
+    <div class="ambient-glow-orb glow-left"></div>
+    <div class="ambient-glow-orb glow-right"></div>
+  </div>
+
+  <div class="highlights-container">
+    <!-- Top Trust Badges Bar -->
+    <div class="highlights-pill-strip">
+      @for (badge of badges; track badge.label) {
+        <div class="trust-badge-pill">
+          <app-icon [icon]="badge.icon" size="xs" class="badge-icon" />
+          <span>{{ badge.label }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- 4 Core Company Metrics Grid -->
+    <div class="highlights-metrics-grid">
+      @for (stat of stats; track stat.label) {
+        <article class="highlight-stat-card">
+          <div class="stat-card-header">
+            <span class="stat-tag">{{ stat.tag }}</span>
+            <div class="stat-icon-wrap" aria-hidden="true">
+              <app-icon [icon]="stat.icon" size="sm" />
+            </div>
+          </div>
+
+          <div class="stat-value-group">
+            <span class="stat-number">{{ stat.value }}</span>
+            <h3 class="stat-title">{{ stat.label }}</h3>
+          </div>
+
+          <p class="stat-desc">{{ stat.description }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+

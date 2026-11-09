@@ -1,0 +1,105 @@
+<section id="testimonials" class="testimonials-section" appScrollReveal>
+  <!-- Ambient Atmospheric Glows -->
+  <div class="testimonials-ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-top"></div>
+    <div class="glow-orb glow-bottom"></div>
+  </div>
+
+  <div class="testimonials-container">
+    <!-- Header -->
+    <div class="testimonials-header">
+      <span class="testimonials-eyebrow">CLIENT TESTIMONIALS</span>
+      <h2 class="testimonials-title">
+        Trusted by High-Growth Companies<br />
+        <span class="title-highlight">Backed by 100% Happy Clients</span>
+      </h2>
+      <p class="testimonials-lead">
+        Hear directly from the founders and directors who have partnered with Aaditya Softwares to build and deploy commercial digital platforms.
+      </p>
+    </div>
+
+    <!-- Active Testimonial Spotlight Showcase -->
+    @let active = testimonials[activeIndex()];
+    <div class="testimonial-showcase-box">
+      <div class="showcase-left-brand">
+        <div class="brand-logo-card">
+          @if (active.logoUrl) {
+            <img [src]="active.logoUrl" [alt]="active.company + ' logo'" class="brand-logo-img" />
+          }
+        </div>
+        <div class="brand-meta">
+          <span class="brand-name">{{ active.company }}</span>
+          <span class="brand-type-badge">
+            <app-icon [icon]="LucideCheckCircle2" size="xs" />
+            <span>{{ active.verifiedType }}</span>
+          </span>
+        </div>
+
+        <div class="outcome-pill">
+          <span class="outcome-label">Key Result:</span>
+          <span class="outcome-text">{{ active.outcome }}</span>
+        </div>
+      </div>
+
+      <div class="showcase-right-quote">
+        <div class="quote-header">
+          <div class="star-rating-row" aria-label="5 out of 5 stars">
+            @for (star of [1, 2, 3, 4, 5]; track star) {
+              <span class="star-gold">★</span>
+            }
+          </div>
+          <app-icon [icon]="LucideQuote" size="lg" class="quote-watermark" aria-hidden="true" />
+        </div>
+
+        <blockquote class="quote-text">
+          &ldquo;{{ active.quote }}&rdquo;
+        </blockquote>
+
+        <div class="quote-author-row">
+          <div class="author-details">
+            <span class="author-name">{{ active.clientName }}</span>
+            <span class="author-role">{{ active.role }} &bull; {{ active.company }}</span>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="carousel-nav-buttons">
+            <button
+              type="button"
+              class="nav-btn btn-prev"
+              (click)="prev()"
+              aria-label="Previous testimonial"
+            >
+              <app-icon [icon]="LucideChevronLeft" size="sm" />
+            </button>
+            <button
+              type="button"
+              class="nav-btn btn-next"
+              (click)="next()"
+              aria-label="Next testimonial"
+            >
+              <app-icon [icon]="LucideChevronRight" size="sm" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial Client Selector Tabs -->
+    <div class="testimonial-pills-row" role="tablist" aria-label="Client testimonials">
+      @for (item of testimonials; track item.company; let idx = $index) {
+        <button
+          type="button"
+          role="tab"
+          class="client-pill-btn"
+          [class.is-active]="activeIndex() === idx"
+          [attr.aria-selected]="activeIndex() === idx"
+          (click)="select(idx)"
+        >
+          <span class="pill-company">{{ item.company }}</span>
+          <span class="pill-verified">{{ item.verifiedType }}</span>
+        </button>
+      }
+    </div>
+  </div>
+</section>
+

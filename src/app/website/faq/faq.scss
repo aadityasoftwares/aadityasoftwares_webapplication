@@ -1,0 +1,218 @@
+@use '../../styles/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  position: relative;
+  background-color: $color-surface-white;
+}
+
+.faq-section {
+  position: relative;
+  width: 100%;
+  padding-top: $section-padding-top;
+  padding-bottom: $section-padding-bottom;
+  overflow: hidden;
+  font-family: $font-sans;
+}
+
+.faq-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.35;
+  }
+
+  .glow-top {
+    top: 5%;
+    left: -5%;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba($color-primary, 0.12) 0%, rgba($color-accent, 0.04) 60%, transparent 75%);
+  }
+
+  .glow-bottom {
+    bottom: -50px;
+    right: -5%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba($color-primary-hover, 0.1) 0%, rgba($color-accent, 0.03) 60%, transparent 75%);
+  }
+}
+
+.faq-container {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 $container-padding-x;
+
+  @media (max-width: 768px) {
+    padding: 0 $container-padding-x-mobile;
+  }
+}
+
+/* ----------------------------------------------------------
+   Header
+   ---------------------------------------------------------- */
+.faq-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto $section-header-margin-bottom;
+
+  .faq-eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-family: $font-sans;
+    font-size: $font-size-eyebrow;
+    font-weight: $font-weight-eyebrow;
+    letter-spacing: $letter-spacing-eyebrow;
+    color: $color-primary;
+    text-transform: uppercase;
+  }
+
+  .faq-title {
+    margin: 0 0 16px;
+    font-family: $font-sans;
+    font-size: $font-size-display;
+    font-weight: 850;
+    line-height: $line-height-display;
+    letter-spacing: $letter-spacing-display;
+    color: $color-heading;
+
+    .title-highlight {
+      color: $color-primary;
+      background: linear-gradient(135deg, $color-primary 0%, #2563eb 50%, $color-accent 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+  }
+
+  .faq-lead {
+    margin: 0 auto;
+    font-size: $font-size-lead;
+    line-height: $line-height-body;
+    color: $color-text-body;
+    max-width: 660px;
+  }
+}
+
+/* ----------------------------------------------------------
+   Accordion List
+   ---------------------------------------------------------- */
+.faq-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-accordion-card {
+  background: $color-surface-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.03);
+  transition: all 0.25s ease;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.4);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  &.is-open {
+    border-color: $color-primary;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+
+    .chevron-circle {
+      background: $color-primary;
+      color: #ffffff;
+      border-color: $color-primary;
+      transform: rotate(180deg);
+    }
+  }
+
+  .faq-question-btn {
+    width: 100%;
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: clamp(20px, 3vw, 26px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    cursor: pointer;
+    text-align: left;
+    font-family: $font-sans;
+
+    .question-left-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      .faq-cat-tag {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $color-primary;
+      }
+
+      .faq-question-text {
+        margin: 0;
+        font-size: clamp(16px, 1.8vw, 18px);
+        font-weight: 750;
+        color: $color-heading;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
+      }
+    }
+
+    .chevron-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: $color-surface;
+      border: 1px solid $color-border;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-heading;
+      flex-shrink: 0;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+  }
+
+  .faq-answer-body {
+    padding: 0 clamp(20px, 3vw, 26px) clamp(20px, 3vw, 26px);
+    border-top: 1px solid #f8fafc;
+    animation: answerSlide 0.3s ease;
+
+    .answer-text {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.68;
+      color: $color-text-body;
+    }
+  }
+}
+
+@keyframes answerSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

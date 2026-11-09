@@ -1,0 +1,81 @@
+<section id="contact" class="cta-banner-section" appScrollReveal>
+  <div class="cta-container">
+    <div class="cta-gradient-card">
+      <!-- Ambient Glow Orbs within Card -->
+      <div class="card-ambient-glow" aria-hidden="true">
+        <div class="glow-orb orb-top-right"></div>
+        <div class="glow-orb orb-bottom-left"></div>
+      </div>
+
+      <div class="cta-card-content">
+        <!-- Eyebrow Badge -->
+        <div class="cta-eyebrow-pill">
+          <span class="cta-pulse-dot" aria-hidden="true"></span>
+          <span>LET'S BUILD SOMETHING TOGETHER</span>
+        </div>
+
+        <!-- Headline -->
+        <h2 class="cta-headline">
+          Ready to Engineer Software<br />
+          <span class="headline-light">Your Users Will Love?</span>
+        </h2>
+
+        <!-- Subtitle -->
+        <p class="cta-subtitle">
+          Partner directly with experienced senior software engineers. From architectural blueprints to production rollout, we turn ideas into resilient, scalable digital systems.
+        </p>
+
+        <!-- 4 Key Stats Row -->
+        <div class="cta-stats-row">
+          @for (st of trustStats; track st.label) {
+            <div class="cta-stat-item">
+              <span class="stat-num">{{ st.value }}</span>
+              <span class="stat-text">{{ st.label }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Actions -->
+        <div class="cta-actions-group">
+          <app-button
+            variant="primary"
+            size="lg"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onDiscuss()"
+          >
+            Discuss Your Project
+          </app-button>
+
+          <a
+            href="https://stickyji.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cta-secondary-link"
+          >
+            <span>Explore Our SaaS (StickyJi)</span>
+            <app-icon [icon]="LucideExternalLink" size="xs" />
+          </a>
+        </div>
+
+        <!-- Micro-Guarantees -->
+        <div class="cta-guarantees-bar">
+          <div class="guarantee-item">
+            <app-icon [icon]="LucideShieldCheck" size="xs" class="g-icon" />
+            <span>100% Code &amp; IP Ownership</span>
+          </div>
+          <span class="g-divider" aria-hidden="true">&bull;</span>
+          <div class="guarantee-item">
+            <app-icon [icon]="LucideClock" size="xs" class="g-icon" />
+            <span>Response within 24 Hours</span>
+          </div>
+          <span class="g-divider" aria-hidden="true">&bull;</span>
+          <div class="guarantee-item">
+            <app-icon [icon]="LucideShieldCheck" size="xs" class="g-icon" />
+            <span>Strict Mutual NDA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

@@ -87,24 +87,24 @@ export class About {
    */
   readonly metrics = {
     experience: {
-      label: 'Years of experience',
-      value: '9+',
+      label: 'Years of Experience',
+      value: '3+',
       note: 'Full-stack engineering expertise across modern stacks.',
     },
     satisfaction: {
-      ratingLabel: 'Happy clients worldwide',
-      value: '99%',
-      note: 'Clients stay for code quality and reliable delivery.',
+      ratingLabel: 'Client Happy Ratio',
+      value: '100%',
+      note: '100% happy clients dedicated to code quality and reliable delivery.',
     },
     projects: {
-      label: 'Software Projects delivered',
-      value: '100+',
-      note: 'Enterprise web apps, APIs & cloud platforms.',
+      label: 'Projects Delivered',
+      value: '12+',
+      note: 'High-performance web apps, marketplace ecosystems & SaaS platforms.',
     },
     brands: {
-      label: 'Production Systems Shipped',
-      value: '86+',
-      note: 'High-availability software in active commercial use.',
+      label: 'Own SaaS Product',
+      value: '1 (StickyJi)',
+      note: 'Our in-house sticky notes & productivity SaaS platform.',
     },
   };
 
