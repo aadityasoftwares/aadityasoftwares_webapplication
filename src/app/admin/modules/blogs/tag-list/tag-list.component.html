@@ -1,0 +1,161 @@
+<div class="admin-page">
+  <app-blog-website-selector />
+
+  <header class="page-header">
+    <div class="header-left">
+      <div class="header-badge">Taxonomies</div>
+      <h1 class="page-title">Blog Tags</h1>
+      <p class="page-subtitle">Manage topic tags and keywords for <strong>{{ contextStore.selectedWebsite()?.name }}</strong>.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline" (click)="loadTags()" [disabled]="isLoading()">
+        <span>Refresh</span>
+      </button>
+      <button class="btn btn-primary" (click)="openCreateModal()">
+        <span>+ New Tag</span>
+      </button>
+    </div>
+  </header>
+
+  @if (successMessage()) {
+    <div class="alert alert-success">
+      <span>{{ successMessage() }}</span>
+      <button class="alert-close" (click)="successMessage.set(null)">✕</button>
+    </div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger">
+      <span>{{ errorMessage() }}</span>
+      <button class="alert-close" (click)="errorMessage.set(null)">✕</button>
+    </div>
+  }
+
+  <section class="filter-card">
+    <div class="filter-group search-group">
+      <input
+        type="text"
+        placeholder="Search tags..."
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
+        (keyup.enter)="loadTags()"
+        class="search-input"
+      />
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Status</label>
+      <select [ngModel]="selectedStatus()" (ngModelChange)="selectedStatus.set($event); loadTags()" class="filter-select">
+        <option value="ALL">All Statuses</option>
+        <option [value]="BlogTagStatus.ACTIVE">Active</option>
+        <option [value]="BlogTagStatus.INACTIVE">Inactive</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="table-container">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading tags...</p>
+      </div>
+    } @else if (tags().length === 0) {
+      <div class="empty-state">
+        <h3>No tags found</h3>
+        <p>Add descriptive keywords to group related articles across topics.</p>
+        <button class="btn btn-primary" style="margin-top: 1rem;" (click)="openCreateModal()">Create Tag</button>
+      </div>
+    } @else {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tag Name</th>
+            <th>Slug</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th style="text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tag of tags(); track tag._id) {
+            <tr>
+              <td><span class="tag-badge"># {{ tag.name }}</span></td>
+              <td><code>/blog/tag/{{ tag.slug }}</code></td>
+              <td><span class="desc-text">{{ tag.description || '—' }}</span></td>
+              <td>
+                <span class="status-pill status-{{ tag.status | lowercase }}">{{ tag.status }}</span>
+              </td>
+              <td style="text-align: right;">
+                <div class="action-btn-group">
+                  <button type="button" class="icon-action-btn" (click)="openEditModal(tag)" title="Edit Tag">
+                    <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                  </button>
+                  <button type="button" class="icon-action-btn btn-danger-hover" (click)="openDeleteModal(tag)" title="Delete Tag">
+                    <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </section>
+
+  <!-- Create/Edit Modal -->
+  @if (isModalOpen()) {
+    <div class="modal-backdrop" (click)="isModalOpen.set(false)">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3 class="modal-title">{{ isEditMode() ? 'Edit Tag' : 'Create Tag' }}</h3>
+          <button class="modal-close" (click)="isModalOpen.set(false)">✕</button>
+        </header>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Tag Name</label>
+            <input type="text" class="form-input" [(ngModel)]="formName" (ngModelChange)="onNameChange()" placeholder="e.g. Architecture" />
+          </div>
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Slug</label>
+            <input type="text" class="form-input" [(ngModel)]="formSlug" placeholder="architecture" />
+          </div>
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Description</label>
+            <textarea class="form-textarea" rows="3" [(ngModel)]="formDescription" placeholder="Optional tag description..."></textarea>
+          </div>
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Status</label>
+            <select class="form-select" [(ngModel)]="formStatus">
+              <option [value]="BlogTagStatus.ACTIVE">Active</option>
+              <option [value]="BlogTagStatus.INACTIVE">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button class="btn btn-ghost" (click)="isModalOpen.set(false)" [disabled]="isSaving()">Cancel</button>
+          <button class="btn btn-primary" (click)="saveTag()" [disabled]="isSaving() || !formName || !formSlug">
+            {{ isEditMode() ? 'Update' : 'Create' }}
+          </button>
+        </footer>
+      </div>
+    </div>
+  }
+
+  <!-- Delete Modal -->
+  @if (isDeleteModalOpen()) {
+    <div class="modal-backdrop" (click)="isDeleteModalOpen.set(false)">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3 class="modal-title" style="color: #ef4444;">Delete Tag?</h3>
+          <button class="modal-close" (click)="isDeleteModalOpen.set(false)">✕</button>
+        </header>
+        <div class="modal-body">
+          <p class="modal-desc">Are you sure you want to delete tag <strong>"{{ tagToDelete?.name }}"</strong>?</p>
+        </div>
+        <footer class="modal-footer">
+          <button class="btn btn-ghost" (click)="isDeleteModalOpen.set(false)" [disabled]="isSaving()">Cancel</button>
+          <button class="btn btn-danger" (click)="confirmDelete()" [disabled]="isSaving()">Delete</button>
+        </footer>
+      </div>
+    </div>
+  }
+</div>
+

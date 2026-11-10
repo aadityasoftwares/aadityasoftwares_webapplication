@@ -15,6 +15,11 @@ import {
   LucideSparkles,
   LucideLogOut,
   LucideX,
+  LucideBookOpen,
+  LucideFolder,
+  LucideTag,
+  LucideUserPen,
+  LucideArrowRightLeft,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../../../shared/components/icon/icon';
 import { AdminAuthStore } from '../../../core/state/admin-auth.store';
@@ -49,7 +54,7 @@ export class AdminSidebarComponent {
   readonly LucideLogOut = LucideLogOut;
   readonly LucideX = LucideX;
 
-  readonly navItems: NavItem[] = [
+  readonly crmNavItems: NavItem[] = [
     { label: 'Dashboard', route: '/admin/dashboard', icon: LucideLayoutDashboard },
     { label: 'Enquiries', route: '/admin/enquiries', icon: LucideMessageSquare, badge: 'Active', badgeClass: 'blue' },
     { label: 'Clients', route: '/admin/clients', icon: LucideUsers },
@@ -57,6 +62,17 @@ export class AdminSidebarComponent {
     { label: 'Invoices', route: '/admin/invoices', icon: LucideReceipt },
     { label: 'Tasks', route: '/admin/tasks', icon: LucideCheckSquare },
     { label: 'Expenses', route: '/admin/expenses', icon: LucideTrendingDown },
+  ];
+
+  readonly contentNavItems: NavItem[] = [
+    { label: 'Blogs', route: '/admin/blogs', icon: LucideBookOpen },
+    { label: 'Categories', route: '/admin/blogs/categories', icon: LucideFolder },
+    { label: 'Tags', route: '/admin/blogs/tags', icon: LucideTag },
+    { label: 'Authors', route: '/admin/blogs/authors', icon: LucideUserPen },
+    { label: 'Redirects', route: '/admin/blogs/redirects', icon: LucideArrowRightLeft },
+  ];
+
+  readonly settingsNavItems: NavItem[] = [
     { label: 'Settings', route: '/admin/settings', icon: LucideSettings },
   ];
 

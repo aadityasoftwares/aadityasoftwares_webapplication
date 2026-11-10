@@ -21,6 +21,7 @@ import {
   LucideMail,
   LucideMapPin,
   LucideArrowRight,
+  LucideBookOpen,
 } from '@lucide/angular';
 import { AppIcon, type AppIconDefinition } from '../../shared/components/icon/icon';
 import { Button } from '../../shared/components/button/button';
@@ -135,6 +136,7 @@ export class WebsiteHeader {
     { label: 'About', href: '/about', route: '/about', icon: LucideUsers },
     { label: 'Service', href: '/services', route: '/services', icon: LucideLayers },
     { label: 'Project', href: '/projects', route: '/projects', icon: LucideBriefcase },
+    { label: 'Blog', href: '/blog', route: '/blog', icon: LucideBookOpen },
     { label: 'Contact', href: '/contact', route: '/contact', icon: LucideMail },
   ];
 

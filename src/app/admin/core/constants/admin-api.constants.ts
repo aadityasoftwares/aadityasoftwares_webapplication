@@ -51,6 +51,46 @@ export const ADMIN_API_ENDPOINTS = {
   reports: {
     base: `${ADMIN_API_BASE}/reports`,
   },
+  blogs: {
+    base: `${ADMIN_API_BASE}/blogs`,
+    byId: (id: string) => `${ADMIN_API_BASE}/blogs/${id}`,
+    publish: (id: string) => `${ADMIN_API_BASE}/blogs/${id}/publish`,
+    unpublish: (id: string) => `${ADMIN_API_BASE}/blogs/${id}/unpublish`,
+    schedule: (id: string) => `${ADMIN_API_BASE}/blogs/${id}/schedule`,
+    archive: (id: string) => `${ADMIN_API_BASE}/blogs/${id}/archive`,
+    preview: (id: string) => `${ADMIN_API_BASE}/blogs/${id}/preview`,
+    revisions: (id: string) => `${ADMIN_API_BASE}/blogs/${id}/revisions`,
+    restoreRevision: (id: string, revisionId: string) =>
+      `${ADMIN_API_BASE}/blogs/${id}/revisions/${revisionId}/restore`,
+    websites: {
+      base: `${ADMIN_API_BASE}/blogs/websites`,
+      byId: (id: string) => `${ADMIN_API_BASE}/blogs/websites/${id}`,
+      status: (id: string) => `${ADMIN_API_BASE}/blogs/websites/${id}/status`,
+    },
+    categories: {
+      base: `${ADMIN_API_BASE}/blogs/categories`,
+      byId: (id: string) => `${ADMIN_API_BASE}/blogs/categories/${id}`,
+    },
+    tags: {
+      base: `${ADMIN_API_BASE}/blogs/tags`,
+      byId: (id: string) => `${ADMIN_API_BASE}/blogs/tags/${id}`,
+    },
+    authors: {
+      base: `${ADMIN_API_BASE}/blogs/authors`,
+      byId: (id: string) => `${ADMIN_API_BASE}/blogs/authors/${id}`,
+    },
+    redirects: {
+      base: `${ADMIN_API_BASE}/blogs/redirects`,
+      byId: (id: string) => `${ADMIN_API_BASE}/blogs/redirects/${id}`,
+    },
+  },
+  media: {
+    requestUpload: `${ADMIN_API_BASE}/media/requestupload`,
+    completeUpload: (id: string) => `${ADMIN_API_BASE}/media/${id}/complete`,
+    getAll: `${ADMIN_API_BASE}/media/getall`,
+    getById: (id: string) => `${ADMIN_API_BASE}/media/get/${id}`,
+    delete: (id: string) => `${ADMIN_API_BASE}/media/delete/${id}`,
+  },
   user: {
     base: `${ADMIN_API_BASE}/user`,
     profile: `${ADMIN_API_BASE}/userprofile`,

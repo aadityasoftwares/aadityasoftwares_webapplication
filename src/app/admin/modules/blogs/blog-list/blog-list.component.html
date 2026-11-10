@@ -1,0 +1,330 @@
+<div class="admin-page">
+  <!-- Target Website Switcher -->
+  <app-blog-website-selector />
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="header-left">
+      <div class="header-badge">Content Management</div>
+      <h1 class="page-title">Articles &amp; Blog Posts</h1>
+      <p class="page-subtitle">
+        Manage blog publications, authoring pipelines, and SEO distribution for
+        <strong>{{ contextStore.selectedWebsite()?.name || 'Selected Platform' }}</strong>.
+      </p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline" (click)="loadBlogs()" [disabled]="isLoading()">
+        <svg viewBox="0 0 24 24" class="icon" [class.spinning]="isLoading()"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        <span>Refresh</span>
+      </button>
+      <a routerLink="/admin/blogs/create" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" class="icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <span>Write Article</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Flash Alerts -->
+  @if (successMessage()) {
+    <div class="alert alert-success">
+      <svg viewBox="0 0 24 24" class="alert-icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      <span>{{ successMessage() }}</span>
+      <button class="alert-close" (click)="successMessage.set(null)">✕</button>
+    </div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger">
+      <svg viewBox="0 0 24 24" class="alert-icon"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" stroke-width="2"/></svg>
+      <span>{{ errorMessage() }}</span>
+      <button class="alert-close" (click)="errorMessage.set(null)">✕</button>
+    </div>
+  }
+
+  <!-- Filter & Search Bar -->
+  <section class="filter-card">
+    <div class="filter-group search-group">
+      <svg viewBox="0 0 24 24" class="search-icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input
+        type="text"
+        placeholder="Search by article title or slug..."
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
+        (keyup.enter)="applyFilter()"
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Status</label>
+      <select [ngModel]="selectedStatus()" (ngModelChange)="selectedStatus.set($event); applyFilter()" class="filter-select">
+        <option value="ALL">All Statuses</option>
+        <option [value]="BlogStatus.DRAFT">Draft</option>
+        <option [value]="BlogStatus.REVIEW">In Review</option>
+        <option [value]="BlogStatus.SCHEDULED">Scheduled</option>
+        <option [value]="BlogStatus.PUBLISHED">Published</option>
+        <option [value]="BlogStatus.ARCHIVED">Archived</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Category</label>
+      <select [ngModel]="selectedCategory()" (ngModelChange)="selectedCategory.set($event); applyFilter()" class="filter-select">
+        <option value="ALL">All Categories</option>
+        @for (cat of categories(); track cat._id) {
+          <option [value]="cat._id">{{ cat.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Author</label>
+      <select [ngModel]="selectedAuthor()" (ngModelChange)="selectedAuthor.set($event); applyFilter()" class="filter-select">
+        <option value="ALL">All Authors</option>
+        @for (author of authors(); track author._id) {
+          <option [value]="author._id">{{ author.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn btn-secondary btn-sm" (click)="applyFilter()">Apply</button>
+      <button class="btn btn-ghost btn-sm" (click)="resetFilter()">Reset</button>
+    </div>
+  </section>
+
+  <!-- Table Container -->
+  <section class="table-container">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading articles...</p>
+      </div>
+    } @else if (blogs().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon-box">
+          <svg viewBox="0 0 24 24" class="empty-svg"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        </div>
+        <h3 class="empty-title">No articles found</h3>
+        <p class="empty-desc">There are no blog posts matching your selected filters for this website.</p>
+        <a routerLink="/admin/blogs/create" class="btn btn-primary" style="margin-top: 1rem;">
+          Write First Article
+        </a>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 72px;">Cover</th>
+              <th>Title &amp; Slug</th>
+              <th>Category</th>
+              <th>Author</th>
+              <th>Status</th>
+              <th>Published</th>
+              <th>Updated</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (blog of blogs(); track blog._id) {
+              <tr class="table-row">
+                <!-- Cover Image Thumbnail -->
+                <td>
+                  <div class="blog-thumb">
+                    @if (blog.featuredImageMediaId && typeof blog.featuredImageMediaId === 'object' && blog.featuredImageMediaId.publicUrl) {
+                      <img [src]="blog.featuredImageMediaId.publicUrl" [alt]="blog.featuredImageAlt || blog.title" />
+                    } @else {
+                      <div class="thumb-placeholder">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+                      </div>
+                    }
+                  </div>
+                </td>
+
+                <!-- Title & Slug -->
+                <td>
+                  <div class="blog-title-cell">
+                    <a [routerLink]="['/admin/blogs/edit', blog._id]" class="blog-title-link">
+                      {{ blog.title }}
+                    </a>
+                    <span class="blog-slug-text">/blog/{{ blog.slug }}</span>
+                    @if (blog.isFeatured) {
+                      <span class="featured-badge">Featured</span>
+                    }
+                  </div>
+                </td>
+
+                <!-- Category -->
+                <td>
+                  <span class="category-pill">{{ getCategoryNames(blog) }}</span>
+                </td>
+
+                <!-- Author -->
+                <td>
+                  <span class="author-name">{{ getAuthorName(blog) }}</span>
+                </td>
+
+                <!-- Status Pill -->
+                <td>
+                  <span class="status-pill status-{{ blog.status | lowercase }}">
+                    {{ blog.status }}
+                  </span>
+                </td>
+
+                <!-- Published Date -->
+                <td>
+                  <div class="date-cell">
+                    @if (blog.publishedAt) {
+                      <span class="date-primary">{{ blog.publishedAt | date:'mediumDate' }}</span>
+                      <span class="date-sub">{{ blog.publishedAt | date:'shortTime' }}</span>
+                    } @else if (blog.scheduledAt) {
+                      <span class="date-primary scheduled-date">📅 {{ blog.scheduledAt | date:'mediumDate' }}</span>
+                      <span class="date-sub">{{ blog.scheduledAt | date:'shortTime' }}</span>
+                    } @else {
+                      <span class="date-empty">—</span>
+                    }
+                  </div>
+                </td>
+
+                <!-- Updated Date -->
+                <td>
+                  <span class="date-sub">{{ blog.updatedAt | date:'mediumDate' }}</span>
+                </td>
+
+                <!-- Actions -->
+                <td style="text-align: right;">
+                  <div class="action-btn-group">
+                    <a [routerLink]="['/admin/blogs/edit', blog._id]" class="icon-action-btn" title="Edit Article">
+                      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    </a>
+
+                    @if (blog.status === BlogStatus.PUBLISHED) {
+                      <button type="button" class="icon-action-btn" (click)="viewLive(blog)" title="View Live Article">
+                        <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                      </button>
+                      <button type="button" class="icon-action-btn btn-warning-hover" (click)="onUnpublish(blog)" title="Unpublish / Move to Draft">
+                        <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                      </button>
+                    }
+
+                    @if (blog.status === BlogStatus.DRAFT || blog.status === BlogStatus.REVIEW) {
+                      <button type="button" class="icon-action-btn btn-success-hover" (click)="onPublish(blog)" title="Publish Now">
+                        <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      </button>
+                      <button type="button" class="icon-action-btn" (click)="openScheduleModal(blog)" title="Schedule Publication">
+                        <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                      </button>
+                    }
+
+                    @if (blog.status !== BlogStatus.ARCHIVED) {
+                      <button type="button" class="icon-action-btn" (click)="onArchive(blog)" title="Archive Article">
+                        <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+                      </button>
+                    }
+
+                    <button type="button" class="icon-action-btn btn-danger-hover" (click)="openDeleteModal(blog)" title="Delete Article">
+                      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <footer class="pagination-footer">
+        <div class="pagination-info">
+          Showing page <strong>{{ currentPage() }}</strong> of <strong>{{ totalPages() }}</strong>
+          ({{ totalItems() }} total articles)
+        </div>
+        <div class="pagination-controls">
+          <button
+            class="btn btn-outline btn-sm"
+            [disabled]="currentPage() === 1"
+            (click)="goToPage(currentPage() - 1)"
+          >
+            Previous
+          </button>
+          @for (p of [].constructor(totalPages()); track $index) {
+            @if ($index + 1 >= currentPage() - 2 && $index + 1 <= currentPage() + 2) {
+              <button
+                class="page-number-btn"
+                [class.is-active]="currentPage() === $index + 1"
+                (click)="goToPage($index + 1)"
+              >
+                {{ $index + 1 }}
+              </button>
+            }
+          }
+          <button
+            class="btn btn-outline btn-sm"
+            [disabled]="currentPage() === totalPages()"
+            (click)="goToPage(currentPage() + 1)"
+          >
+            Next
+          </button>
+        </div>
+      </footer>
+    }
+  </section>
+
+  <!-- Schedule Modal -->
+  @if (isScheduleModalOpen()) {
+    <div class="modal-backdrop" (click)="isScheduleModalOpen.set(false)">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3 class="modal-title">Schedule Publication</h3>
+          <button class="modal-close" (click)="isScheduleModalOpen.set(false)">✕</button>
+        </header>
+        <div class="modal-body">
+          <p class="modal-desc">
+            Choose the future date and time to automatically publish
+            <strong>"{{ blogToSchedule()?.title }}"</strong>.
+          </p>
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Publication Date &amp; Time (UTC)</label>
+            <input
+              type="datetime-local"
+              class="form-input"
+              [ngModel]="scheduledDate()"
+              (ngModelChange)="scheduledDate.set($event)"
+            />
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button class="btn btn-ghost" (click)="isScheduleModalOpen.set(false)" [disabled]="isActionInProgress()">Cancel</button>
+          <button class="btn btn-primary" (click)="confirmSchedule()" [disabled]="isActionInProgress() || !scheduledDate()">
+            Schedule Publication
+          </button>
+        </footer>
+      </div>
+    </div>
+  }
+
+  <!-- Delete Modal -->
+  @if (isDeleteModalOpen()) {
+    <div class="modal-backdrop" (click)="isDeleteModalOpen.set(false)">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3 class="modal-title" style="color: #ef4444;">Permanently Delete Article?</h3>
+          <button class="modal-close" (click)="isDeleteModalOpen.set(false)">✕</button>
+        </header>
+        <div class="modal-body">
+          <p class="modal-desc">
+            Are you sure you want to delete <strong>"{{ blogToDelete()?.title }}"</strong>?
+            This will permanently remove the article and its SEO URLs. This action cannot be undone.
+          </p>
+        </div>
+        <footer class="modal-footer">
+          <button class="btn btn-ghost" (click)="isDeleteModalOpen.set(false)" [disabled]="isActionInProgress()">Cancel</button>
+          <button class="btn btn-danger" (click)="confirmDelete()" [disabled]="isActionInProgress()">
+            Delete Permanently
+          </button>
+        </footer>
+      </div>
+    </div>
+  }
+</div>
+

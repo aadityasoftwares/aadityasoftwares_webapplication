@@ -1,0 +1,213 @@
+<div class="public-blog-page">
+  <!-- Blog Hero Section -->
+  <header class="blog-hero">
+    <div class="hero-inner">
+      <span class="hero-badge">Engineering &amp; Technology Insights</span>
+
+      @if (filterType() === 'category' && currentCategory()) {
+        <h1 class="hero-title">{{ currentCategory()?.name }}</h1>
+        <p class="hero-subtitle">{{ currentCategory()?.description || 'Curated technical guides, tutorials, and architecture practices.' }}</p>
+      } @else if (filterType() === 'tag' && currentTag()) {
+        <h1 class="hero-title">Topic: #{{ currentTag()?.name }}</h1>
+        <p class="hero-subtitle">Articles tagged under #{{ currentTag()?.name }}.</p>
+      } @else if (filterType() === 'author' && currentAuthor()) {
+        <div class="author-hero-bio">
+          <h1 class="hero-title">Articles by {{ currentAuthor()?.name }}</h1>
+          <p class="hero-subtitle">{{ currentAuthor()?.designation || 'Staff Writer' }} &bull; {{ currentAuthor()?.biography }}</p>
+        </div>
+      } @else {
+        <h1 class="hero-title">The Engineering &amp; Software Blog</h1>
+        <p class="hero-subtitle">
+          In-depth technical articles, modern web engineering practices, scalable cloud architectures,
+          and insights from the software team at Aaditya Softwares.
+        </p>
+      }
+
+      <!-- Search & Category Filters Bar -->
+      <div class="blog-controls-bar">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" class="search-icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input
+            type="text"
+            placeholder="Search articles by title, topic or keywords..."
+            [value]="searchQuery()"
+            (input)="onSearch($event)"
+            class="search-input"
+          />
+        </div>
+
+        <nav class="category-pills-nav" aria-label="Blog Categories">
+          <a routerLink="/blog" class="cat-pill" [class.is-active]="filterType() === 'all'">All Posts</a>
+          @for (cat of categories(); track cat._id) {
+            <a
+              [routerLink]="['/blog/category', cat.slug]"
+              class="cat-pill"
+              [class.is-active]="filterType() === 'category' && filterSlug() === cat.slug"
+            >
+              {{ cat.name }}
+            </a>
+          }
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="blog-container">
+    <!-- Featured Article Spotlight (on first page of main blog) -->
+    @if (featuredArticle(); as featured) {
+      <section class="featured-spotlight-section">
+        <article class="featured-card">
+          <div class="featured-media">
+            <a [routerLink]="['/blog', featured.slug]" class="featured-media-link">
+              <img [src]="getCoverImageUrl(featured)" [alt]="featured.featuredImageAlt || featured.title" class="featured-img" />
+              <div class="featured-badge-pill">Featured Article</div>
+            </a>
+          </div>
+
+          <div class="featured-content">
+            <div class="meta-row">
+              @if (getCategory(featured); as cat) {
+                <a [routerLink]="['/blog/category', cat.slug]" class="category-tag">{{ cat.name }}</a>
+              }
+              <span class="reading-time">⏱ {{ featured.readingTime || 4 }} min read</span>
+              <span class="pub-date">{{ featured.publishedAt | date:'mediumDate' }}</span>
+            </div>
+
+            <h2 class="featured-title">
+              <a [routerLink]="['/blog', featured.slug]">{{ featured.title }}</a>
+            </h2>
+
+            <p class="featured-excerpt">{{ featured.excerpt }}</p>
+
+            <div class="featured-footer">
+              @if (getAuthor(featured); as author) {
+                <div class="author-mini-card">
+                  <div class="author-avatar-sm">
+                    @if (author.profileImageMediaId && typeof author.profileImageMediaId === 'object' && author.profileImageMediaId.publicUrl) {
+                      <img [src]="author.profileImageMediaId.publicUrl" [alt]="author.name" />
+                    } @else {
+                      <span>{{ author.name.slice(0, 1) }}</span>
+                    }
+                  </div>
+                  <div class="author-info-sm">
+                    <span class="author-name-sm">{{ author.name }}</span>
+                    <span class="author-role-sm">{{ author.designation || 'Author' }}</span>
+                  </div>
+                </div>
+              }
+
+              <a [routerLink]="['/blog', featured.slug]" class="read-more-btn">
+                <span>Read Full Article</span>
+                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      </section>
+    }
+
+    <!-- Articles Grid -->
+    <section class="articles-grid-section">
+      @if (isLoading()) {
+        <div class="loading-grid">
+          @for (s of [1, 2, 3, 4, 5, 6]; track s) {
+            <div class="skeleton-card">
+              <div class="skeleton-media"></div>
+              <div class="skeleton-text line-1"></div>
+              <div class="skeleton-text line-2"></div>
+              <div class="skeleton-text line-3"></div>
+            </div>
+          }
+        </div>
+      } @else if (articles().length === 0 && !featuredArticle()) {
+        <div class="empty-blog-state">
+          <div class="empty-blog-icon">📝</div>
+          <h3 class="empty-blog-title">No articles published yet</h3>
+          <p class="empty-blog-desc">We are continuously drafting technical guides and updates. Please check back soon!</p>
+          <a routerLink="/blog" class="btn-back-all">View All Articles</a>
+        </div>
+      } @else {
+        <div class="articles-grid">
+          @for (article of articles(); track article._id) {
+            <article class="article-card">
+              <div class="card-media">
+                <a [routerLink]="['/blog', article.slug]" class="media-link">
+                  <img [src]="getCoverImageUrl(article)" [alt]="article.featuredImageAlt || article.title" class="card-img" loading="lazy" />
+                </a>
+                @if (getCategory(article); as cat) {
+                  <a [routerLink]="['/blog/category', cat.slug]" class="card-category-pill">
+                    {{ cat.name }}
+                  </a>
+                }
+              </div>
+
+              <div class="card-body">
+                <div class="card-meta">
+                  <span class="meta-date">{{ article.publishedAt | date:'mediumDate' }}</span>
+                  <span class="meta-separator">&bull;</span>
+                  <span class="meta-reading">{{ article.readingTime || 3 }} min read</span>
+                </div>
+
+                <h3 class="card-title">
+                  <a [routerLink]="['/blog', article.slug]">{{ article.title }}</a>
+                </h3>
+
+                <p class="card-excerpt">{{ article.excerpt }}</p>
+
+                <div class="card-footer">
+                  @if (getAuthor(article); as author) {
+                    <div class="card-author">
+                      <div class="author-dot-avatar">
+                        @if (author.profileImageMediaId && typeof author.profileImageMediaId === 'object' && author.profileImageMediaId.publicUrl) {
+                          <img [src]="author.profileImageMediaId.publicUrl" [alt]="author.name" />
+                        } @else {
+                          <span>{{ author.name.slice(0, 1) }}</span>
+                        }
+                      </div>
+                      <span class="card-author-name">{{ author.name }}</span>
+                    </div>
+                  }
+                  <a [routerLink]="['/blog', article.slug]" class="card-read-link" aria-label="Read article">
+                    <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+
+        <!-- Pagination Controls -->
+        @if (totalPages() > 1) {
+          <footer class="blog-pagination">
+            <button
+              class="pagination-btn"
+              [disabled]="currentPage() === 1"
+              (click)="goToPage(currentPage() - 1)"
+            >
+              &larr; Previous
+            </button>
+            <div class="pagination-pages">
+              @for (p of [].constructor(totalPages()); track $index) {
+                <button
+                  class="page-pill"
+                  [class.is-active]="currentPage() === $index + 1"
+                  (click)="goToPage($index + 1)"
+                >
+                  {{ $index + 1 }}
+                </button>
+              }
+            </div>
+            <button
+              class="pagination-btn"
+              [disabled]="currentPage() === totalPages()"
+              (click)="goToPage(currentPage() + 1)"
+            >
+              Next &rarr;
+            </button>
+          </footer>
+        }
+      }
+    </section>
+  </main>
+</div>
+

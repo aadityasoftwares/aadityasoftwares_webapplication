@@ -1,0 +1,207 @@
+<div class="admin-page">
+  <app-blog-website-selector />
+
+  <header class="page-header">
+    <div class="header-left">
+      <div class="header-badge">Content Creators</div>
+      <h1 class="page-title">Blog Authors</h1>
+      <p class="page-subtitle">Manage editorial contributors and bios for <strong>{{ contextStore.selectedWebsite()?.name }}</strong>.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline" (click)="loadAuthors()" [disabled]="isLoading()">
+        <span>Refresh</span>
+      </button>
+      <button class="btn btn-primary" (click)="openCreateModal()">
+        <span>+ New Author</span>
+      </button>
+    </div>
+  </header>
+
+  @if (successMessage()) {
+    <div class="alert alert-success">
+      <span>{{ successMessage() }}</span>
+      <button class="alert-close" (click)="successMessage.set(null)">✕</button>
+    </div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger">
+      <span>{{ errorMessage() }}</span>
+      <button class="alert-close" (click)="errorMessage.set(null)">✕</button>
+    </div>
+  }
+
+  <section class="filter-card">
+    <div class="filter-group search-group">
+      <input
+        type="text"
+        placeholder="Search authors by name or designation..."
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
+        (keyup.enter)="loadAuthors()"
+        class="search-input"
+      />
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Status</label>
+      <select [ngModel]="selectedStatus()" (ngModelChange)="selectedStatus.set($event); loadAuthors()" class="filter-select">
+        <option value="ALL">All Statuses</option>
+        <option [value]="BlogAuthorStatus.ACTIVE">Active</option>
+        <option [value]="BlogAuthorStatus.INACTIVE">Inactive</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="table-container">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading authors...</p>
+      </div>
+    } @else if (authors().length === 0) {
+      <div class="empty-state">
+        <h3>No authors registered</h3>
+        <p>Create an author profile to attribute articles with credentials and bios.</p>
+        <button class="btn btn-primary" style="margin-top: 1rem;" (click)="openCreateModal()">Create Author</button>
+      </div>
+    } @else {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 56px;">Photo</th>
+            <th>Name &amp; Designation</th>
+            <th>Slug</th>
+            <th>Biography</th>
+            <th>Status</th>
+            <th style="text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (author of authors(); track author._id) {
+            <tr>
+              <td>
+                <div class="author-avatar-cell">
+                  @if (author.profileImageMediaId && typeof author.profileImageMediaId === 'object' && author.profileImageMediaId.publicUrl) {
+                    <img [src]="author.profileImageMediaId.publicUrl" [alt]="author.name" />
+                  } @else {
+                    <div class="avatar-placeholder">{{ author.name.slice(0, 2) | uppercase }}</div>
+                  }
+                </div>
+              </td>
+              <td>
+                <div class="author-name-col">
+                  <strong class="item-name">{{ author.name }}</strong>
+                  <span class="sub-text">{{ author.designation || 'Staff Contributor' }}</span>
+                </div>
+              </td>
+              <td><code>/blog/author/{{ author.slug }}</code></td>
+              <td><span class="desc-text clamp-2">{{ author.biography || '—' }}</span></td>
+              <td>
+                <span class="status-pill status-{{ author.status | lowercase }}">{{ author.status }}</span>
+              </td>
+              <td style="text-align: right;">
+                <div class="action-btn-group">
+                  <button type="button" class="icon-action-btn" (click)="openEditModal(author)" title="Edit Author">
+                    <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                  </button>
+                  <button type="button" class="icon-action-btn btn-danger-hover" (click)="openDeleteModal(author)" title="Delete Author">
+                    <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </section>
+
+  <!-- Create/Edit Modal -->
+  @if (isModalOpen()) {
+    <div class="modal-backdrop" (click)="isModalOpen.set(false)">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3 class="modal-title">{{ isEditMode() ? 'Edit Author Profile' : 'Create Author Profile' }}</h3>
+          <button class="modal-close" (click)="isModalOpen.set(false)">✕</button>
+        </header>
+        <div class="modal-body">
+          <!-- Profile Avatar Upload -->
+          <div class="avatar-upload-row">
+            <div class="avatar-preview">
+              @if (formProfileImageUrl) {
+                <img [src]="formProfileImageUrl" alt="Author Photo" />
+              } @else {
+                <div class="avatar-placeholder">👤</div>
+              }
+            </div>
+            <div class="avatar-upload-action">
+              <input type="file" accept="image/*" id="avatar-input" (change)="onAvatarSelected($event)" style="display: none;" />
+              <label for="avatar-input" class="btn btn-outline btn-sm">
+                {{ isUploadingAvatar ? 'Uploading...' : 'Upload Photo' }}
+              </label>
+              <span class="sub-text">JPG, PNG, WebP</span>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" [(ngModel)]="formName" (ngModelChange)="onNameChange()" placeholder="e.g. Aaditya Sharma" />
+          </div>
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Slug</label>
+            <input type="text" class="form-input" [(ngModel)]="formSlug" placeholder="aaditya-sharma" />
+          </div>
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Designation / Role</label>
+            <input type="text" class="form-input" [(ngModel)]="formDesignation" placeholder="e.g. Lead Software Architect" />
+          </div>
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Biography</label>
+            <textarea class="form-textarea" rows="3" [(ngModel)]="formBiography" placeholder="Short professional bio..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">LinkedIn Profile URL</label>
+            <input type="url" class="form-input" [(ngModel)]="formLinkedin" placeholder="https://linkedin.com/in/..." />
+          </div>
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Twitter / X URL</label>
+            <input type="url" class="form-input" [(ngModel)]="formTwitter" placeholder="https://x.com/..." />
+          </div>
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Status</label>
+            <select class="form-select" [(ngModel)]="formStatus">
+              <option [value]="BlogAuthorStatus.ACTIVE">Active</option>
+              <option [value]="BlogAuthorStatus.INACTIVE">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button class="btn btn-ghost" (click)="isModalOpen.set(false)" [disabled]="isSaving()">Cancel</button>
+          <button class="btn btn-primary" (click)="saveAuthor()" [disabled]="isSaving() || !formName || !formSlug">
+            {{ isEditMode() ? 'Update' : 'Create' }}
+          </button>
+        </footer>
+      </div>
+    </div>
+  }
+
+  <!-- Delete Modal -->
+  @if (isDeleteModalOpen()) {
+    <div class="modal-backdrop" (click)="isDeleteModalOpen.set(false)">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3 class="modal-title" style="color: #ef4444;">Delete Author?</h3>
+          <button class="modal-close" (click)="isDeleteModalOpen.set(false)">✕</button>
+        </header>
+        <div class="modal-body">
+          <p class="modal-desc">Are you sure you want to delete author <strong>"{{ authorToDelete?.name }}"</strong>?</p>
+        </div>
+        <footer class="modal-footer">
+          <button class="btn btn-ghost" (click)="isDeleteModalOpen.set(false)" [disabled]="isSaving()">Cancel</button>
+          <button class="btn btn-danger" (click)="confirmDelete()" [disabled]="isSaving()">Delete</button>
+        </footer>
+      </div>
+    </div>
+  }
+</div>
+

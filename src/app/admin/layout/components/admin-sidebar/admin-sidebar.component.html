@@ -19,7 +19,7 @@
   <nav class="sidebar-nav">
     <div class="nav-section-label">MANAGEMENT &amp; CRM</div>
     <ul class="nav-items-list">
-      @for (item of navItems; track item.route) {
+      @for (item of crmNavItems; track item.route) {
         <li>
           <a
             [routerLink]="item.route"
@@ -36,6 +36,51 @@
             @if (item.badge) {
               <span class="nav-badge" [ngClass]="item.badgeClass || 'blue'">{{ item.badge }}</span>
             }
+          </a>
+        </li>
+      }
+    </ul>
+
+    <div class="nav-section-label" style="margin-top: 1.25rem;">CONTENT MANAGEMENT</div>
+    <ul class="nav-items-list">
+      @for (item of contentNavItems; track item.route) {
+        <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="is-active"
+            class="nav-item-link"
+            (click)="closeSidebar.emit()"
+          >
+            <div class="link-left">
+              <span class="link-icon">
+                <app-icon [icon]="item.icon" size="sm" />
+              </span>
+              <span class="link-label">{{ item.label }}</span>
+            </div>
+            @if (item.badge) {
+              <span class="nav-badge" [ngClass]="item.badgeClass || 'blue'">{{ item.badge }}</span>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+
+    <div class="nav-section-label" style="margin-top: 1.25rem;">SYSTEM</div>
+    <ul class="nav-items-list">
+      @for (item of settingsNavItems; track item.route) {
+        <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="is-active"
+            class="nav-item-link"
+            (click)="closeSidebar.emit()"
+          >
+            <div class="link-left">
+              <span class="link-icon">
+                <app-icon [icon]="item.icon" size="sm" />
+              </span>
+              <span class="link-label">{{ item.label }}</span>
+            </div>
           </a>
         </li>
       }

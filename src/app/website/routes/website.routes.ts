@@ -26,6 +26,32 @@ export const WEBSITE_ROUTES: Routes = [
         title: 'Featured Projects & Case Studies - AadityaSoftwares',
       },
       {
+        path: 'blog',
+        loadComponent: () =>
+          import('../pages/blog/blog-list/blog-list.component').then((m) => m.PublicBlogListComponent),
+        title: 'Engineering & Technology Blog - AadityaSoftwares',
+      },
+      {
+        path: 'blog/category/:slug',
+        loadComponent: () =>
+          import('../pages/blog/blog-list/blog-list.component').then((m) => m.PublicBlogListComponent),
+      },
+      {
+        path: 'blog/tag/:slug',
+        loadComponent: () =>
+          import('../pages/blog/blog-list/blog-list.component').then((m) => m.PublicBlogListComponent),
+      },
+      {
+        path: 'blog/author/:slug',
+        loadComponent: () =>
+          import('../pages/blog/blog-list/blog-list.component').then((m) => m.PublicBlogListComponent),
+      },
+      {
+        path: 'blog/:slug',
+        loadComponent: () =>
+          import('../pages/blog/blog-detail/blog-detail.component').then((m) => m.PublicBlogDetailComponent),
+      },
+      {
         path: 'contact',
         loadComponent: () => import('../pages/contact-page/contact-page').then((m) => m.ContactPage),
         title: 'Contact Us - AadityaSoftwares | Start Your Project',

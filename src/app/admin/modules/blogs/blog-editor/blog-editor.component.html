@@ -1,0 +1,540 @@
+<div class="editor-page">
+  <!-- Top Editor Appbar -->
+  <header class="editor-topbar">
+    <div class="topbar-left">
+      <a routerLink="/admin/blogs" class="back-link" title="Back to all articles">
+        <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        <span>Articles</span>
+      </a>
+      <div class="topbar-divider"></div>
+      <span class="site-context-tag">
+        {{ contextStore.selectedWebsite()?.name || 'Blog Editor' }}
+      </span>
+
+      <!-- Autosave indicator -->
+      @if (isEditMode()) {
+        <div class="autosave-indicator" [class]="'state-' + autosaveStatus()">
+          @if (autosaveStatus() === 'saving') {
+            <span class="save-dot pulse"></span>
+            <span>Saving draft...</span>
+          } @else if (autosaveStatus() === 'saved') {
+            <span class="save-dot green"></span>
+            <span>All changes saved @if (lastSavedAt()) {({{ lastSavedAt() | date:'shortTime' }})}</span>
+          } @else if (autosaveStatus() === 'failed') {
+            <span class="save-dot red"></span>
+            <span>Save failed</span>
+          } @else {
+            <span class="save-dot"></span>
+            <span>Autosave active</span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="topbar-actions">
+      @if (status === BlogStatus.PUBLISHED) {
+        <button type="button" class="btn btn-outline btn-sm" (click)="viewLiveArticle()">
+          <svg viewBox="0 0 24 24" class="icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          <span>View Live</span>
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="updatePublished()" [disabled]="isSaving()">
+          <span>Update Live Article</span>
+        </button>
+      } @else {
+        <button type="button" class="btn btn-outline btn-sm" (click)="saveDraft()" [disabled]="isSaving()">
+          <span>Save Draft</span>
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="publishNow()" [disabled]="isSaving()">
+          <svg viewBox="0 0 24 24" class="icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          <span>Publish Now</span>
+        </button>
+      }
+    </div>
+  </header>
+
+  <!-- Flash Alerts -->
+  @if (successMessage()) {
+    <div class="alert alert-success">
+      <svg viewBox="0 0 24 24" class="alert-icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      <span>{{ successMessage() }}</span>
+      <button class="alert-close" (click)="successMessage.set(null)">✕</button>
+    </div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger">
+      <svg viewBox="0 0 24 24" class="alert-icon"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" stroke-width="2"/></svg>
+      <span>{{ errorMessage() }}</span>
+      <button class="alert-close" (click)="errorMessage.set(null)">✕</button>
+    </div>
+  }
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="editor-loading">
+      <div class="spinner"></div>
+      <p>Loading article content...</p>
+    </div>
+  } @else {
+    <!-- Main Two-Column Canvas -->
+    <div class="editor-layout">
+      <!-- Left Column: Writing Canvas -->
+      <main class="editor-main">
+        <!-- Title & Slug -->
+        <div class="canvas-card title-card">
+          <input
+            type="text"
+            class="title-input"
+            placeholder="Article Title..."
+            [(ngModel)]="title"
+            (ngModelChange)="onTitleChange()"
+          />
+
+          <!-- Slug Bar -->
+          <div class="slug-row">
+            <span class="slug-prefix">
+              {{ contextStore.selectedWebsite()?.domain || 'site.com' }}/blog/
+            </span>
+            <input
+              type="text"
+              class="slug-input"
+              [(ngModel)]="slug"
+              (ngModelChange)="isSlugCustomized = true; triggerAutosave()"
+              [readonly]="!isSlugCustomized"
+              placeholder="url-slug"
+            />
+            <button
+              type="button"
+              class="slug-lock-btn"
+              (click)="toggleSlugLock()"
+              [title]="isSlugCustomized ? 'Lock slug to title' : 'Customize URL slug'"
+            >
+              @if (isSlugCustomized) {
+                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                <span>Custom</span>
+              } @else {
+                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
+                <span>Auto</span>
+              }
+            </button>
+          </div>
+        </div>
+
+        <!-- Excerpt Card -->
+        <div class="canvas-card excerpt-card">
+          <label class="section-label">
+            <span>Article Excerpt &amp; Summary</span>
+            <span class="char-count" [class.warning]="excerpt.length > 300">{{ excerpt.length }}/300 chars</span>
+          </label>
+          <textarea
+            class="excerpt-textarea"
+            rows="3"
+            placeholder="A short, compelling summary of this article for search results, listing cards, and social sharing..."
+            [(ngModel)]="excerpt"
+            (ngModelChange)="triggerAutosave()"
+          ></textarea>
+        </div>
+
+        <!-- Featured Cover Image Card -->
+        <div class="canvas-card cover-image-card">
+          <label class="section-label">Featured Cover Image</label>
+
+          @if (featuredImageUrl) {
+            <div class="cover-preview-box">
+              <img [src]="featuredImageUrl" [alt]="featuredImageAlt || title" class="cover-img" />
+              <button type="button" class="cover-remove-btn" (click)="removeFeaturedImage()" title="Remove cover image">
+                ✕ Remove
+              </button>
+            </div>
+            <div class="cover-alt-row">
+              <label class="alt-label">Image Alt Text (Accessibility &amp; SEO):</label>
+              <input
+                type="text"
+                class="alt-input"
+                placeholder="Descriptive alt text for screen readers..."
+                [(ngModel)]="featuredImageAlt"
+                (ngModelChange)="triggerAutosave()"
+              />
+            </div>
+          } @else {
+            <div class="upload-dropzone" [class.is-uploading]="isUploadingImage">
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                (change)="onFeaturedImageSelected($event)"
+                class="file-input-hidden"
+                id="featured-image-upload"
+              />
+              <label for="featured-image-upload" class="dropzone-label">
+                @if (isUploadingImage) {
+                  <div class="spinner"></div>
+                  <span>Uploading to Cloudflare R2...</span>
+                } @else {
+                  <svg viewBox="0 0 24 24" class="upload-icon"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span class="drop-primary">Click or drop cover image here</span>
+                  <span class="drop-sub">Recommended: 1200 × 630 px (PNG, JPEG, WebP up to 10MB)</span>
+                }
+              </label>
+            </div>
+          }
+        </div>
+
+        <!-- Rich Text Editor (CKEditor 5) -->
+        <div class="canvas-card editor-card">
+          <label class="section-label">Article Body Content</label>
+          <div class="ckeditor-wrapper">
+            <ckeditor
+              [editor]="Editor"
+              [(ngModel)]="contentHtml"
+              [config]="editorConfig"
+              (change)="onContentChange()"
+            ></ckeditor>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Column: Publishing Sidebar & SEO -->
+      <aside class="editor-sidebar">
+        <!-- Publishing Control Card -->
+        <div class="sidebar-card">
+          <div class="card-title-row">
+            <h3 class="card-title">Publishing Status</h3>
+            <span class="status-pill status-{{ status | lowercase }}">{{ status }}</span>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Publication Website</label>
+            <select
+              class="form-select"
+              [ngModel]="contextStore.selectedWebsiteId()"
+              (ngModelChange)="contextStore.setWebsiteId($event); loadTaxonomies($event)"
+            >
+              @for (site of contextStore.websites(); track site._id) {
+                <option [value]="site._id">{{ site.name }} ({{ site.domain }})</option>
+              }
+            </select>
+          </div>
+
+          <!-- Actions Stack -->
+          <div class="actions-stack">
+            @if (status === BlogStatus.PUBLISHED) {
+              <button type="button" class="btn btn-primary btn-block" (click)="updatePublished()" [disabled]="isSaving()">
+                Update Published Article
+              </button>
+              <button type="button" class="btn btn-outline btn-block" (click)="saveDraft()" [disabled]="isSaving()">
+                Unpublish to Draft
+              </button>
+            } @else {
+              <button type="button" class="btn btn-primary btn-block" (click)="publishNow()" [disabled]="isSaving()">
+                Publish Article
+              </button>
+              <button type="button" class="btn btn-secondary btn-block" (click)="submitForReview()" [disabled]="isSaving()">
+                Submit for Review
+              </button>
+              <button type="button" class="btn btn-outline btn-block" (click)="openScheduleModal()" [disabled]="isSaving()">
+                Schedule Publication...
+              </button>
+              <button type="button" class="btn btn-ghost btn-block" (click)="saveDraft()" [disabled]="isSaving()">
+                Save as Draft
+              </button>
+            }
+
+            @if (isEditMode() && status !== BlogStatus.ARCHIVED) {
+              <button type="button" class="btn btn-ghost btn-block btn-archive" (click)="archiveArticle()" [disabled]="isSaving()">
+                Archive Article
+              </button>
+            }
+          </div>
+
+          <!-- Revision History Link -->
+          @if (isEditMode()) {
+            <div class="revisions-trigger-row">
+              <button type="button" class="revisions-btn" (click)="openRevisionsModal()">
+                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>Revision History</span>
+              </button>
+            </div>
+          }
+        </div>
+
+        <!-- Taxonomies & Author Card -->
+        <div class="sidebar-card">
+          <h3 class="card-title">Taxonomies</h3>
+
+          <!-- Primary Category -->
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Primary Category</label>
+            <select class="form-select" [(ngModel)]="selectedCategoryId" (ngModelChange)="triggerAutosave()">
+              <option value="">Select a Category...</option>
+              @for (cat of categories(); track cat._id) {
+                <option [value]="cat._id">{{ cat.name }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Author -->
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Article Author</label>
+            <select class="form-select" [(ngModel)]="selectedAuthorId" (ngModelChange)="triggerAutosave()">
+              <option value="">Select an Author...</option>
+              @for (author of authors(); track author._id) {
+                <option [value]="author._id">{{ author.name }} ({{ author.designation || 'Author' }})</option>
+              }
+            </select>
+          </div>
+
+          <!-- Tags -->
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Article Tags</label>
+            <div class="tags-cloud">
+              @for (tag of tags(); track tag._id) {
+                <button
+                  type="button"
+                  class="tag-chip"
+                  [class.is-selected]="isTagSelected(tag._id)"
+                  (click)="toggleTag(tag._id)"
+                >
+                  <span>{{ tag.name }}</span>
+                </button>
+              }
+            </div>
+            <div class="quick-add-tag-row">
+              <input
+                type="text"
+                placeholder="Add tag..."
+                class="form-input quick-tag-input"
+                [(ngModel)]="newTagInput"
+                (keyup.enter)="addNewTag()"
+              />
+              <button type="button" class="btn btn-secondary btn-sm" (click)="addNewTag()">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article Options Card -->
+        <div class="sidebar-card">
+          <h3 class="card-title">Article Visibility</h3>
+          <div class="toggle-group" style="margin-top: 0.85rem;">
+            <label class="toggle-row">
+              <input type="checkbox" [(ngModel)]="isFeatured" (ngModelChange)="triggerAutosave()" />
+              <div class="toggle-text">
+                <span class="toggle-title">Featured Article</span>
+                <span class="toggle-desc">Prominently highlight on the blog homepage hero section.</span>
+              </div>
+            </label>
+
+            <label class="toggle-row">
+              <input type="checkbox" [(ngModel)]="allowIndexing" (ngModelChange)="triggerAutosave()" />
+              <div class="toggle-text">
+                <span class="toggle-title">Allow Search Indexing</span>
+                <span class="toggle-desc">Include article in public sitemap and search engine index.</span>
+              </div>
+            </label>
+
+            <label class="toggle-row">
+              <input type="checkbox" [(ngModel)]="allowComments" (ngModelChange)="triggerAutosave()" />
+              <div class="toggle-text">
+                <span class="toggle-title">Allow Reader Comments</span>
+                <span class="toggle-desc">Enable reader feedback section on live page.</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- SEO Management Panel -->
+        <div class="sidebar-card seo-card">
+          <div class="card-title-row">
+            <h3 class="card-title">Search Engine Optimization (SEO)</h3>
+            <span class="seo-badge">Editorial</span>
+          </div>
+
+          <!-- SEO Meta Title -->
+          <div class="form-group" style="margin-top: 1rem;">
+            <div class="label-with-count">
+              <label class="form-label">SEO Meta Title</label>
+              <span class="char-count" [class.optimal]="(seo.title || '').length >= 50 && (seo.title || '').length <= 60">
+                {{ (seo.title || '').length }}/60 chars
+              </span>
+            </div>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Defaults to article title..."
+              [(ngModel)]="seo.title"
+              (ngModelChange)="triggerAutosave()"
+            />
+          </div>
+
+          <!-- Meta Description -->
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <div class="label-with-count">
+              <label class="form-label">Meta Description</label>
+              <span class="char-count" [class.optimal]="(seo.description || '').length >= 120 && (seo.description || '').length <= 160">
+                {{ (seo.description || '').length }}/160 chars
+              </span>
+            </div>
+            <textarea
+              class="form-textarea"
+              rows="3"
+              placeholder="Defaults to article excerpt..."
+              [(ngModel)]="seo.description"
+              (ngModelChange)="triggerAutosave()"
+            ></textarea>
+          </div>
+
+          <!-- Focus Keyword & Canonical URL -->
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Focus Keyword</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="e.g. angular microfrontends, saas architecture"
+              [(ngModel)]="seo.focusKeyword"
+              (ngModelChange)="triggerAutosave()"
+            />
+          </div>
+
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Canonical URL (Optional)</label>
+            <input
+              type="url"
+              class="form-input"
+              placeholder="https://..."
+              [(ngModel)]="seo.canonicalUrl"
+              (ngModelChange)="triggerAutosave()"
+            />
+          </div>
+
+          <div class="form-group" style="margin-top: 0.85rem;">
+            <label class="form-label">Robots Indexing</label>
+            <select class="form-select" [(ngModel)]="seo.robots" (ngModelChange)="triggerAutosave()">
+              <option [value]="BlogRobotsDirective.INDEX_FOLLOW">index, follow (Default - Recommended)</option>
+              <option [value]="BlogRobotsDirective.NOINDEX_FOLLOW">noindex, follow</option>
+              <option [value]="BlogRobotsDirective.NOINDEX_NOFOLLOW">noindex, nofollow</option>
+            </select>
+          </div>
+
+          <!-- Live Google Snippet Preview -->
+          <div class="preview-block">
+            <h4 class="preview-title">Google Search Snippet Preview</h4>
+            <div class="google-snippet-box">
+              <div class="google-url-row">
+                <span class="google-favicon">🌐</span>
+                <span class="google-domain">{{ contextStore.selectedWebsite()?.domain || 'site.com' }}</span>
+                <span class="google-slash">› blog › {{ slug || 'your-article' }}</span>
+              </div>
+              <div class="google-headline">
+                {{ seo.title || title || 'Your Article Title Goes Here' }}
+              </div>
+              <div class="google-snippet-text">
+                {{ seo.description || excerpt || 'Preview of your meta description that search engines display beneath your title.' }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Social Sharing Preview (Open Graph) -->
+          <div class="preview-block">
+            <h4 class="preview-title">Social Sharing Preview (OG Card)</h4>
+            <div class="social-preview-box">
+              <div class="social-thumb">
+                @if (featuredImageUrl) {
+                  <img [src]="featuredImageUrl" alt="OG Preview" />
+                } @else {
+                  <div class="social-thumb-empty">No Image Attached</div>
+                }
+              </div>
+              <div class="social-meta">
+                <span class="social-domain">{{ contextStore.selectedWebsite()?.domain || 'site.com' }}</span>
+                <h5 class="social-title">{{ seo.ogTitle || seo.title || title || 'Article Title' }}</h5>
+                <p class="social-desc">{{ seo.ogDescription || seo.description || excerpt || 'Article excerpt...' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Editorial Validation Warnings -->
+          @if (editorialWarnings().length > 0) {
+            <div class="editorial-warnings-box">
+              <div class="warnings-header">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" stroke-width="2"/></svg>
+                <span>Editorial Checklist ({{ editorialWarnings().length }})</span>
+              </div>
+              <ul class="warnings-list">
+                @for (warning of editorialWarnings(); track warning) {
+                  <li>{{ warning }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </aside>
+    </div>
+  }
+
+  <!-- Revisions Modal -->
+  @if (isRevisionsModalOpen()) {
+    <div class="modal-backdrop" (click)="isRevisionsModalOpen.set(false)">
+      <div class="modal-box revisions-modal" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3 class="modal-title">Revision History</h3>
+          <button class="modal-close" (click)="isRevisionsModalOpen.set(false)">✕</button>
+        </header>
+        <div class="modal-body">
+          @if (isLoadingRevisions()) {
+            <div class="spinner" style="margin: 2rem auto;"></div>
+          } @else if (revisions().length === 0) {
+            <p class="modal-desc">No previous revisions recorded yet for this article.</p>
+          } @else {
+            <div class="revisions-list">
+              @for (rev of revisions(); track rev._id) {
+                <div class="revision-item">
+                  <div class="rev-left">
+                    <span class="rev-version">Version {{ rev.version }}</span>
+                    <span class="rev-date">{{ rev.createdAt | date:'medium' }}</span>
+                    <span class="rev-summary">{{ rev.changeSummary || 'Autosave revision' }}</span>
+                  </div>
+                  <button type="button" class="btn btn-outline btn-sm" (click)="restoreRevision(rev)">
+                    Restore
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+        <footer class="modal-footer">
+          <button class="btn btn-ghost" (click)="isRevisionsModalOpen.set(false)">Close</button>
+        </footer>
+      </div>
+    </div>
+  }
+
+  <!-- Schedule Modal -->
+  @if (isScheduleModalOpen()) {
+    <div class="modal-backdrop" (click)="isScheduleModalOpen.set(false)">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3 class="modal-title">Schedule Publication</h3>
+          <button class="modal-close" (click)="isScheduleModalOpen.set(false)">✕</button>
+        </header>
+        <div class="modal-body">
+          <p class="modal-desc">
+            Choose the future date and time for automatic publication.
+          </p>
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Publication Date &amp; Time (UTC)</label>
+            <input
+              type="datetime-local"
+              class="form-input"
+              [(ngModel)]="scheduledAt"
+            />
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button class="btn btn-ghost" (click)="isScheduleModalOpen.set(false)">Cancel</button>
+          <button class="btn btn-primary" (click)="confirmSchedule()" [disabled]="!scheduledAt">
+            Confirm Schedule
+          </button>
+        </footer>
+      </div>
+    </div>
+  }
+</div>
+

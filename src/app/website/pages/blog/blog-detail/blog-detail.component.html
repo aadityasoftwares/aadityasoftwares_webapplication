@@ -1,0 +1,236 @@
+<div class="article-detail-page">
+  @if (isLoading()) {
+    <div class="detail-loading-state">
+      <div class="spinner"></div>
+      <p>Loading article...</p>
+    </div>
+  } @else if (article(); as post) {
+    <!-- Article Header & Hero -->
+    <header class="article-hero">
+      <div class="hero-container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a routerLink="/" class="crumb-link">Home</a>
+          <span class="crumb-sep">›</span>
+          <a routerLink="/blog" class="crumb-link">Blog</a>
+          @if (getPrimaryCategory(post); as cat) {
+            <span class="crumb-sep">›</span>
+            <a [routerLink]="['/blog/category', cat.slug]" class="crumb-link">{{ cat.name }}</a>
+          }
+          <span class="crumb-sep">›</span>
+          <span class="crumb-current">{{ post.title }}</span>
+        </nav>
+
+        <!-- Category & Meta Row -->
+        <div class="article-meta-row">
+          @if (getPrimaryCategory(post); as cat) {
+            <a [routerLink]="['/blog/category', cat.slug]" class="category-badge">
+              {{ cat.name }}
+            </a>
+          }
+          <span class="reading-time">⏱ {{ post.readingTime || 4 }} min read</span>
+          <span class="meta-dot">&bull;</span>
+          <span class="publish-date">Published on {{ post.publishedAt | date:'longDate' }}</span>
+          @if (post.updatedAt && post.updatedAt !== post.publishedAt) {
+            <span class="meta-dot">&bull;</span>
+            <span class="update-date">(Updated {{ post.updatedAt | date:'mediumDate' }})</span>
+          }
+        </div>
+
+        <!-- Title & Excerpt -->
+        <h1 class="article-title">{{ post.title }}</h1>
+        <p class="article-lead">{{ post.excerpt }}</p>
+
+        <!-- Author Byline -->
+        @if (getAuthor(post); as author) {
+          <div class="author-byline">
+            <div class="author-avatar-img">
+              @if (author.profileImageMediaId && typeof author.profileImageMediaId === 'object' && author.profileImageMediaId.publicUrl) {
+                <img [src]="author.profileImageMediaId.publicUrl" [alt]="author.name" />
+              } @else {
+                <span>{{ author.name.slice(0, 1) }}</span>
+              }
+            </div>
+            <div class="author-text">
+              <span class="byline-name">Written by <strong>{{ author.name }}</strong></span>
+              <span class="byline-role">{{ author.designation || 'Software Engineer & Technical Writer' }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </header>
+
+    <!-- Featured Cover Banner -->
+    <div class="cover-banner-container">
+      <div class="cover-banner-box">
+        <img [src]="getCoverImageUrl(post)" [alt]="post.featuredImageAlt || post.title" class="cover-image" />
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="content-container">
+      <div class="article-grid">
+        <!-- Main Article Text -->
+        <article class="article-body-col">
+          <div
+            class="article-rich-text"
+            #contentArea
+            [innerHTML]="safeContent()"
+          ></div>
+
+          <!-- Tags List -->
+          @if (post.tagIds && post.tagIds.length > 0) {
+            <div class="article-tags-box">
+              <span class="tags-label">Tagged under:</span>
+              <div class="tags-list">
+                @for (tag of post.tagIds; track tag) {
+                  @if (typeof tag === 'object' && tag.slug) {
+                    <a [routerLink]="['/blog/tag', tag.slug]" class="tag-pill">#{{ tag.name }}</a>
+                  }
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Social Share Bar -->
+          <div class="share-bar">
+            <span class="share-title">Share this article:</span>
+            <div class="share-buttons">
+              <button type="button" class="share-btn share-x" (click)="shareOnTwitter()" aria-label="Share on X">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <span>X / Twitter</span>
+              </button>
+              <button type="button" class="share-btn share-li" (click)="shareOnLinkedIn()" aria-label="Share on LinkedIn">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <span>LinkedIn</span>
+              </button>
+              <button type="button" class="share-btn share-wa" (click)="shareOnWhatsApp()" aria-label="Share on WhatsApp">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                <span>WhatsApp</span>
+              </button>
+              <button type="button" class="share-btn share-copy" (click)="copyLink()" aria-label="Copy Link">
+                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                <span>{{ isCopied() ? 'Copied!' : 'Copy Link' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Author Bio Card -->
+          @if (getAuthor(post); as author) {
+            <div class="author-bio-card">
+              <div class="author-bio-avatar">
+                @if (author.profileImageMediaId && typeof author.profileImageMediaId === 'object' && author.profileImageMediaId.publicUrl) {
+                  <img [src]="author.profileImageMediaId.publicUrl" [alt]="author.name" />
+                } @else {
+                  <span>{{ author.name.slice(0, 1) }}</span>
+                }
+              </div>
+              <div class="author-bio-details">
+                <h4 class="author-bio-name">{{ author.name }}</h4>
+                <span class="author-bio-role">{{ author.designation || 'Technical Author' }}</span>
+                <p class="author-bio-desc">
+                  {{ author.biography || 'Specialist software engineer writing about modern full-stack web architectures, performance optimization, and distributed systems.' }}
+                </p>
+                @if (author.socialLinks?.linkedin || author.socialLinks?.twitter) {
+                  <div class="author-socials">
+                    @if (author.socialLinks?.linkedin) {
+                      <a [href]="author.socialLinks?.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    }
+                    @if (author.socialLinks?.twitter) {
+                      <a [href]="author.socialLinks?.twitter" target="_blank" rel="noopener noreferrer">Twitter</a>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- High-Conversion Engineering Services CTA -->
+          <section class="software-services-cta">
+            <div class="cta-inner">
+              <span class="cta-pill">Partner With Aaditya Softwares</span>
+              <h3 class="cta-title">Turn Complex Ideas Into Scalable Production Software</h3>
+              <p class="cta-desc">
+                Need enterprise software engineering, scalable cloud infrastructure, or custom AI product development?
+                Our elite engineering studio builds reliable digital products designed for scale.
+              </p>
+              <div class="cta-actions">
+                <a routerLink="/contact" class="cta-btn-primary">
+                  <span>Start Your Project</span>
+                  <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+                <a routerLink="/services" class="cta-btn-ghost">Explore Engineering Capabilities</a>
+              </div>
+            </div>
+          </section>
+        </article>
+
+        <!-- Right Sticky Sidebar -->
+        <aside class="article-sidebar-col">
+          <!-- Table of Contents -->
+          @if (tocItems().length > 0) {
+            <div class="sidebar-sticky-card toc-card">
+              <h4 class="toc-title">Table of Contents</h4>
+              <nav class="toc-nav">
+                @for (item of tocItems(); track item.id) {
+                  <button
+                    type="button"
+                    class="toc-link"
+                    [class.toc-h3]="item.level === 3"
+                    (click)="scrollToSection(item.id)"
+                  >
+                    {{ item.text }}
+                  </button>
+                }
+              </nav>
+            </div>
+          }
+
+          <!-- Quick Share Card -->
+          <div class="sidebar-sticky-card share-card">
+            <h4 class="toc-title">Share Article</h4>
+            <div class="sidebar-share-buttons">
+              <button type="button" class="sidebar-share-icon" (click)="shareOnTwitter()" title="Share on X">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </button>
+              <button type="button" class="sidebar-share-icon" (click)="shareOnLinkedIn()" title="Share on LinkedIn">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </button>
+              <button type="button" class="sidebar-share-icon" (click)="copyLink()" title="Copy Link">
+                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Related Articles Section -->
+      @if (relatedArticles().length > 0) {
+        <section class="related-articles-section">
+          <div class="related-header">
+            <h3 class="related-heading">Related Technical Articles</h3>
+            <a routerLink="/blog" class="related-view-all">View all &rarr;</a>
+          </div>
+
+          <div class="related-grid">
+            @for (rel of relatedArticles(); track rel._id) {
+              <article class="related-card">
+                <a [routerLink]="['/blog', rel.slug]" class="related-thumb-link">
+                  <img [src]="getCoverImageUrl(rel)" [alt]="rel.featuredImageAlt || rel.title" class="related-thumb-img" />
+                </a>
+                <div class="related-card-content">
+                  <span class="related-meta">{{ rel.publishedAt | date:'mediumDate' }} &bull; {{ rel.readingTime || 4 }} min read</span>
+                  <h4 class="related-card-title">
+                    <a [routerLink]="['/blog', rel.slug]">{{ rel.title }}</a>
+                  </h4>
+                  <p class="related-card-excerpt">{{ rel.excerpt }}</p>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+      }
+    </div>
+  }
+</div>
+

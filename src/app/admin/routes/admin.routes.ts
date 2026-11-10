@@ -65,6 +65,45 @@ export const ADMIN_ROUTES: Routes = [
           ),
       },
       {
+        path: 'blogs',
+        loadComponent: () =>
+          import('../modules/blogs/blog-list/blog-list.component').then((m) => m.BlogListComponent),
+      },
+      {
+        path: 'blogs/create',
+        loadComponent: () =>
+          import('../modules/blogs/blog-editor/blog-editor.component').then((m) => m.BlogEditorComponent),
+      },
+      {
+        path: 'blogs/edit/:id',
+        loadComponent: () =>
+          import('../modules/blogs/blog-editor/blog-editor.component').then((m) => m.BlogEditorComponent),
+      },
+      {
+        path: 'blogs/categories',
+        loadComponent: () =>
+          import('../modules/blogs/category-list/category-list.component').then(
+            (m) => m.CategoryListComponent
+          ),
+      },
+      {
+        path: 'blogs/tags',
+        loadComponent: () =>
+          import('../modules/blogs/tag-list/tag-list.component').then((m) => m.TagListComponent),
+      },
+      {
+        path: 'blogs/authors',
+        loadComponent: () =>
+          import('../modules/blogs/author-list/author-list.component').then((m) => m.AuthorListComponent),
+      },
+      {
+        path: 'blogs/redirects',
+        loadComponent: () =>
+          import('../modules/blogs/redirect-list/redirect-list.component').then(
+            (m) => m.RedirectListComponent
+          ),
+      },
+      {
         path: 'settings',
         loadComponent: () =>
           import('../modules/settings/admin-settings.component').then(

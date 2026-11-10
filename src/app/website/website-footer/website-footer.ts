@@ -130,6 +130,7 @@ export class WebsiteFooter {
         { label: 'About Us', href: '/about' },
         { label: 'Engineering Philosophy', href: '/about' },
         { label: 'Client Work & Case Studies', href: '/projects' },
+        { label: 'Engineering Blog', href: '/blog' },
         { label: 'StickyJi Platform', href: 'https://stickyji.com/', isExternal: true, badge: 'In-House' },
         { label: 'Careers', href: '/contact', badge: 'Hiring' },
         { label: 'Contact Us', href: '/contact' },
