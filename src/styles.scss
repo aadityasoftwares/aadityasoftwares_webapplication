@@ -73,25 +73,89 @@ body {
   min-height: 100vh;
 }
 
-/* Custom Blue Dot Cursor - Hide default system pointer on desktop fine pointer devices */
+/* Custom Blue Dot Cursor - Hide default system pointer ONLY on public website desktop fine pointer devices */
 @media (hover: hover) and (pointer: fine) {
-  body,
+  app-website {
+    &,
+    a,
+    button,
+    [role="button"],
+    select,
+    summary,
+    .clickable,
+    .app-button,
+    .client-card,
+    .filter-tab-pill {
+      cursor: none !important;
+    }
+
+    input,
+    textarea,
+    [contenteditable="true"] {
+      cursor: text !important;
+    }
+  }
+}
+
+/* Admin Layout & Admin Login - Always restore full native system cursor visibility */
+app-admin-layout,
+app-admin-login,
+.admin-shell {
+  cursor: default !important;
+
+  *,
+  *::before,
+  *::after {
+    cursor: auto;
+  }
+
   a,
   button,
   [role="button"],
   select,
   summary,
   .clickable,
+  .app-btn,
   .app-button,
-  .client-card,
-  .filter-tab-pill {
-    cursor: none !important;
+  .action-btn,
+  .icon-btn,
+  .tab-btn,
+  .website-pill,
+  .filter-pill,
+  .pagination-btn,
+  .nav-item,
+  .badge-btn,
+  input[type="button"],
+  input[type="submit"],
+  input[type="checkbox"],
+  input[type="radio"],
+  label[for] {
+    cursor: pointer !important;
   }
 
-  input,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="search"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="datetime-local"],
   textarea,
-  [contenteditable="true"] {
+  [contenteditable="true"],
+  .ck-editor__editable,
+  .ck-content {
     cursor: text !important;
+  }
+
+  [disabled],
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  textarea:disabled,
+  .disabled {
+    cursor: not-allowed !important;
   }
 }
 

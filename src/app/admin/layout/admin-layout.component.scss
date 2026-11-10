@@ -4,12 +4,14 @@
   display: block;
   min-height: 100vh;
   background-color: $color-surface;
+  cursor: default;
 }
 
 .admin-shell {
   display: flex;
   min-height: 100vh;
   position: relative;
+  cursor: default;
 }
 
 .sidebar-backdrop {
