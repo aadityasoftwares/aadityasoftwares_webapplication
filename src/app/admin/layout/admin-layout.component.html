@@ -1,0 +1,24 @@
+<div class="admin-shell">
+  <app-admin-sidebar
+    [isOpen]="sidebarOpen"
+    (closeSidebar)="sidebarOpen = false"
+  />
+
+  @if (sidebarOpen) {
+    <div
+      class="sidebar-backdrop"
+      (click)="sidebarOpen = false"
+      aria-hidden="true"
+    ></div>
+  }
+
+  <div class="admin-main-wrapper">
+    <app-admin-topbar
+      (toggleSidebar)="sidebarOpen = !sidebarOpen"
+    />
+    <main class="admin-content-area">
+      <router-outlet />
+    </main>
+  </div>
+</div>
+

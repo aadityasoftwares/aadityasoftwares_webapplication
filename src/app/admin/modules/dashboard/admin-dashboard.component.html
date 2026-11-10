@@ -1,0 +1,203 @@
+<div class="dashboard-page">
+  <!-- Welcome Banner -->
+  <div class="dashboard-hero-banner">
+    <div class="banner-content">
+      <span class="banner-eyebrow">EXECUTIVE OVERVIEW</span>
+      <h1 class="banner-title">Welcome back, {{ userName }}</h1>
+      <p class="banner-subtitle">
+        Here is your operational snapshot across prospect leads, software engineering deliverables, client invoicing, and cashflow.
+      </p>
+    </div>
+
+    <!-- Quick Action Launchpad -->
+    <div class="banner-actions">
+      <button type="button" class="action-btn primary" (click)="navigate('/admin/enquiries')">
+        <app-icon [icon]="LucidePlus" size="xs" />
+        <span>Manage Enquiries</span>
+      </button>
+      <button type="button" class="action-btn secondary" (click)="navigate('/admin/clients')">
+        <app-icon [icon]="LucideUsers" size="xs" />
+        <span>Clients</span>
+      </button>
+      <button type="button" class="action-btn secondary" (click)="navigate('/admin/invoices')">
+        <app-icon [icon]="LucideReceipt" size="xs" />
+        <span>Invoices</span>
+      </button>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="dashboard-loading-state">
+      <div class="loading-spinner"></div>
+      <span>Loading real-time business telemetry...</span>
+    </div>
+  } @else if (metrics(); as m) {
+    <!-- Row 1: KPI Stat Tiles Grid -->
+    <div class="kpi-metrics-grid">
+      <!-- Card 1: Total Enquiries -->
+      <div class="kpi-card blue">
+        <div class="kpi-top">
+          <div class="kpi-icon-tile">
+            <app-icon [icon]="LucideMessageSquare" size="sm" />
+          </div>
+          <span class="kpi-pill blue">+{{ m.summary.newEnquiriesThisMonth }} This Month</span>
+        </div>
+        <div class="kpi-val">{{ m.summary.totalEnquiries }}</div>
+        <div class="kpi-label">Total Prospect Enquiries</div>
+        <div class="kpi-footer">
+          <span>Won: {{ m.summary.wonEnquiries }}</span>
+          <span class="dot">&bull;</span>
+          <span>Lost: {{ m.summary.lostEnquiries }}</span>
+        </div>
+      </div>
+
+      <!-- Card 2: Active Clients -->
+      <div class="kpi-card cyan">
+        <div class="kpi-top">
+          <div class="kpi-icon-tile">
+            <app-icon [icon]="LucideUsers" size="sm" />
+          </div>
+          <span class="kpi-pill cyan">Active Roster</span>
+        </div>
+        <div class="kpi-val">{{ m.summary.totalClients }}</div>
+        <div class="kpi-label">Managed Enterprise Clients</div>
+        <div class="kpi-footer">
+          <span>100% Commercial IP Assigned</span>
+        </div>
+      </div>
+
+      <!-- Card 3: Total Collected Revenue -->
+      <div class="kpi-card green">
+        <div class="kpi-top">
+          <div class="kpi-icon-tile">
+            <app-icon [icon]="LucideTrendingUp" size="sm" />
+          </div>
+          <span class="kpi-pill green">Cash Inflow</span>
+        </div>
+        <div class="kpi-val">{{ formatCurrency(m.summary.totalCollected) }}</div>
+        <div class="kpi-label">Total Realized Collections</div>
+        <div class="kpi-footer">
+          <span>Billed: {{ formatCurrency(m.summary.totalBilled) }}</span>
+        </div>
+      </div>
+
+      <!-- Card 4: Outstanding Balance -->
+      <div class="kpi-card purple">
+        <div class="kpi-top">
+          <div class="kpi-icon-tile">
+            <app-icon [icon]="LucideReceipt" size="sm" />
+          </div>
+          <span class="kpi-pill purple">{{ m.summary.overdueInvoices }} Overdue</span>
+        </div>
+        <div class="kpi-val">{{ formatCurrency(m.summary.totalOutstanding) }}</div>
+        <div class="kpi-label">Accounts Receivable</div>
+        <div class="kpi-footer">
+          <span>Paid Invoices: {{ m.summary.paidInvoices }} / {{ m.summary.totalInvoices }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Two Column Operational Split -->
+    <div class="dashboard-split-row">
+      <!-- Left: Recent Enquiries / Inquiries Pipeline -->
+      <div class="dashboard-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <h3 class="panel-title">Inquiries &amp; Lead Stream</h3>
+            <span class="panel-badge">Active CRM</span>
+          </div>
+          <a routerLink="/admin/enquiries" class="panel-link">
+            <span>View All</span>
+            <app-icon [icon]="LucideArrowRight" size="xs" />
+          </a>
+        </div>
+
+        <div class="panel-body">
+          <div class="lead-stream-list">
+            <div class="lead-item">
+              <div class="lead-avatar">SJ</div>
+              <div class="lead-details">
+                <span class="lead-name">StickyJi Enterprise Sync</span>
+                <span class="lead-proj">Cross-Platform Sync &amp; R2 Storage Implementation</span>
+                <span class="lead-meta">Source: Direct &bull; Priority: Urgent</span>
+              </div>
+              <div class="lead-status-pill discussion">DISCUSSION</div>
+            </div>
+
+            <div class="lead-item">
+              <div class="lead-avatar">AC</div>
+              <div class="lead-details">
+                <span class="lead-name">Anderson Drive Club Portal</span>
+                <span class="lead-proj">Custom Booking Architecture &amp; Telemetry</span>
+                <span class="lead-meta">Source: Website &bull; Priority: High</span>
+              </div>
+              <div class="lead-status-pill proposal">PROPOSAL SENT</div>
+            </div>
+
+            <div class="lead-item">
+              <div class="lead-avatar">NV</div>
+              <div class="lead-details">
+                <span class="lead-name">Nexus Vadodara Hub</span>
+                <span class="lead-proj">Angular 19 Enterprise Dashboard Architecture</span>
+                <span class="lead-meta">Source: Referral &bull; Priority: Medium</span>
+              </div>
+              <div class="lead-status-pill new">NEW</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Operations & Tasks -->
+      <div class="dashboard-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <h3 class="panel-title">Sprint Deliverables &amp; Milestones</h3>
+            <span class="panel-badge cyan">Agile Sprint</span>
+          </div>
+          <a routerLink="/admin/tasks" class="panel-link">
+            <span>View Tasks</span>
+            <app-icon [icon]="LucideArrowRight" size="xs" />
+          </a>
+        </div>
+
+        <div class="panel-body">
+          <div class="task-stream-list">
+            <div class="task-item">
+              <div class="task-icon done">
+                <app-icon [icon]="LucideCheckCircle2" size="xs" />
+              </div>
+              <div class="task-info">
+                <span class="task-title">Deploy Aaditya Softwares Website 2.0</span>
+                <span class="task-desc">Modern blue design system, SEO sitemap.xml, legal compliance</span>
+              </div>
+              <span class="task-badge completed">Completed</span>
+            </div>
+
+            <div class="task-item">
+              <div class="task-icon in-progress">
+                <app-icon [icon]="LucideClock" size="xs" />
+              </div>
+              <div class="task-info">
+                <span class="task-title">Admin Console Front-end Integration</span>
+                <span class="task-desc">Connect frontend modules to AadityaSoftwaresBackend API</span>
+              </div>
+              <span class="task-badge active">In Progress</span>
+            </div>
+
+            <div class="task-item">
+              <div class="task-icon todo">
+                <app-icon [icon]="LucideCheckSquare" size="xs" />
+              </div>
+              <div class="task-info">
+                <span class="task-title">Invoice Milestone &amp; GST Reporting</span>
+                <span class="task-desc">Generate monthly billing and client statement breakdowns</span>
+              </div>
+              <span class="task-badge todo">Queued</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+

@@ -1,0 +1,89 @@
+export enum EnquiryStatus {
+  NEW = 'NEW',
+  CONTACTED = 'CONTACTED',
+  DISCUSSION = 'DISCUSSION',
+  PROPOSAL_SENT = 'PROPOSAL_SENT',
+  NEGOTIATION = 'NEGOTIATION',
+  WON = 'WON',
+  LOST = 'LOST',
+}
+
+export enum EnquiryPriority {
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+  URGENT = 'URGENT',
+}
+
+export enum EnquirySource {
+  WEBSITE = 'WEBSITE',
+  REFERRAL = 'REFERRAL',
+  DIRECT = 'DIRECT',
+  LINKEDIN = 'LINKEDIN',
+  UPWORK = 'UPWORK',
+  OTHER = 'OTHER',
+}
+
+export enum ClientStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  BLOCKED = 'BLOCKED',
+}
+
+export enum InvoiceStatus {
+  DRAFT = 'DRAFT',
+  SENT = 'SENT',
+  PARTIALLY_PAID = 'PARTIALLY_PAID',
+  PAID = 'PAID',
+  OVERDUE = 'OVERDUE',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum QuotationStatus {
+  DRAFT = 'DRAFT',
+  SENT = 'SENT',
+  ACCEPTED = 'ACCEPTED',
+  REJECTED = 'REJECTED',
+  EXPIRED = 'EXPIRED',
+}
+
+export enum TaskStatus {
+  TODO = 'TODO',
+  IN_PROGRESS = 'IN_PROGRESS',
+  REVIEW = 'REVIEW',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum TaskPriority {
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+  URGENT = 'URGENT',
+}
+
+export enum PaymentStatus {
+  PENDING = 'PENDING',
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED',
+  REFUNDED = 'REFUNDED',
+}
+
+export enum ExpenseCategory {
+  OFFICE_RENT = 'OFFICE_RENT',
+  SALARY_PAYROLL = 'SALARY_PAYROLL',
+  SOFTWARE_LICENSE = 'SOFTWARE_LICENSE',
+  INFRASTRUCTURE_HOSTING = 'INFRASTRUCTURE_HOSTING',
+  MARKETING = 'MARKETING',
+  TRAVEL = 'TRAVEL',
+  OFFICE_SUPPLIES = 'OFFICE_SUPPLIES',
+  PROFESSIONAL_FEES = 'PROFESSIONAL_FEES',
+  MISCELLANEOUS = 'MISCELLANEOUS',
+}
+
+export enum ExpenseStatus {
+  PENDING_APPROVAL = 'PENDING_APPROVAL',
+  APPROVED = 'APPROVED',
+  PAID = 'PAID',
+  REJECTED = 'REJECTED',
+}

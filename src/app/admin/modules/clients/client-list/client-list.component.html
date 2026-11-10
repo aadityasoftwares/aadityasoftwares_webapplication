@@ -1,0 +1,350 @@
+<div class="admin-page">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="header-left">
+      <div class="header-badge">Customer Accounts</div>
+      <h1 class="page-title">Client Directory</h1>
+      <p class="page-subtitle">Manage client accounts, business profiles, tax registrations, and billing credentials across all projects.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline" (click)="loadClients()" [disabled]="isLoading()">
+        <svg viewBox="0 0 24 24" class="icon" [class.spinning]="isLoading()"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        <span>Refresh</span>
+      </button>
+      <button class="btn btn-primary" (click)="openCreateModal()">
+        <svg viewBox="0 0 24 24" class="icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <span>Add Client</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Flash Alerts -->
+  @if (successMessage()) {
+    <div class="alert alert-success">
+      <svg viewBox="0 0 24 24" class="alert-icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      <span>{{ successMessage() }}</span>
+    </div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger">
+      <svg viewBox="0 0 24 24" class="alert-icon"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" stroke-width="2"/></svg>
+      <span>{{ errorMessage() }}</span>
+      <button class="alert-close" (click)="errorMessage.set(null)">✕</button>
+    </div>
+  }
+
+  <!-- Filter Card -->
+  <section class="filter-card">
+    <div class="filter-group search-group">
+      <svg viewBox="0 0 24 24" class="search-icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input
+        type="text"
+        placeholder="Search clients by name, company, email, or GSTIN..."
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
+        (keyup.enter)="applyFilter()"
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Account Status</label>
+      <select [ngModel]="selectedStatus()" (ngModelChange)="selectedStatus.set($event); applyFilter()" class="filter-select">
+        <option value="ALL">All Accounts</option>
+        <option [value]="ClientStatus.ACTIVE">Active</option>
+        <option [value]="ClientStatus.INACTIVE">Inactive</option>
+        <option [value]="ClientStatus.BLOCKED">Blocked</option>
+      </select>
+    </div>
+
+    <button class="btn btn-secondary filter-apply-btn" (click)="applyFilter()">Filter</button>
+  </section>
+
+  <!-- Table Card -->
+  <section class="table-card">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading enterprise clients...</p>
+      </div>
+    } @else if (clients().length === 0) {
+      <div class="empty-state">
+        <div class="empty-illustration">👥</div>
+        <h3>No Clients Found</h3>
+        <p>No client records match your search criteria. Add your first client account or reset filters.</p>
+        <button class="btn btn-primary" (click)="openCreateModal()">Add Client Account</button>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Contact Info</th>
+              <th>Tax Identifiers</th>
+              <th>Location</th>
+              <th>Status</th>
+              <th>Joined Date</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (client of clients(); track client._id) {
+              <tr class="table-row">
+                <td>
+                  <div class="client-cell">
+                    <div class="client-avatar">{{ getClientInitials(client.name) }}</div>
+                    <div class="client-info">
+                      <div class="client-name">{{ client.name }}</div>
+                      @if (client.companyName) {
+                        <div class="client-company">{{ client.companyName }}</div>
+                      }
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="contact-info">
+                    <div class="contact-email">{{ client.email }}</div>
+                    @if (client.phone) {
+                      <div class="contact-phone">{{ client.phone }}</div>
+                    }
+                  </div>
+                </td>
+                <td>
+                  <div class="tax-info">
+                    @if (client.gstin) {
+                      <div class="tax-item"><span class="tax-tag">GST</span> {{ client.gstin }}</div>
+                    }
+                    @if (client.pan) {
+                      <div class="tax-item"><span class="tax-tag">PAN</span> {{ client.pan }}</div>
+                    }
+                    @if (!client.gstin && !client.pan) {
+                      <span class="text-muted">—</span>
+                    }
+                  </div>
+                </td>
+                <td>
+                  <div class="location-info">
+                    @if (client.billingAddress?.city || client.billingAddress?.state) {
+                      <span>{{ client.billingAddress?.city }}{{ client.billingAddress?.city && client.billingAddress?.state ? ', ' : '' }}{{ client.billingAddress?.state }}</span>
+                    } @else {
+                      <span class="text-muted">—</span>
+                    }
+                  </div>
+                </td>
+                <td>
+                  <span class="status-pill" [ngClass]="getStatusClass(client.status)">
+                    {{ client.status }}
+                  </span>
+                </td>
+                <td class="cell-date">
+                  {{ client.createdAt | date:'mediumDate' }}
+                </td>
+                <td class="text-right">
+                  <div class="action-buttons">
+                    <button class="action-btn view-btn" (click)="openDetailDrawer(client)" title="View Client Details">
+                      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </button>
+                    <button class="action-btn edit-btn" (click)="openEditModal(client)" title="Edit Client">
+                      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                    </button>
+                    <button class="action-btn delete-btn" (click)="deleteClient(client)" title="Delete Client">
+                      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+
+  <!-- Create / Edit Client Modal -->
+  @if (isModalOpen()) {
+    <div class="modal-backdrop" (click)="closeModal()">
+      <div class="modal-dialog" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <div>
+            <h2 class="modal-title">{{ isEditing() ? 'Edit Client Account' : 'Add New Client Account' }}</h2>
+            <p class="modal-subtitle">Configure business contact details, billing credentials, and tax profiles.</p>
+          </div>
+          <button class="modal-close" (click)="closeModal()">✕</button>
+        </header>
+
+        <form (ngSubmit)="submitClient()" class="modal-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label required">Contact Name</label>
+              <input type="text" [(ngModel)]="clientForm.name" name="name" required class="form-input" placeholder="e.g. Vikram Singhania" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Company Name</label>
+              <input type="text" [(ngModel)]="clientForm.companyName" name="companyName" class="form-input" placeholder="e.g. Singhania Tech Ventures" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required">Primary Email</label>
+              <input type="email" [(ngModel)]="clientForm.email" name="email" required class="form-input" placeholder="vikram@singhania.com" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Primary Phone</label>
+              <input type="tel" [(ngModel)]="clientForm.phone" name="phone" class="form-input" placeholder="+91 98200 12345" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">GSTIN (Optional)</label>
+              <input type="text" [(ngModel)]="clientForm.gstin" name="gstin" class="form-input" placeholder="24AAAAA0000A1Z5" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">PAN (Optional)</label>
+              <input type="text" [(ngModel)]="clientForm.pan" name="pan" class="form-input" placeholder="ABCDE1234F" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Website</label>
+              <input type="url" [(ngModel)]="clientForm.website" name="website" class="form-input" placeholder="https://singhania.com" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Account Status</label>
+              <select [(ngModel)]="clientForm.status" name="status" class="form-select">
+                <option [value]="ClientStatus.ACTIVE">Active Account</option>
+                <option [value]="ClientStatus.INACTIVE">Inactive</option>
+                <option [value]="ClientStatus.BLOCKED">Blocked</option>
+              </select>
+            </div>
+
+            <!-- Billing Address Sub-section -->
+            <div class="form-group full-width">
+              <h4 class="form-subheading">Billing Address</h4>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label">Street Address</label>
+              <input type="text" [(ngModel)]="clientForm.billingAddress!.street" name="street" class="form-input" placeholder="102, Apex Business Park, SG Highway" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input type="text" [(ngModel)]="clientForm.billingAddress!.city" name="city" class="form-input" placeholder="Ahmedabad" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">State</label>
+              <input type="text" [(ngModel)]="clientForm.billingAddress!.state" name="state" class="form-input" placeholder="Gujarat" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Postal / ZIP Code</label>
+              <input type="text" [(ngModel)]="clientForm.billingAddress!.postalCode" name="postalCode" class="form-input" placeholder="380015" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Country Code</label>
+              <input type="text" [(ngModel)]="clientForm.billingAddress!.countryCode" name="countryCode" class="form-input" placeholder="IN" />
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label">Internal Account Notes</label>
+              <textarea [(ngModel)]="clientForm.notes" name="notes" rows="2" class="form-textarea" placeholder="Payment terms, special discounts, key points of contact..."></textarea>
+            </div>
+          </div>
+
+          <footer class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+              @if (isSaving()) {
+                <span>Saving...</span>
+              } @else {
+                <span>{{ isEditing() ? 'Update Account' : 'Save Client' }}</span>
+              }
+            </button>
+          </footer>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Client Details Drawer -->
+  @if (isDetailDrawerOpen() && selectedClient(); as client) {
+    <div class="drawer-backdrop" (click)="closeDetailDrawer()">
+      <div class="drawer-panel" (click)="$event.stopPropagation()">
+        <header class="drawer-header">
+          <div class="drawer-header-content">
+            <span class="status-pill mb-2" [ngClass]="getStatusClass(client.status)">{{ client.status }}</span>
+            <h2 class="drawer-title">{{ client.name }}</h2>
+            @if (client.companyName) {
+              <div class="drawer-meta">{{ client.companyName }}</div>
+            }
+          </div>
+          <button class="drawer-close" (click)="closeDetailDrawer()">✕</button>
+        </header>
+
+        <div class="drawer-body">
+          <div class="drawer-section">
+            <h3 class="section-title">Communication Details</h3>
+            <div class="detail-grid">
+              <div class="detail-item">
+                <span class="detail-label">Email</span>
+                <a [href]="'mailto:' + client.email" class="detail-link">{{ client.email }}</a>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Phone</span>
+                <span class="detail-value">{{ client.phone || '—' }}</span>
+              </div>
+              @if (client.website) {
+                <div class="detail-item full-span">
+                  <span class="detail-label">Website</span>
+                  <a [href]="client.website" target="_blank" rel="noopener noreferrer" class="detail-link">{{ client.website }}</a>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="drawer-section">
+            <h3 class="section-title">Tax & Legal Identifiers</h3>
+            <div class="detail-grid">
+              <div class="detail-item">
+                <span class="detail-label">GSTIN</span>
+                <span class="detail-value font-mono">{{ client.gstin || 'Unregistered' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">PAN</span>
+                <span class="detail-value font-mono">{{ client.pan || '—' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="drawer-section">
+            <h3 class="section-title">Billing Address</h3>
+            <div class="address-box">
+              @if (client.billingAddress?.street || client.billingAddress?.city) {
+                <div>{{ client.billingAddress?.street }}</div>
+                <div>{{ client.billingAddress?.city }}{{ client.billingAddress?.city && client.billingAddress?.state ? ', ' : '' }}{{ client.billingAddress?.state }} - {{ client.billingAddress?.postalCode }}</div>
+                <div>{{ client.billingAddress?.countryCode || 'IN' }}</div>
+              } @else {
+                <span class="text-muted">No billing address saved for this client.</span>
+              }
+            </div>
+          </div>
+
+          @if (client.notes) {
+            <div class="drawer-section">
+              <h3 class="section-title">Account Notes</h3>
+              <div class="notes-box">{{ client.notes }}</div>
+            </div>
+          }
+
+          <div class="drawer-footer-actions">
+            <button class="btn btn-outline full-width" (click)="closeDetailDrawer(); openEditModal(client)">Edit Client Information</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

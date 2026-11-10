@@ -1,0 +1,31 @@
+<header class="admin-topbar">
+  <div class="topbar-left">
+    <button type="button" class="sidebar-toggle-btn" (click)="toggleSidebar.emit()" aria-label="Toggle navigation">
+      <app-icon [icon]="LucideMenu" size="sm" />
+    </button>
+    <div class="topbar-title-box">
+      <span class="portal-env-badge">PRODUCTION</span>
+      <h1 class="portal-title">Engineering &amp; Business Management</h1>
+    </div>
+  </div>
+
+  <div class="topbar-right">
+    <!-- User Profile Pill -->
+    <div class="user-profile-menu">
+      <div class="user-avatar-circle">
+        <span>{{ initials }}</span>
+      </div>
+      <div class="user-meta">
+        <span class="user-name">{{ displayName }}</span>
+        <span class="user-role-badge">{{ userRole }}</span>
+      </div>
+      <button type="button" class="quick-settings-btn" (click)="onSettings()" title="Account Settings" aria-label="Settings">
+        <app-icon [icon]="LucideSettings" size="xs" />
+      </button>
+      <button type="button" class="quick-logout-btn" (click)="onLogout()" title="Sign Out" aria-label="Sign out">
+        <app-icon [icon]="LucideLogOut" size="xs" />
+      </button>
+    </div>
+  </div>
+</header>
+

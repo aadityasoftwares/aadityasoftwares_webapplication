@@ -1,0 +1,144 @@
+<div class="admin-page">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="header-left">
+      <div class="header-badge">Administration & System</div>
+      <h1 class="page-title">Settings & System Health</h1>
+      <p class="page-subtitle">Manage administrative profile, security credentials, and verify live backend API microservices connectivity.</p>
+    </div>
+  </header>
+
+  <div class="settings-grid">
+    <!-- Profile Card -->
+    <section class="settings-card">
+      <header class="card-header">
+        <h2 class="card-title">Administrator Profile</h2>
+        <p class="card-subtitle">Active logged-in session and credentials.</p>
+      </header>
+
+      <div class="card-body">
+        <div class="profile-hero">
+          <div class="profile-avatar">
+            {{ (authStore.displayName() || 'Admin').slice(0, 2).toUpperCase() }}
+          </div>
+          <div class="profile-meta">
+            <h3 class="profile-name">{{ authStore.displayName() }}</h3>
+            <span class="role-badge">{{ authStore.role() }}</span>
+          </div>
+        </div>
+
+        <div class="info-list">
+          <div class="info-item">
+            <span class="info-label">Email</span>
+            <span class="info-value">{{ authStore.user()?.email || 'admin@aadityasoftwares.com' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Active Session ID</span>
+            <span class="info-value font-mono">{{ authStore.sessionId() || 'active_bearer_session' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Auth Token State</span>
+            <span class="info-value text-success font-semibold">Active & Valid</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API Connectivity Health Card -->
+    <section class="settings-card">
+      <header class="card-header">
+        <div class="header-flex">
+          <div>
+            <h2 class="card-title">Backend API Diagnostics</h2>
+            <p class="card-subtitle">Real-time status check with {{ environment.apiUrl }}</p>
+          </div>
+          <button class="btn btn-xs btn-outline" (click)="checkApiConnectivity()" [disabled]="isCheckingHealth()">
+            <svg viewBox="0 0 24 24" class="icon" [class.spinning]="isCheckingHealth()"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>Ping API</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="card-body">
+        <div class="health-status-box" [ngClass]="apiHealthStatus().toLowerCase()">
+          <div class="health-indicator">
+            <span class="pulse-dot"></span>
+            <span class="health-text">
+              @if (apiHealthStatus() === 'CONNECTED') {
+                API Microservices Online & Healthy
+              } @else if (apiHealthStatus() === 'DISCONNECTED') {
+                API Unreachable (Check Port 5050)
+              } @else {
+                Diagnosing Server Connection...
+              }
+            </span>
+          </div>
+          @if (apiLatency() !== null) {
+            <span class="latency-tag">{{ apiLatency() }}ms roundtrip</span>
+          }
+        </div>
+
+        <div class="info-list mt-3">
+          <div class="info-item">
+            <span class="info-label">Endpoint URL</span>
+            <span class="info-value font-mono">{{ environment.apiUrl }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Environment Mode</span>
+            <span class="info-value">{{ environment.production ? 'Production' : 'Development' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Platform Version</span>
+            <span class="info-value">Aaditya Softwares Admin v2.0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Change Password Card -->
+    <section class="settings-card full-span">
+      <header class="card-header">
+        <h2 class="card-title">Security & Password</h2>
+        <p class="card-subtitle">Change administrative login credentials securely.</p>
+      </header>
+
+      <div class="card-body">
+        @if (passwordSuccess()) {
+          <div class="alert alert-success">{{ passwordSuccess() }}</div>
+        }
+        @if (passwordError()) {
+          <div class="alert alert-danger">{{ passwordError() }}</div>
+        }
+
+        <form (ngSubmit)="changePassword()" class="password-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label required">Current Password</label>
+              <input type="password" [(ngModel)]="passwordForm.currentPassword" name="currentPassword" required class="form-input" placeholder="••••••••" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required">New Password</label>
+              <input type="password" [(ngModel)]="passwordForm.newPassword" name="newPassword" required minlength="6" class="form-input" placeholder="Minimum 6 characters" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label required">Confirm New Password</label>
+              <input type="password" [(ngModel)]="passwordForm.confirmPassword" name="confirmPassword" required class="form-input" placeholder="Repeat new password" />
+            </div>
+          </div>
+
+          <div class="form-actions mt-3">
+            <button type="submit" class="btn btn-primary" [disabled]="isChangingPassword()">
+              @if (isChangingPassword()) {
+                <span>Updating Password...</span>
+              } @else {
+                <span>Update Password</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>

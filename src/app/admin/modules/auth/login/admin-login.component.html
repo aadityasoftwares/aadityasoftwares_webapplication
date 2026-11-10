@@ -1,0 +1,114 @@
+<div class="login-page-container">
+  <!-- Subtle Ambient Glow -->
+  <div class="login-ambient-glow" aria-hidden="true">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div class="login-card-shell">
+    <!-- Header -->
+    <div class="login-header">
+      <div class="brand-logo-tile">
+        <img src="/companylogos/AadityaSoftwaresLogo.png" alt="Aaditya Softwares" class="brand-logo-img" />
+      </div>
+      <h1 class="login-title">Aaditya Softwares</h1>
+      <span class="login-subtitle">Internal Management &amp; Admin Console</span>
+    </div>
+
+    <!-- Error Alert Box -->
+    @if (errorMessage()) {
+      <div class="login-error-alert" role="alert">
+        <app-icon [icon]="LucideAlertCircle" size="xs" class="alert-icon" />
+        <span>{{ errorMessage() }}</span>
+      </div>
+    }
+
+    <!-- Form -->
+    <form class="login-form" (submit)="onSubmit($event)">
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="adminEmail" class="form-label">Work Email</label>
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <app-icon [icon]="LucideMail" size="xs" />
+          </span>
+          <input
+            id="adminEmail"
+            type="email"
+            class="form-input"
+            placeholder="admin@aadityasoftwares.in"
+            [(ngModel)]="email"
+            name="email"
+            required
+            autocomplete="email"
+          />
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <div class="label-row">
+          <label for="adminPassword" class="form-label">Password</label>
+          <a routerLink="/admin/forgot-password" class="forgot-link">Forgot password?</a>
+        </div>
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <app-icon [icon]="LucideLock" size="xs" />
+          </span>
+          <input
+            id="adminPassword"
+            [type]="showPassword ? 'text' : 'password'"
+            class="form-input"
+            placeholder="••••••••••••"
+            [(ngModel)]="password"
+            name="password"
+            required
+            autocomplete="current-password"
+          />
+          <button
+            type="button"
+            class="password-toggle-btn"
+            (click)="showPassword = !showPassword"
+            aria-label="Toggle password visibility"
+          >
+            <app-icon [icon]="showPassword ? LucideEyeOff : LucideEye" size="xs" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Remember Me -->
+      <div class="form-options-row">
+        <label class="remember-checkbox-label">
+          <input
+            type="checkbox"
+            [(ngModel)]="rememberMe"
+            name="rememberMe"
+            class="custom-checkbox"
+          />
+          <span>Remember this device for 30 days</span>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="login-submit-btn"
+        [disabled]="isLoading()"
+      >
+        @if (isLoading()) {
+          <span>Signing In...</span>
+        } @else {
+          <span>Sign In to Console</span>
+          <app-icon [icon]="LucideArrowRight" size="xs" />
+        }
+      </button>
+    </form>
+
+    <!-- Footer Security Note -->
+    <div class="login-footer-security">
+      <app-icon [icon]="LucideShield" size="xs" />
+      <span>Protected by Enterprise Session Cryptography &amp; RBAC</span>
+    </div>
+  </div>
+</div>
+

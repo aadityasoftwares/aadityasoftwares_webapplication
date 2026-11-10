@@ -1,0 +1,150 @@
+@use '../../../../styles/variables' as *;
+
+:host {
+  display: block;
+}
+
+.admin-topbar {
+  height: 68px;
+  background-color: #ffffff;
+  border-bottom: 1px solid $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: $shadow-xs;
+
+  @media (max-width: 768px) {
+    padding: 0 16px;
+  }
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sidebar-toggle-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-heading;
+  padding: 8px;
+  cursor: pointer;
+
+  @media (max-width: 1024px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.topbar-title-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.portal-env-badge {
+  font-family: $font-mono;
+  font-size: 10px;
+  font-weight: 800;
+  background: $color-primary-light;
+  color: $color-primary;
+  padding: 2px 8px;
+  border-radius: $radius-full;
+  letter-spacing: 0.05em;
+}
+
+.portal-title {
+  margin: 0;
+  font-family: $font-sans;
+  font-size: 15px;
+  font-weight: 750;
+  color: $color-heading;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-profile-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+  padding: 4px 12px 4px 6px;
+}
+
+.user-avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-full;
+  background: $color-primary;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.user-name {
+  font-size: 12.5px;
+  font-weight: 750;
+  color: $color-heading;
+  line-height: 1.2;
+}
+
+.user-role-badge {
+  font-family: $font-mono;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: $color-text-muted;
+}
+
+.quick-settings-btn,
+.quick-logout-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  border-radius: $radius-full;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-text-muted;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $color-surface-muted;
+    color: $color-heading;
+  }
+}
+
+.quick-logout-btn:hover {
+  color: $color-danger;
+}

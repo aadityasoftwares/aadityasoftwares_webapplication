@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
+import { CustomCursor } from '../../shared/components/custom-cursor/custom-cursor';
+import { QuickContact } from '../../shared/components/quick-contact/quick-contact';
 
 @Component({
   selector: 'app-website',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CustomCursor, QuickContact],
   templateUrl: './website.html',
   styleUrl: './website.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,4 +27,3 @@ export class Website implements OnInit {
       });
   }
 }
-

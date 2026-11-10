@@ -1,0 +1,338 @@
+<div class="admin-page">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="header-left">
+      <div class="header-badge">Sales & Proposals</div>
+      <h1 class="page-title">Quotations & Estimates</h1>
+      <p class="page-subtitle">Draft enterprise proposals, calculate line item deliverables, manage client approval workflows, and export PDFs.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline" (click)="loadQuotations()" [disabled]="isLoading()">
+        <svg viewBox="0 0 24 24" class="icon" [class.spinning]="isLoading()"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        <span>Refresh</span>
+      </button>
+      <button class="btn btn-primary" (click)="openCreateModal()">
+        <svg viewBox="0 0 24 24" class="icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <span>New Quotation</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Alerts -->
+  @if (successMessage()) {
+    <div class="alert alert-success">
+      <svg viewBox="0 0 24 24" class="alert-icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      <span>{{ successMessage() }}</span>
+    </div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger">
+      <svg viewBox="0 0 24 24" class="alert-icon"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" stroke-width="2"/></svg>
+      <span>{{ errorMessage() }}</span>
+      <button class="alert-close" (click)="errorMessage.set(null)">✕</button>
+    </div>
+  }
+
+  <!-- Filter -->
+  <section class="filter-card">
+    <div class="filter-group search-group">
+      <svg viewBox="0 0 24 24" class="search-icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input
+        type="text"
+        placeholder="Search quotations by number, client, or proposal title..."
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
+        (keyup.enter)="applyFilter()"
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Status</label>
+      <select [ngModel]="selectedStatus()" (ngModelChange)="selectedStatus.set($event); applyFilter()" class="filter-select">
+        <option value="ALL">All Statuses</option>
+        <option [value]="QuotationStatus.DRAFT">Draft</option>
+        <option [value]="QuotationStatus.SENT">Sent to Client</option>
+        <option [value]="QuotationStatus.ACCEPTED">Accepted</option>
+        <option [value]="QuotationStatus.REJECTED">Rejected</option>
+        <option [value]="QuotationStatus.EXPIRED">Expired</option>
+      </select>
+    </div>
+
+    <button class="btn btn-secondary filter-apply-btn" (click)="applyFilter()">Filter</button>
+  </section>
+
+  <!-- Table Card -->
+  <section class="table-card">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading enterprise quotation proposals...</p>
+      </div>
+    } @else if (quotations().length === 0) {
+      <div class="empty-state">
+        <div class="empty-illustration">📄</div>
+        <h3>No Quotations Created</h3>
+        <p>Generate a proposal or estimate with transparent line-item pricing for your clients.</p>
+        <button class="btn btn-primary" (click)="openCreateModal()">Create First Quotation</button>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Quotation #</th>
+              <th>Client</th>
+              <th>Deliverables / Scope</th>
+              <th>Items</th>
+              <th>Grand Total</th>
+              <th>Valid Until</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (quote of quotations(); track quote._id) {
+              <tr class="table-row">
+                <td class="cell-mono">
+                  <span class="code-pill">{{ quote.quotationNumber }}</span>
+                </td>
+                <td>
+                  <div class="client-name">{{ getClientDisplayName(quote.clientId) }}</div>
+                </td>
+                <td>
+                  <div class="title-cell">{{ quote.title || (quote.items[0]?.description || 'Project Proposal') }}</div>
+                </td>
+                <td>
+                  <span class="items-count-badge">{{ quote.items?.length || 0 }} items</span>
+                </td>
+                <td class="cell-amount">
+                  {{ quote.grandTotal | currency:'INR':'symbol':'1.0-0' }}
+                </td>
+                <td class="cell-date">
+                  {{ quote.validUntil ? (quote.validUntil | date:'mediumDate') : 'No expiry' }}
+                </td>
+                <td>
+                  <select
+                    [ngModel]="quote.status"
+                    (ngModelChange)="updateStatus(quote, $event)"
+                    class="status-dropdown"
+                    [ngClass]="getStatusClass(quote.status)"
+                  >
+                    <option [value]="QuotationStatus.DRAFT">DRAFT</option>
+                    <option [value]="QuotationStatus.SENT">SENT</option>
+                    <option [value]="QuotationStatus.ACCEPTED">ACCEPTED</option>
+                    <option [value]="QuotationStatus.REJECTED">REJECTED</option>
+                    <option [value]="QuotationStatus.EXPIRED">EXPIRED</option>
+                  </select>
+                </td>
+                <td class="cell-date">
+                  {{ quote.createdAt | date:'shortDate' }}
+                </td>
+                <td class="text-right">
+                  <div class="action-buttons">
+                    <button class="action-btn pdf-btn" (click)="downloadPdf(quote)" title="Download Proposal PDF">
+                      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </button>
+                    <button class="action-btn view-btn" (click)="openDetailDrawer(quote)" title="View Proposal">
+                      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </button>
+                    <button class="action-btn delete-btn" (click)="deleteQuotation(quote)" title="Delete Quotation">
+                      <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+
+  <!-- Create Modal -->
+  @if (isModalOpen()) {
+    <div class="modal-backdrop" (click)="closeModal()">
+      <div class="modal-dialog lg-dialog" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <div>
+            <h2 class="modal-title">Create Quotation Proposal</h2>
+            <p class="modal-subtitle">Generate a formal quotation with transparent scope and itemized deliverables.</p>
+          </div>
+          <button class="modal-close" (click)="closeModal()">✕</button>
+        </header>
+
+        <form (ngSubmit)="submitQuotation()" class="modal-form">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label required">Select Client Account</label>
+              <select [(ngModel)]="formClientId" name="formClientId" required class="form-select">
+                <option value="" disabled>-- Choose a Client --</option>
+                @for (c of clients(); track c._id) {
+                  <option [value]="c._id">{{ c.name }} {{ c.companyName ? '(' + c.companyName + ')' : '' }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label">Proposal Title / Overview</label>
+              <input type="text" [(ngModel)]="formTitle" name="formTitle" class="form-input" placeholder="e.g. Mobile Application & Web Admin Portal" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Valid Until</label>
+              <input type="date" [(ngModel)]="formValidUntil" name="formValidUntil" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Payment Terms</label>
+              <input type="text" [(ngModel)]="formPaymentTerms" name="formPaymentTerms" class="form-input" placeholder="e.g. 50% Advance, 50% Delivery" />
+            </div>
+
+            <!-- Items Table Sub-section -->
+            <div class="form-group full-width">
+              <div class="items-section-header">
+                <h4 class="form-subheading mb-0">Deliverables & Line Items</h4>
+                <button type="button" class="btn btn-xs btn-outline" (click)="addLineItem()">+ Add Item</button>
+              </div>
+
+              <div class="line-items-table">
+                @for (item of formItems; track $index) {
+                  <div class="line-item-row">
+                    <input
+                      type="text"
+                      [(ngModel)]="item.description"
+                      [name]="'desc_' + $index"
+                      class="form-input flex-2"
+                      placeholder="Deliverable description..."
+                      required
+                    />
+                    <input
+                      type="number"
+                      [(ngModel)]="item.quantity"
+                      [name]="'qty_' + $index"
+                      (ngModelChange)="calculateItemTotal(item)"
+                      min="1"
+                      class="form-input flex-qty"
+                      placeholder="Qty"
+                    />
+                    <input
+                      type="number"
+                      [(ngModel)]="item.unitRate"
+                      [name]="'rate_' + $index"
+                      (ngModelChange)="calculateItemTotal(item)"
+                      min="0"
+                      class="form-input flex-rate"
+                      placeholder="Rate (INR)"
+                    />
+                    <div class="item-amount">
+                      {{ (item.quantity * item.unitRate) | currency:'INR':'symbol':'1.0-0' }}
+                    </div>
+                    <button type="button" class="btn-icon-danger" (click)="removeLineItem($index)" [disabled]="formItems.length === 1">✕</button>
+                  </div>
+                }
+              </div>
+
+              <div class="items-summary-card">
+                <div class="summary-row total-row">
+                  <span>Grand Total (INR):</span>
+                  <span class="total-value">{{ getGrandTotal() | currency:'INR':'symbol':'1.0-0' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label">Terms, Conditions & Warranty</label>
+              <textarea [(ngModel)]="formNotes" name="formNotes" rows="2" class="form-textarea" placeholder="Delivery timeframe, IP ownership, SLA support terms..."></textarea>
+            </div>
+          </div>
+
+          <footer class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+              @if (isSaving()) {
+                <span>Generating Proposal...</span>
+              } @else {
+                <span>Save Quotation</span>
+              }
+            </button>
+          </footer>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Detail Drawer -->
+  @if (isDetailDrawerOpen() && selectedQuotation(); as quote) {
+    <div class="drawer-backdrop" (click)="closeDetailDrawer()">
+      <div class="drawer-panel" (click)="$event.stopPropagation()">
+        <header class="drawer-header">
+          <div class="drawer-header-content">
+            <span class="code-pill mb-2">Quote #{{ quote.quotationNumber }}</span>
+            <h2 class="drawer-title">{{ quote.title || 'Quotation Proposal' }}</h2>
+            <div class="drawer-meta">{{ getClientDisplayName(quote.clientId) }}</div>
+          </div>
+          <button class="drawer-close" (click)="closeDetailDrawer()">✕</button>
+        </header>
+
+        <div class="drawer-body">
+          <div class="drawer-actions-card">
+            <div class="action-item">
+              <span class="action-label">Proposal Status</span>
+              <select
+                [ngModel]="quote.status"
+                (ngModelChange)="updateStatus(quote, $event)"
+                class="status-dropdown full-width"
+                [ngClass]="getStatusClass(quote.status)"
+              >
+                <option [value]="QuotationStatus.DRAFT">DRAFT</option>
+                <option [value]="QuotationStatus.SENT">SENT</option>
+                <option [value]="QuotationStatus.ACCEPTED">ACCEPTED</option>
+                <option [value]="QuotationStatus.REJECTED">REJECTED</option>
+                <option [value]="QuotationStatus.EXPIRED">EXPIRED</option>
+              </select>
+            </div>
+            <button class="btn btn-outline full-width mt-2" (click)="downloadPdf(quote)">
+              <svg viewBox="0 0 24 24" class="icon"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Download Quotation PDF</span>
+            </button>
+          </div>
+
+          <div class="drawer-section">
+            <h3 class="section-title">Line Items & Deliverables</h3>
+            <div class="drawer-items-list">
+              @for (item of quote.items; track $index) {
+                <div class="drawer-item-row">
+                  <div class="item-desc">
+                    <div class="item-title">{{ item.description }}</div>
+                    <div class="item-calc">{{ item.quantity }} × {{ (item.rate || item.unitRate || 0) | currency:'INR':'symbol':'1.0-0' }}</div>
+                  </div>
+                  <div class="item-row-total">{{ (item.amount || item.totalAmount || 0) | currency:'INR':'symbol':'1.0-0' }}</div>
+                </div>
+              }
+              <div class="drawer-total-box">
+                <span class="total-label">Grand Total:</span>
+                <span class="total-figure">{{ quote.grandTotal | currency:'INR':'symbol':'1.0-0' }}</span>
+              </div>
+            </div>
+          </div>
+
+          @if (quote.paymentTerms) {
+            <div class="drawer-section">
+              <h3 class="section-title">Payment Terms</h3>
+              <p class="drawer-text">{{ quote.paymentTerms }}</p>
+            </div>
+          }
+
+          @if (quote.notes || quote.termsAndConditions) {
+            <div class="drawer-section">
+              <h3 class="section-title">Notes & Conditions</h3>
+              <p class="drawer-text">{{ quote.notes || quote.termsAndConditions }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

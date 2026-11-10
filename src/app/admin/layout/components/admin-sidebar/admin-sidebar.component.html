@@ -1,0 +1,65 @@
+<aside class="admin-sidebar" [class.is-open]="isOpen">
+  <!-- Brand Section -->
+  <div class="sidebar-brand-box">
+    <a routerLink="/admin/dashboard" class="brand-link">
+      <div class="brand-logo-tile">
+        <img src="/companylogos/AadityaSoftwaresLogo.png" alt="Aaditya Softwares" class="brand-logo-img" />
+      </div>
+      <div class="brand-text">
+        <span class="brand-title">Aaditya Softwares</span>
+        <span class="brand-portal-tag">Admin Console</span>
+      </div>
+    </a>
+    <button type="button" class="mobile-close-btn" (click)="closeSidebar.emit()" aria-label="Close sidebar">
+      <app-icon [icon]="LucideX" size="sm" />
+    </button>
+  </div>
+
+  <!-- Navigation Links -->
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">MANAGEMENT &amp; CRM</div>
+    <ul class="nav-items-list">
+      @for (item of navItems; track item.route) {
+        <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="is-active"
+            class="nav-item-link"
+            (click)="closeSidebar.emit()"
+          >
+            <div class="link-left">
+              <span class="link-icon">
+                <app-icon [icon]="item.icon" size="sm" />
+              </span>
+              <span class="link-label">{{ item.label }}</span>
+            </div>
+            @if (item.badge) {
+              <span class="nav-badge" [ngClass]="item.badgeClass || 'blue'">{{ item.badge }}</span>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <!-- Bottom Workspace Switcher / Live Site Link -->
+  <div class="sidebar-bottom">
+    <a href="/" target="_blank" rel="noopener noreferrer" class="live-website-card">
+      <div class="live-icon">
+        <app-icon [icon]="LucideGlobe" size="xs" />
+      </div>
+      <div class="live-info">
+        <span class="live-label">Public Website</span>
+        <span class="live-url">aadityasoftwares.in</span>
+      </div>
+      <app-icon [icon]="LucideChevronRight" size="xs" class="live-arrow" />
+    </a>
+
+    <!-- Sign Out Row -->
+    <button type="button" class="sidebar-logout-btn" (click)="onLogout()">
+      <app-icon [icon]="LucideLogOut" size="xs" />
+      <span>Sign Out</span>
+    </button>
+  </div>
+</aside>
+
