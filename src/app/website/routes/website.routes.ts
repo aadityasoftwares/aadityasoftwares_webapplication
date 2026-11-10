@@ -65,6 +65,17 @@ export const WEBSITE_ROUTES: Routes = [
         redirectTo: 'legal',
         pathMatch: 'full',
       },
+      {
+        path: 'site-map',
+        loadComponent: () =>
+          import('../pages/site-map-page/site-map-page').then((m) => m.SiteMapPage),
+        title: 'Site Map & Page Directory - AadityaSoftwares',
+      },
+      {
+        path: 'sitemap',
+        redirectTo: 'site-map',
+        pathMatch: 'full',
+      },
     ],
   },
 ];

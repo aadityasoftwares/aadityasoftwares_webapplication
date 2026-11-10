@@ -1,0 +1,233 @@
+<app-website-header></app-website-header>
+
+<main class="page-main sitemap-page">
+  <!-- =======================================================
+       Section 1: Increased-Height Editorial Hero (Brand Consistent)
+       ======================================================= -->
+  <section class="page-hero-section editorial-tall-hero">
+    <!-- Ambient Glow Mesh (Aaditya Softwares Brand Theme) -->
+    <div class="hero-ambient-glow" aria-hidden="true">
+      <div class="glow-orb glow-orb-top-right"></div>
+      <div class="glow-orb glow-orb-top-left"></div>
+      <div class="glow-orb glow-orb-center"></div>
+    </div>
+
+    <div class="page-hero-container">
+      <!-- Eyebrow & Display Title -->
+      <div class="hero-center-copy">
+        <span class="section-sub-eyebrow">INDEX &amp; ARCHITECTURAL DIRECTORY</span>
+        <h1 class="page-hero-title">
+          Site Map &amp; Page Directory
+        </h1>
+        <p class="page-hero-subtitle">
+          Explore our structured index of public web destinations, technical engineering capabilities, case studies, in-house software platforms, and corporate legal governance policies.
+        </p>
+
+        <!-- Meta Badge Row -->
+        <div class="policy-meta-badges">
+          <span class="meta-pill">
+            <app-icon [icon]="LucideClock" size="xs" />
+            <span>Updated: {{ lastUpdated }}</span>
+          </span>
+          <span class="meta-pill version">
+            <app-icon [icon]="LucideCompass" size="xs" />
+            <span>Index Status: 100% Accessible</span>
+          </span>
+          <span class="meta-pill jurisdiction">
+            <app-icon [icon]="LucideGlobe" size="xs" />
+            <span>Standard: Sitemaps XML Protocol</span>
+          </span>
+        </div>
+
+        <!-- Interactive Search & Filter Deck -->
+        <div class="sitemap-search-wrapper">
+          <div class="sitemap-search-bar">
+            <app-icon [icon]="LucideSearch" size="sm" class="search-icon" />
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search pages, capabilities, policies, or routes (e.g. mobile, terms, cloud)..."
+              [value]="searchQuery()"
+              (input)="searchQuery.set($any($event.target).value)"
+              aria-label="Search site map"
+            />
+            @if (searchQuery()) {
+              <button
+                type="button"
+                class="search-clear-btn"
+                (click)="searchQuery.set('')"
+                aria-label="Clear search"
+              >
+                Clear
+              </button>
+            }
+          </div>
+
+          <!-- Category Filter Tabs -->
+          <div class="category-filter-row" role="tablist" aria-label="Sitemap Categories">
+            @for (cat of categories; track cat.id) {
+              <button
+                type="button"
+                class="category-pill-btn"
+                [class.is-active]="activeCategory() === cat.id"
+                (click)="setCategory(cat.id)"
+                role="tab"
+                [attr.aria-selected]="activeCategory() === cat.id"
+              >
+                {{ cat.label }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Stats Deck -->
+      <div class="hero-highlights-deck">
+        @for (stat of stats; track stat.label) {
+          <div class="highlight-card">
+            <div class="highlight-top">
+              <span class="highlight-num">{{ stat.num }}</span>
+              <span class="highlight-badge" [ngClass]="stat.badgeClass">{{ stat.badge }}</span>
+            </div>
+            <h3 class="highlight-title">{{ stat.label }}</h3>
+            <p class="highlight-desc">{{ stat.description }}</p>
+            <div class="highlight-footer">
+              <app-icon [icon]="stat.icon" size="xs" />
+              <span>Verified Architecture</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       Section 2: Categorized Sitemap Sections
+       ======================================================= -->
+  <section class="sitemap-directory-section" appScrollReveal>
+    <div class="section-container">
+      @if (filteredGroups().length === 0) {
+        <div class="no-results-card">
+          <div class="no-results-icon">
+            <app-icon [icon]="LucideSearch" size="md" />
+          </div>
+          <h3>No matching pages found</h3>
+          <p>We couldn't find any destination matching "<strong>{{ searchQuery() }}</strong>". Try searching for another term or reset the category filter.</p>
+          <app-button
+            variant="secondary"
+            size="sm"
+            (buttonClick)="searchQuery.set(''); activeCategory.set('all')"
+          >
+            Reset Filters
+          </app-button>
+        </div>
+      }
+
+      <div class="sitemap-groups-list">
+        @for (group of filteredGroups(); track group.id) {
+          <div class="sitemap-group-card">
+            <!-- Group Header -->
+            <div class="group-header">
+              <div class="group-header-left">
+                <div class="group-icon-circle">
+                  <app-icon [icon]="group.icon" size="sm" />
+                </div>
+                <div>
+                  <div class="group-badge-wrap">
+                    <span class="group-badge">{{ group.badge }}</span>
+                    <span class="group-count">{{ group.links.length }} {{ group.links.length === 1 ? 'Destination' : 'Destinations' }}</span>
+                  </div>
+                  <h2 class="group-title">{{ group.title }}</h2>
+                </div>
+              </div>
+              <p class="group-desc">{{ group.description }}</p>
+            </div>
+
+            <!-- Group Grid of Links -->
+            <div class="links-grid">
+              @for (link of group.links; track link.path) {
+                <a
+                  [href]="link.path"
+                  class="sitemap-link-card"
+                  (click)="navigateTo(link.path, link.isExternal, $event)"
+                  [attr.target]="link.isExternal ? '_blank' : null"
+                  [attr.rel]="link.isExternal ? 'noopener noreferrer' : null"
+                >
+                  <div class="card-top">
+                    <div class="link-icon-tile">
+                      <app-icon [icon]="link.icon" size="xs" />
+                    </div>
+                    <div class="card-badges">
+                      @if (link.badge) {
+                        <span class="link-badge">{{ link.badge }}</span>
+                      }
+                      @if (link.priority) {
+                        <span class="priority-badge" title="Search Index Priority">P: {{ link.priority }}</span>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="card-content">
+                    <h3 class="link-title">
+                      <span>{{ link.title }}</span>
+                      @if (link.isExternal) {
+                        <app-icon [icon]="LucideExternalLink" size="xs" class="ext-icon" />
+                      } @else {
+                        <app-icon [icon]="LucideArrowRight" size="xs" class="arrow-icon" />
+                      }
+                    </h3>
+                    <div class="link-path-pill">
+                      <code>{{ link.path }}</code>
+                    </div>
+                    <p class="link-desc">{{ link.description }}</p>
+                  </div>
+                </a>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- =======================================================
+           Section 3: XML Sitemap & Machine Search Index Banner
+           ======================================================= -->
+      <div class="xml-sitemap-banner">
+        <div class="xml-banner-left">
+          <div class="xml-icon-box">
+            <app-icon [icon]="LucideFileCode" size="md" />
+          </div>
+          <div class="xml-text-box">
+            <span class="xml-badge">SEARCH ENGINE DISCOVERY</span>
+            <h3 class="xml-title">Machine-Readable XML Sitemap Available</h3>
+            <p class="xml-desc">
+              For web crawlers, search bots, and automated diagnostic tools, we provide a valid, auto-synchronized <strong>sitemap.xml</strong> following the official Sitemaps.org schema standard.
+            </p>
+          </div>
+        </div>
+
+        <div class="xml-banner-actions">
+          <a
+            href="/sitemap.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="xml-view-btn"
+          >
+            <app-icon [icon]="LucideExternalLink" size="xs" />
+            <span>Open sitemap.xml</span>
+          </a>
+          <app-button
+            variant="secondary"
+            size="md"
+            [iconRight]="LucideArrowRight"
+            (buttonClick)="onContact()"
+          >
+            Start a Project
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-website-footer></app-website-footer>
+

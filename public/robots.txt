@@ -1,0 +1,7 @@
+# Robots.txt for Aaditya Softwares
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://aadityasoftwares.in/sitemap.xml
+

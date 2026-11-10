@@ -184,6 +184,8 @@ export class WebsiteFooter {
           terms: '/terms-of-use',
           legal: '/legal',
           'legal-notice': '/legal',
+          'site-map': '/site-map',
+          sitemap: '/site-map',
         };
         const targetRoute = routeMap[targetId] || '/';
         this.router?.navigate([targetRoute]);
