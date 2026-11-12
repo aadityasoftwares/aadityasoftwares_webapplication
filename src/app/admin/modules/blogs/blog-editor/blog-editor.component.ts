@@ -171,6 +171,12 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.setupEditorConfig();
+    // The website list is loaded asynchronously by the context store. React to
+    // its selection so taxonomy requests run even when the editor opens first.
+    effect(() => {
+      const websiteId = this.contextStore.selectedWebsiteId();
+      if (websiteId) this.loadTaxonomies(websiteId);
+    });
   }
 
   ngOnInit(): void {
@@ -178,11 +184,6 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
     if (id) {
       this.isEditMode.set(true);
       this.blogId.set(id);
-    }
-
-    const currentWebsiteId = this.contextStore.selectedWebsiteId();
-    if (currentWebsiteId) {
-      this.loadTaxonomies(currentWebsiteId);
     }
 
     if (this.isEditMode() && id) {
@@ -201,6 +202,8 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
 
   private setupEditorConfig(): void {
     this.editorConfig = {
+      licenseKey: 'GPL',
+      placeholder: 'Start writing your article content here...',
       plugins: [
         Essentials,
         Paragraph,
@@ -314,7 +317,6 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
           typeof blog.websiteId === 'object' ? blog.websiteId._id : blog.websiteId;
         if (siteId && siteId !== this.contextStore.selectedWebsiteId()) {
           this.contextStore.setWebsiteId(siteId);
-          this.loadTaxonomies(siteId);
         }
 
         this.title = blog.title || '';

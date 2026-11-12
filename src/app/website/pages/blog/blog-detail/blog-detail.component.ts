@@ -238,10 +238,10 @@ export class PublicBlogDetailComponent implements OnInit, OnDestroy {
           publisher: {
             '@type': 'Organization',
             name: 'Aaditya Softwares',
-            url: 'https://aadityasoftwares.fun',
+            url: 'https://aadityasoftwares.in',
             logo: {
               '@type': 'ImageObject',
-              url: 'https://aadityasoftwares.fun/companylogos/AadityaSoftwaresLogo.png',
+              url: 'https://aadityasoftwares.in/companylogos/AadityaSoftwaresLogo.png',
             },
           },
         },
@@ -252,37 +252,37 @@ export class PublicBlogDetailComponent implements OnInit, OnDestroy {
               '@type': 'ListItem',
               position: 1,
               name: 'Home',
-              item: 'https://aadityasoftwares.fun',
+              item: 'https://aadityasoftwares.in',
             },
             {
               '@type': 'ListItem',
               position: 2,
               name: 'Blog',
-              item: 'https://aadityasoftwares.fun/blog',
+              item: 'https://aadityasoftwares.in/blog',
             },
             ...(category
               ? [
-                  {
-                    '@type': 'ListItem',
-                    position: 3,
-                    name: category.name,
-                    item: `https://aadityasoftwares.fun/blog/category/${category.slug}`,
-                  },
-                  {
-                    '@type': 'ListItem',
-                    position: 4,
-                    name: blog.title,
-                    item: url,
-                  },
-                ]
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: category.name,
+                  item: `https://aadityasoftwares.in/blog/category/${category.slug}`,
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 4,
+                  name: blog.title,
+                  item: url,
+                },
+              ]
               : [
-                  {
-                    '@type': 'ListItem',
-                    position: 3,
-                    name: blog.title,
-                    item: url,
-                  },
-                ]),
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: blog.title,
+                  item: url,
+                },
+              ]),
           ],
         },
       ],
