@@ -25,6 +25,18 @@ export class Faq {
 
   readonly faqs: FaqItem[] = [
     {
+      category: 'Location & Global Reach',
+      question: 'Where is Aaditya Softwares located, and do you serve clients in Vadodara and globally?',
+      answer:
+        'Aaditya Softwares is proudly headquartered in Vadodara, Gujarat, India. As one of the top software companies in Vadodara, we serve growing businesses, enterprises, and startups across Vadodara, Gujarat (Ahmedabad, Surat), pan-India, as well as international clients in the USA, UK, and Europe. Local clients are welcome to connect with our Vadodara engineering team for in-person consultations or remote sessions.',
+    },
+    {
+      category: 'Software Companies in Vadodara',
+      question: 'What sets Aaditya Softwares apart from other software companies in Vadodara?',
+      answer:
+        'Unlike traditional outsourcing agencies or body shops in Vadodara, Aaditya Softwares is a dedicated software engineering studio. You collaborate directly with senior full-stack software architects specializing in modern frameworks (Angular, React, Node.js, Cloud, and AI). We deliver 100% IP ownership, transparent 2-week agile sprints, zero vendor lock-in, and battle-tested production code.',
+    },
+    {
       category: 'Experience & Background',
       question: 'How much experience does Aaditya Softwares have?',
       answer:

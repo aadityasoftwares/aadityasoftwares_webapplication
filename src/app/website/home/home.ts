@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { WebsiteHeader } from '../website-header/website-header';
 import { Hero } from '../hero/hero';
-import { TrustHighlights } from '../trust-highlights/trust-highlights';
 import { About } from '../about/about';
 import { Services } from '../services/services';
 import { WhyChooseUs } from '../why-choose-us/why-choose-us';
@@ -20,7 +19,6 @@ import { WebsiteFooter } from '../website-footer/website-footer';
   imports: [
     WebsiteHeader,
     Hero,
-    TrustHighlights,
     About,
     Services,
     WhyChooseUs,

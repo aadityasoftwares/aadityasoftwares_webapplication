@@ -184,7 +184,7 @@ export class PublicBlogDetailComponent implements OnInit, OnDestroy {
     const seo = blog.seo || {};
     const title = seo.title || blog.title;
     const description = seo.description || blog.excerpt;
-    const pageUrl = typeof window !== 'undefined' ? window.location.href : `https://aadityasoftwares.com/blog/${blog.slug}`;
+    const pageUrl = typeof window !== 'undefined' ? window.location.href : `https://aadityasoftwares.in/blog/${blog.slug}`;
     const coverUrl =
       typeof blog.featuredImageMediaId === 'object' && blog.featuredImageMediaId?.publicUrl
         ? blog.featuredImageMediaId.publicUrl
